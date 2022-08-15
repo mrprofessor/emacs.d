@@ -1,0 +1,173 @@
+* Literate Config
+
+** Initialization
+
+*** Basics
+- Menu and toobars
+
+#+BEGIN_SRC emacs-lisp
+    (scroll-bar-mode -1)                ; Disable visible scrollbar
+  (tool-bar-mode -1)                    ; Disable tool bar
+  (tooltip-mode -1)                     ; Disable tooltip
+  (set-fringe-mode 30)                  ; Give some breathing room?
+  (menu-bar-mode -1)                    ; Go full spartan
+#+END_SRC
+
+- Scroll Emacs
+
+#+BEGIN_SRC emacs-lisp
+(setq scroll-step    1
+    scroll-conservatively 10000)
+#+END_SRC
+
+- Set up the visible bell
+
+#+BEGIN_SRC emacs-lisp
+(setq visible-bell t)
+#+END_SRC
+
+- Set Fonts
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil :font "Cascadia mono" :height 180)
+#+END_SRC
+
+- Display line numbers
+
+#+BEGIN_SRC emacs-lisp
+(global-display-line-numbers-mode t)
+
+;; We don't want line numbers everywhere, e.g shell
+(dolist (mode '(org-hook-mode
+                term-mode-hook
+                eshell-mode-hook
+                shell-mode-hook))
+  (add-hook mode(lambda() (display-line-numbers-mode 0))))
+#+END_SRC
+
+- Truncate long lines in certain modes
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook (lambda() (setq truncate-lines nil)))
+#+END_SRC
+
+- Display a vertical line on 80th character
+
+  #+begin_src emacs-lisp
+(setq global-display-fill-indicator-mode 79)
+  #+end_src
+
+** Packages
+*** Intialize packages
+
+- Initialize Melpa
+
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(setq package-archives '(("melpa"  . "https://melpa.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")))
+
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; Initialize use-package on non-linux platforms
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+#+END_SRC
+
+*** Evil Mode
+
+- Since I have been using VI for quite sometime now, I don't want to
+  train myself to learn Emacs
+
+#+BEGIN_SRC emacs-lisp
+;; package: evil
+;; First thing first. Be EVIL!
+(use-package evil
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  :config
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+  ;; Use visual line motions even outside of visual-line-mode buffers
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal))
+
+
+;; package: evil-collection
+;; Now be EVIL on every mode
+;; TODO: Doesn't work
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+#+END_SRC
+
+*** Org Mode
+
+Org mode is probably the best thing happened to the mankind. j/k
+By default Org mode doesn't look very nice, at least not as a word
+processor. Our goal is to make it look like one.
+
+There are a couple of nice blog posts on beautifying the Org mode,
+but right now I will go with the "org-modern" package. It looks nice
+enough for now.
+
+#+BEGIN_SRC emacs-lisp
+  ;; (setq org-hide-emphasis-markers t)
+
+  ;; (font-lock-add-keywords 'org-mode
+  ;; 			'(("^ *\\([-]\\) "
+  ;; 			   (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+  ;; (use-package org-bullets
+  ;;  :config
+  ;;   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+  (use-package org-modern
+    :config
+    (global-org-modern-mode))
+
+  ;; For shorthand completions, lile <s-TAB for source code blocks.
+  (require 'org-tempo)
+
+
+#+END_SRC
+
+*** Install a Bunch of themes
+
+Doom Emacs has consolidated a bunch of nice looking themes, we would
+like to get them all.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-old-hope t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-solarized-light") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+#+END_SRC

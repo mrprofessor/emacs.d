@@ -1,0 +1,3 @@
+* Emacs config
+
+An attempt to finally mod emacs to my own will.
