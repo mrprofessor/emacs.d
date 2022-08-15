@@ -1,4 +1,18 @@
-* Literate Config
+* Literate Config :TOC_5_org:
+  - [[Initialization][Initialization]]
+    - [[Basics][Basics]]
+  - [[Packages][Packages]]
+    - [[Intialize packages][Intialize packages]]
+    - [[Evil Mode][Evil Mode]]
+    - [[Org Mode][Org Mode]]
+      - [[Org table of contents][Org table of contents]]
+    - [[Appearence][Appearence]]
+      - [[Themes][Themes]]
+      - [[Dashboard][Dashboard]]
+      - [[Modeline][Modeline]]
+  - [[KeyBindings][KeyBindings]]
+    - [[Global constants][Global constants]]
+    - [[A leader][A leader]]
 
 ** Initialization
 
@@ -6,7 +20,7 @@
 - Menu and toobars
 
 #+BEGIN_SRC emacs-lisp
-    (scroll-bar-mode -1)                ; Disable visible scrollbar
+  (scroll-bar-mode -1)                  ; Disable visible scrollbar
   (tool-bar-mode -1)                    ; Disable tool bar
   (tooltip-mode -1)                     ; Disable tooltip
   (set-fringe-mode 30)                  ; Give some breathing room?
@@ -55,7 +69,7 @@
   #+begin_src emacs-lisp
 (setq global-display-fill-indicator-mode 79)
   #+end_src
-
+  
 ** Packages
 *** Intialize packages
 
@@ -142,15 +156,34 @@ enough for now.
     (global-org-modern-mode))
 
   ;; For shorthand completions, lile <s-TAB for source code blocks.
-  (require 'org-tempo)
-
+  (require'org-tempo)
 
 #+END_SRC
 
-*** Install a Bunch of themes
+**** Org table of contents
+
+Create table of contents for Org files.
+Usage:
+- Add toc tags such as =TOC_2= and =TOC_2_gh=
+- While at the TOC entry call =M-x org-open-at-point= (=C-c C-o=) to
+jump to the corresponding heading.
+
+ref: [[https://github.com/snosov1/toc-org][toc-org]]
+#+begin_src emacs-lisp
+  (use-package toc-org
+    :hook (org-mode . toc-org-enable)
+    :config
+    (setq toc-org-hrefify-default "gh"))
+#+end_src
+
+*** Appearence
+
+**** Themes
 
 Doom Emacs has consolidated a bunch of nice looking themes, we would
 like to get them all.
+
+I love how Org files look with poet theme. So that's a must.
 
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes
@@ -158,8 +191,8 @@ like to get them all.
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-old-hope t)
+	doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-tomorrow-day t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -170,4 +203,92 @@ like to get them all.
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
+
+  (use-package poet-theme)
 #+END_SRC
+
+**** Dashboard
+
+We would need emacs-dashboard package for an easier configuration.
+
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :config
+    (setq dashboard-center-content t)
+    (setq dashboard-show-shortcuts nil)
+    :init
+    (dashboard-setup-startup-hook))
+
+#+end_src
+
+**** Modeline
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons
+  :ensure t)
+
+  ;; (use-package doom-modeline
+  ;; :ensure t
+  ;; :hook (after-init . doom-modeline-mode))
+#+end_src
+
+** KeyBindings
+
+Custom keybindings for emacs. This section is expected to be edited
+frequently, as my requirements evolve.
+
+*** Global constants
+
+#+begin_src emacs-lisp
+  
+  (defconst t-version "0.0.1-a0"
+    "Current version of the tmacs.")
+
+
+  ;; DEPRECATED
+  (defconst IS-MAC      (eq system-type 'darwin))
+  (defconst IS-LINUX    (eq system-type 'gnu/linux))
+  (defconst IS-WINDOWS  (memq system-type '(cygwin windows-nt ms-dos)))
+  (defconst IS-BSD      (memq system-type '(darwin berkeley-unix gnu/kfreebsd)))
+
+
+#+end_src
+
+*** A leader
+
+Both Doom and Spacemacs use a leader key as a prefix to many commands.
+
+Inspiration: [[https://github.com/doomemacs/doomemacs/blob/e0385052a8004ec54a402c27357b1352840eb798/lisp/doom-keybinds.el][Doom keybindings]]
+
+
+
+#+begin_src emacs-lisp
+
+  (defvar t-leader-key "SPC"
+  "The leader prefix key for Evil users.")
+
+#+end_src
+
+Mac =command= should act like =super=
+
+
+#+begin_src emacs-lisp
+
+
+    ;; (cond
+    ;; (IS-MAC
+    ;;  ;; mac-* variables are used by the special emacs-mac build of Emacs by
+    ;;  ;; Yamamoto Mitsuharu, while other builds use ns-*.
+    ;;  (setq mac-command-modifier      'super
+    ;;        ns-command-modifier       'super
+    ;;        mac-option-modifier       'meta
+    ;;        ns-option-modifier        'meta
+    ;;        ;; Free up the right option for character composition
+    ;;        mac-right-option-modifier 'none
+    ;;        ns-right-option-modifier  'none))
+    ;; (IS-WINDOWS
+    ;;  (setq w32-lwindow-modifier 'super
+    ;;        w32-rwindo
+    ;;        w-modifier 'super)))
+
+#+end_src
