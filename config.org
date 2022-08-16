@@ -1,25 +1,31 @@
-* Literate Config :TOC_5_org:
-  - [[Initialization][Initialization]]
-    - [[Basics][Basics]]
-  - [[Packages][Packages]]
-    - [[Intialize packages][Intialize packages]]
-    - [[Evil Mode][Evil Mode]]
-    - [[Org Mode][Org Mode]]
-      - [[Org table of contents][Org table of contents]]
-    - [[Appearence][Appearence]]
-      - [[Themes][Themes]]
-      - [[Dashboard][Dashboard]]
-      - [[Modeline][Modeline]]
-  - [[KeyBindings][KeyBindings]]
-    - [[Global constants][Global constants]]
-    - [[A leader][A leader]]
+* Literate Config :TOC_5_gh:
+  - [[#initialization][Initialization]]
+    - [[#basics][Basics]]
+  - [[#packages][Packages]]
+    - [[#intialize-packages][Intialize packages]]
+    - [[#appearence][Appearence]]
+      - [[#themes][Themes]]
+      - [[#dashboard][Dashboard]]
+      - [[#modeline][Modeline]]
+    - [[#evil-mode][Evil Mode]]
+    - [[#org-mode][Org Mode]]
+      - [[#org-toc][Org TOC]]
+      - [[#org-babel][Org Babel]]
+    - [[#completionsivycounselswiper][Completions(ivy/counsel/swiper)]]
+      - [[#ivy-rich][Ivy rich]]
+      - [[#hydra][Hydra]]
+    - [[#projectile][Projectile]]
+  - [[#keybindings][KeyBindings]]
+    - [[#global-constants][Global constants]]
+    - [[#a-leader][A leader]]
+    - [[#random-goodness][Random goodness]]
 
 ** Initialization
 
 *** Basics
 - Menu and toobars
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC elisp
   (scroll-bar-mode -1)                  ; Disable visible scrollbar
   (tool-bar-mode -1)                    ; Disable tool bar
   (tooltip-mode -1)                     ; Disable tooltip
@@ -29,26 +35,26 @@
 
 - Scroll Emacs
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC elisp
 (setq scroll-step    1
     scroll-conservatively 10000)
 #+END_SRC
 
 - Set up the visible bell
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC elisp
 (setq visible-bell t)
 #+END_SRC
 
 - Set Fonts
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC elisp
 (set-face-attribute 'default nil :font "Cascadia mono" :height 180)
 #+END_SRC
 
 - Display line numbers
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC elisp
 (global-display-line-numbers-mode t)
 
 ;; We don't want line numbers everywhere, e.g shell
@@ -60,13 +66,13 @@
 #+END_SRC
 
 - Truncate long lines in certain modes
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC elisp
 (add-hook 'org-mode-hook (lambda() (setq truncate-lines nil)))
 #+END_SRC
 
 - Display a vertical line on 80th character
 
-  #+begin_src emacs-lisp
+  #+begin_src elisp
 (setq global-display-fill-indicator-mode 79)
   #+end_src
   
@@ -75,7 +81,7 @@
 
 - Initialize Melpa
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC elisp
 (require 'package)
 (setq package-archives '(("melpa"  . "https://melpa.org/packages/")
                          ("melpa-stable" . "https://stable.melpa.org/packages/")
@@ -93,12 +99,97 @@
 
 #+END_SRC
 
+*** Appearence
+
+**** Themes
+
+Doom Emacs has consolidated a bunch of nice looking themes, we would
+like to get them all.
+
+I love how Org files look with poet theme. So that's a must.
+
+#+BEGIN_SRC elisp
+  (use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one-light t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-solarized-light") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+  (use-package poet-theme)
+#+END_SRC
+
+**** Dashboard
+
+We would need emacs-dashboard package for an easier configuration.
+
+#+begin_src elisp
+  (use-package dashboard
+    :config
+    (setq dashboard-center-content t)
+    (setq dashboard-show-shortcuts nil)
+    :init
+    (dashboard-setup-startup-hook))
+
+#+end_src
+
+**** Modeline
+
+A custom modeline until we figure out the issue with doom-modeline.
+#+begin_src elisp
+  (set-face-attribute 'mode-line nil
+		      :background "#353644"
+		      :foreground "white"
+		      :box '(:line-width 8 :color "#353644")
+		      :overline nil
+		      :underline nil)
+
+  (set-face-attribute 'mode-line-inactive nil
+		      :background "#565063"
+		      :foreground "white"
+		      :box '(:line-width 8 :color "#565063")
+		      :overline nil
+		      :underline nil)
+#+end_src
+
+Show the git branch on the mode-line
+
+#+begin_src elisp
+  ;; (defun vc-branch ()
+  ;;   (let ((backend (vc-backend buffer-file-name)))
+  ;;     (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))))
+  ;; (vc-branch)
+#+end_src
+
+
+
+
+#+begin_src elisp
+  (use-package all-the-icons
+    :ensure t)
+
+  ;; (use-package doom-modeline
+  ;; :init (doom-modeline-mode 1)
+  ;; :custom ((doom-modeline-height 30)))
+#+end_src
+
 *** Evil Mode
 
 - Since I have been using VI for quite sometime now, I don't want to
   train myself to learn Emacs
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC elisp
 ;; package: evil
 ;; First thing first. Be EVIL!
 (use-package evil
@@ -140,7 +231,7 @@ There are a couple of nice blog posts on beautifying the Org mode,
 but right now I will go with the "org-modern" package. It looks nice
 enough for now.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC elisp
   ;; (setq org-hide-emphasis-markers t)
 
   ;; (font-lock-add-keywords 'org-mode
@@ -160,7 +251,7 @@ enough for now.
 
 #+END_SRC
 
-**** Org table of contents
+**** Org TOC
 
 Create table of contents for Org files.
 Usage:
@@ -169,68 +260,129 @@ Usage:
 jump to the corresponding heading.
 
 ref: [[https://github.com/snosov1/toc-org][toc-org]]
-#+begin_src emacs-lisp
+#+begin_src elisp
   (use-package toc-org
     :hook (org-mode . toc-org-enable)
     :config
     (setq toc-org-hrefify-default "gh"))
 #+end_src
 
-*** Appearence
+**** Org Babel
 
-**** Themes
+Active Babel languages
 
-Doom Emacs has consolidated a bunch of nice looking themes, we would
-like to get them all.
+;; TODO
 
-I love how Org files look with poet theme. So that's a must.
+#+begin_src elisp
+  ;; (org-babel-do-load-languages
+  ;;  'org-babel-load-languages
+  ;;  '((C . t) (elisp . t) (python . t) ))
+#+end_src
 
-#+BEGIN_SRC emacs-lisp
-  (use-package doom-themes
-  :ensure t
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-	doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-tomorrow-day t)
+*** Completions(ivy/counsel/swiper)
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-solarized-light") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
-
-  (use-package poet-theme)
-#+END_SRC
-
-**** Dashboard
-
-We would need emacs-dashboard package for an easier configuration.
-
-#+begin_src emacs-lisp
-  (use-package dashboard
-    :config
-    (setq dashboard-center-content t)
-    (setq dashboard-show-shortcuts nil)
+#+begin_src elisp
+  ;; package: ivy/counsel/swiper
+  ;; Set up Ivy for better completions
+  ;; Installing counsel will install ivy and swiper.
+  (use-package counsel
+    :diminish
+    :bind (("C-s" . swiper)
+	   ;; Counsel stuff
+	   ("M-x" . counsel-M-x)
+	   ("s-x" . counsel-M-x) ;; Super-X should do M-X
+	   ("C-x b" . counsel-ibuffer)
+	   ("C-x C-f" . counsel-find-file)
+	   :map minibuffer-local-map
+	   ("C-x C-r" . 'counsel-minibuffer-history)
+	   :map ivy-minibuffer-map
+	   ;; ("TAB" . ivy-alt-done)
+	   ;; ("TAB" . ivy-partial-or-done)
+	   ("C-f" . ivy-alt-done)
+	   ("C-l" . ivy-alt-done)
+	   ("C-j" . ivy-next-line)
+	   ("C-k" . ivy-previous-line)
+	   :map ivy-switch-buffer-map
+	   ("C-k" . ivy-previous-line)
+	   ("C-l" . ivy-done)
+	   ("C-d" . ivy-switch-buffer-kill)
+	   :map ivy-reverse-i-search-map
+	   ("C-k" . ivy-previous-line)
+	   ("C-d" . ivy-reverse-i-search-kill))
     :init
-    (dashboard-setup-startup-hook))
+    (ivy-mode 1))
 
+  (use-package counsel
+    :bind (("C-M-j" . 'counsel-switch-buffer)
+	   :map minibuffer-local-map
+	   ("C-r" . 'counsel-minibuffer-history))
+    :custom
+    (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+    :config
+    (counsel-mode 1))
+
+  (use-package ivy-prescient
+    :after counsel
+    :custom
+    (ivy-prescient-enable-filtering nil)
+    :config
+    ;; Uncomment the following line to have sorting remembered across sessions!
+					  ;(prescient-persist-mode 1)
+    (ivy-prescient-mode 1))
+	   #+end_src
+
+**** Ivy rich
+
+A more friendly interface for Ivy.
+
+#+begin_src elisp
+  ;; package: ivy-rich
+  ;; More friendly interface (display transformer) for ivy.
+  (use-package ivy-rich
+    :init
+    (ivy-rich-mode 1))
+
+  ;; All the icons + Ivy
+  (use-package all-the-icons-ivy-rich
+    :ensure t
+    :init (all-the-icons-ivy-rich-mode 1))
 #+end_src
 
-**** Modeline
+**** Hydra
 
-#+begin_src emacs-lisp
-  (use-package all-the-icons
-  :ensure t)
+#+begin_src elisp
+(use-package hydra
+  :defer t)
 
-  ;; (use-package doom-modeline
-  ;; :ensure t
-  ;; :hook (after-init . doom-modeline-mode))
+(defhydra hydra-text-scale (:timeout 4)
+  "scale text"
+  ("j" text-scale-increase "in")
+  ("k" text-scale-decrease "out")
+  ("f" nil "finished" :exit t))
 #+end_src
+*** Projectile
+
+Projectile is instrumental in managing different projects and working
+on them.
+
+#+begin_src elisp
+  (use-package projectile
+    :diminish projectile-mode
+    :config (projectile-mode)
+    :custom ((projectile-completion-system 'ivy))
+    :bind-keymap
+    ("C-c p" . projectile-command-map)
+    :init
+    ;; NOTE: Set this to the folder where you keep your Git repos!
+    (when (file-directory-p "~/dev")
+      (setq projectile-project-search-path '("~/dev")))
+    (setq projectile-switch-project-action #'projectile-dired))
+
+  (use-package counsel-projectile
+    :after projectile
+    :config (counsel-projectile-mode))
+#+end_src
+
 
 ** KeyBindings
 
@@ -239,7 +391,7 @@ frequently, as my requirements evolve.
 
 *** Global constants
 
-#+begin_src emacs-lisp
+#+begin_src elisp
   
   (defconst t-version "0.0.1-a0"
     "Current version of the tmacs.")
@@ -260,9 +412,7 @@ Both Doom and Spacemacs use a leader key as a prefix to many commands.
 
 Inspiration: [[https://github.com/doomemacs/doomemacs/blob/e0385052a8004ec54a402c27357b1352840eb798/lisp/doom-keybinds.el][Doom keybindings]]
 
-
-
-#+begin_src emacs-lisp
+#+begin_src elisp
 
   (defvar t-leader-key "SPC"
   "The leader prefix key for Evil users.")
@@ -272,23 +422,27 @@ Inspiration: [[https://github.com/doomemacs/doomemacs/blob/e0385052a8004ec54a402
 Mac =command= should act like =super=
 
 
-#+begin_src emacs-lisp
-
-
-    ;; (cond
-    ;; (IS-MAC
-    ;;  ;; mac-* variables are used by the special emacs-mac build of Emacs by
-    ;;  ;; Yamamoto Mitsuharu, while other builds use ns-*.
-    ;;  (setq mac-command-modifier      'super
-    ;;        ns-command-modifier       'super
-    ;;        mac-option-modifier       'meta
-    ;;        ns-option-modifier        'meta
-    ;;        ;; Free up the right option for character composition
-    ;;        mac-right-option-modifier 'none
-    ;;        ns-right-option-modifier  'none))
-    ;; (IS-WINDOWS
-    ;;  (setq w32-lwindow-modifier 'super
-    ;;        w32-rwindo
-    ;;        w-modifier 'super)))
-
+#+begin_src elisp
+  ;; (cond
+  ;;  (IS-MAC
+  ;;   ;; mac-* variables are used by the special emacs-mac build of Emacs by
+  ;;   ;; Yamamoto Mitsuharu, while other builds use ns-*.
+  ;;   (setq mac-command-modifier      'super
+  ;; 	ns-command-modifier       'super
+  ;; 	mac-option-modifier       'meta
+  ;; 	ns-option-modifier        'meta
+  ;; 	;; Free up the right option for character composition
+  ;; 	mac-right-option-modifier 'none
+  ;; 	ns-right-option-modifier  'none))
+  ;;  (IS-WINDOWS
+  ;;   (setq w32-lwindow-modifier 'super
+  ;; 	w32-rwindow-modifier 'super)))
 #+end_src
+
+*** Random goodness
+
+- =ESC= Quit prompts
+
+  #+begin_src elisp
+(global-set-key  (kbd "<escape>") 'keyboard-escape-quit)
+  #+end_src

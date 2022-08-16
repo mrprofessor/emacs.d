@@ -1,3 +1,10 @@
 * Emacs config
 
 An attempt to finally mod emacs to my own will.
+
+# Setup
+
+#+begin_src sh
+  cd emacs.d
+  sh setup.sh
+#+end_src
