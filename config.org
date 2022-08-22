@@ -11,17 +11,16 @@
     - [[#org-mode][Org Mode]]
       - [[#org-toc][Org TOC]]
       - [[#org-babel][Org Babel]]
+    - [[#projectile][Projectile]]
     - [[#completionsivycounselswiper][Completions(ivy/counsel/swiper)]]
       - [[#ivy-rich][Ivy rich]]
       - [[#hydra][Hydra]]
-    - [[#projectile][Projectile]]
   - [[#keybindings][KeyBindings]]
     - [[#global-constants][Global constants]]
     - [[#a-leader][A leader]]
     - [[#random-goodness][Random goodness]]
 
 ** Initialization
-
 *** Basics
 - Menu and toobars
 
@@ -49,8 +48,9 @@
 - Set Fonts
 
 #+BEGIN_SRC elisp
-(set-face-attribute 'default nil :font "Cascadia mono" :height 180)
+(set-face-attribute 'default nil :font "Cascadia Code PL" :height 160)
 #+END_SRC
+
 
 - Display line numbers
 
@@ -279,6 +279,31 @@ Active Babel languages
   ;;  '((C . t) (elisp . t) (python . t) ))
 #+end_src
 
+*** Projectile
+
+Projectile is instrumental in managing different projects and working
+on them.
+
+#+begin_src elisp
+
+      (use-package counsel-projectile
+	:after projectile
+	:config (counsel-projectile-mode))
+  
+      (use-package projectile
+	:diminish projectile-mode
+	:config (projectile-mode)
+	:custom ((projectile-completion-system 'ivy))
+	:bind (:map projectile-mode-map
+	("C-c p" . projectile-command-map)
+	("s-p" . projectile-command-map))
+	:init
+	;; NOTE: Set this to the folder where you keep your Git repos!
+	(when (file-directory-p "~/dev")
+	  (setq projectile-project-search-path '("~/dev")))
+	(setq projectile-switch-project-action #'projectile-dired))
+#+end_src
+
 *** Completions(ivy/counsel/swiper)
 
 #+begin_src elisp
@@ -289,6 +314,7 @@ Active Babel languages
     :diminish
     :bind (("C-s" . swiper)
 	   ;; Counsel stuff
+	   ("M-x" . counsel-M-x)
 	   ("M-x" . counsel-M-x)
 	   ("s-x" . counsel-M-x) ;; Super-X should do M-X
 	   ("C-x b" . counsel-ibuffer)
@@ -328,8 +354,14 @@ Active Babel languages
     :config
     ;; Uncomment the following line to have sorting remembered across sessions!
 					  ;(prescient-persist-mode 1)
+
+
     (ivy-prescient-mode 1))
+
+  ;; Remove the "^" character from counsel-M-X 
+  (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "") 
 	   #+end_src
+
 
 **** Ivy rich
 
@@ -359,28 +391,6 @@ A more friendly interface for Ivy.
   ("j" text-scale-increase "in")
   ("k" text-scale-decrease "out")
   ("f" nil "finished" :exit t))
-#+end_src
-*** Projectile
-
-Projectile is instrumental in managing different projects and working
-on them.
-
-#+begin_src elisp
-  (use-package projectile
-    :diminish projectile-mode
-    :config (projectile-mode)
-    :custom ((projectile-completion-system 'ivy))
-    :bind-keymap
-    ("C-c p" . projectile-command-map)
-    :init
-    ;; NOTE: Set this to the folder where you keep your Git repos!
-    (when (file-directory-p "~/dev")
-      (setq projectile-project-search-path '("~/dev")))
-    (setq projectile-switch-project-action #'projectile-dired))
-
-  (use-package counsel-projectile
-    :after projectile
-    :config (counsel-projectile-mode))
 #+end_src
 
 
