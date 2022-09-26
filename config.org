@@ -1,6 +1,7 @@
 * Literate Config :TOC_5_gh:
   - [[#initialization][Initialization]]
     - [[#basics][Basics]]
+    - [[#emacs-backups][Emacs Backups]]
   - [[#packages][Packages]]
     - [[#intialize-packages][Intialize packages]]
     - [[#appearence][Appearence]]
@@ -11,14 +12,19 @@
     - [[#org-mode][Org Mode]]
       - [[#org-toc][Org TOC]]
       - [[#org-babel][Org Babel]]
+      - [[#org-hugoox-hugo][Org Hugo(ox-hugo)]]
     - [[#projectile][Projectile]]
     - [[#completionsivycounselswiper][Completions(ivy/counsel/swiper)]]
       - [[#ivy-rich][Ivy rich]]
       - [[#hydra][Hydra]]
+      - [[#which-key][Which-key]]
   - [[#keybindings][KeyBindings]]
     - [[#global-constants][Global constants]]
     - [[#a-leader][A leader]]
     - [[#random-goodness][Random goodness]]
+  - [[#programming-stuff][Programming stuff]]
+    - [[#lsp-mode][LSP mode]]
+    - [[#yaml][Yaml]]
 
 ** Initialization
 *** Basics
@@ -48,7 +54,7 @@
 - Set Fonts
 
 #+BEGIN_SRC elisp
-(set-face-attribute 'default nil :font "Cascadia Code PL" :height 160)
+  (set-face-attribute 'default nil :font "Cascadia Code PL" :height 160)
 #+END_SRC
 
 
@@ -66,6 +72,7 @@
 #+END_SRC
 
 - Truncate long lines in certain modes
+  
 #+BEGIN_SRC elisp
 (add-hook 'org-mode-hook (lambda() (setq truncate-lines nil)))
 #+END_SRC
@@ -73,32 +80,56 @@
 - Display a vertical line on 80th character
 
   #+begin_src elisp
-(setq global-display-fill-indicator-mode 79)
+(setq-default display-fill-column-indicator-column 79)
+(global-display-fill-column-indicator-mode 1)
   #+end_src
+
+- Start emacs in a fullscreen mode
   
+#+begin_src elisp
+;; start the initial frame maximized
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+;; start every frame maximized
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+
+*** Emacs Backups
+
+Backup in one place. flat, no tree structure
+#+begin_src elisp
+(setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup")))
+#+end_src
+
 ** Packages
 *** Intialize packages
 
 - Initialize Melpa
 
 #+BEGIN_SRC elisp
-(require 'package)
-(setq package-archives '(("melpa"  . "https://melpa.org/packages/")
-                         ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")))
+  (require 'package)
+  (setq package-archives '(("elpa"   . "https://elpa.gnu.org/packages/")
+			   ("melpa"  . "https://melpa.org/packages/")
+			   ("melpa-stable" . "https://stable.melpa.org/packages/")
+			   ("org" . "https://orgmode.org/elpa/")))
 
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
 
-;; Initialize use-package on non-linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-(require 'use-package)
-(setq use-package-always-ensure t)
+  ;; Initialize use-package on non-linux platforms
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+  (require 'use-package)
+  (setq use-package-always-ensure t)
 
 #+END_SRC
 
+- Install local packages manually
+
+  TODO
+  - Certain packages are needed to be installed maually, e.g tomelr
+    
 *** Appearence
 
 **** Themes
@@ -115,7 +146,7 @@ I love how Org files look with poet theme. So that's a must.
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
 	doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-one-light t)
+  (load-theme 'doom-gruvbox t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -227,35 +258,45 @@ Org mode is probably the best thing happened to the mankind. j/k
 By default Org mode doesn't look very nice, at least not as a word
 processor. Our goal is to make it look like one.
 
+Enable indentation(org-indent-mode). To control individual files, use
+=#+STARTUP: indent= or =#+STARTUP: noindent=.
+
+#+begin_src elisp
+  (setq org-startup-indented t)
+#+end_src
+
+Set a conservative indentation, By default the value is set to 2
+
+#+begin_src elisp
+  (setq org-indent-indentation-per-level 2)
+#+end_src
+
+Emacs shouldn't add whitespace to indent text.
+
+#+begin_src elisp
+  (setq org-adapt-indentation nil
+#+end_src
+
+
 There are a couple of nice blog posts on beautifying the Org mode,
-but right now I will go with the "org-modern" package. It looks nice
-enough for now.
+but I plan to go with the "org-modern" package. It looks nice enough for
+now. However, Certain features don't work wit org-indent-mode, which I
+have turned on.
 
 #+BEGIN_SRC elisp
-  ;; (setq org-hide-emphasis-markers t)
-
-  ;; (font-lock-add-keywords 'org-mode
-  ;; 			'(("^ *\\([-]\\) "
-  ;; 			   (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-  ;; (use-package org-bullets
-  ;;  :config
-  ;;   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-
   (use-package org-modern
     :config
     (global-org-modern-mode))
 
   ;; For shorthand completions, lile <s-TAB for source code blocks.
   (require'org-tempo)
-
 #+END_SRC
 
 **** Org TOC
 
 Create table of contents for Org files.
 Usage:
-- Add toc tags such as =TOC_2= and =TOC_2_gh=
+- Add table of content tags such as =TOC_2= and =TOC_2_gh=
 - While at the TOC entry call =M-x org-open-at-point= (=C-c C-o=) to
 jump to the corresponding heading.
 
@@ -279,6 +320,23 @@ Active Babel languages
   ;;  '((C . t) (elisp . t) (python . t) ))
 #+end_src
 
+**** Org Hugo(ox-hugo)
+
+ox-hugo helps me manage my website using org files.
+
+I couldn't install =tomelr= package, using =use-package=, so had to
+install it manually.
+
+#+begin_src elisp
+
+  (use-package ox-hugo
+    :ensure t   ;Auto-install the package from Melpa
+    :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
+    :after ox)    
+
+#+end_src
+
+
 *** Projectile
 
 Projectile is instrumental in managing different projects and working
@@ -286,23 +344,26 @@ on them.
 
 #+begin_src elisp
 
-      (use-package counsel-projectile
-	:after projectile
-	:config (counsel-projectile-mode))
+  (use-package counsel-projectile
+    :after projectile
+    :config (counsel-projectile-mode))
   
-      (use-package projectile
-	:diminish projectile-mode
-	:config (projectile-mode)
-	:custom ((projectile-completion-system 'ivy))
-	:bind (:map projectile-mode-map
-	("C-c p" . projectile-command-map)
-	("s-p" . projectile-command-map))
-	:init
-	;; NOTE: Set this to the folder where you keep your Git repos!
-	(when (file-directory-p "~/dev")
-	  (setq projectile-project-search-path '("~/dev")))
-	(setq projectile-switch-project-action #'projectile-dired))
+  (counsel-projectile-mode)
+
+  (use-package projectile
+    :diminish projectile-mode
+    :config (projectile-mode)
+    :custom ((projectile-completion-system 'ivy))
+    :bind (:map projectile-mode-map
+		("C-c p" . projectile-command-map))
+    :init
+    ;; NOTE: Set this to the folder where you keep your Git repos!
+    (when (file-directory-p "~/dev")
+      (setq projectile-project-search-path '("~/dev"))
+      (setq projectile-project-search-path '("~/rocket")))
+    (setq projectile-switch-project-action #'projectile-dired))
 #+end_src
+
 
 *** Completions(ivy/counsel/swiper)
 
@@ -393,6 +454,16 @@ A more friendly interface for Ivy.
   ("f" nil "finished" :exit t))
 #+end_src
 
+**** Which-key
+
+It's a minor mode that shows kebindings for an incomplete command.
+
+#+begin_src elisp
+  (use-package which-key
+    :init
+    (which-key-mode))
+#+end_src
+
 
 ** KeyBindings
 
@@ -456,3 +527,46 @@ Mac =command= should act like =super=
   #+begin_src elisp
 (global-set-key  (kbd "<escape>") 'keyboard-escape-quit)
   #+end_src
+
+** Programming stuff
+
+This section has configurations for various language programming modes.
+
+*** LSP mode
+
+Language Server Protocol can provide IDE like support for multiple
+programming languages on Emacs.
+
+#+begin_src elisp
+  (use-package lsp-mode
+    :init
+    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    (setq lsp-keymap-prefix "C-c l")
+    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+           (XXX-mode . lsp)
+           ;; if you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
+
+  ;; lsp-ui
+  (use-package lsp-ui :commands lsp-ui-mode)
+
+  ;; lsp-ivy bindings
+  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+#+end_src
+
+
+*** Yaml
+
+#+begin_src elisp
+  (use-package yaml-mode
+  :ensure t)
+#+end_src
+
+Emacs should automatically switch on to yaml-mode while editing 'yml' or 'yaml'
+files.
+
+#+begin_src elisp
+  (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+#+end_src
