@@ -13,11 +13,15 @@
       - [[#org-toc][Org TOC]]
       - [[#org-babel][Org Babel]]
       - [[#org-hugoox-hugo][Org Hugo(ox-hugo)]]
+      - [[#org-roam][Org Roam]]
+        - [[#full-text-search-with-deft][Full text search with Deft]]
     - [[#projectile][Projectile]]
     - [[#completionsivycounselswiper][Completions(ivy/counsel/swiper)]]
       - [[#ivy-rich][Ivy rich]]
       - [[#hydra][Hydra]]
       - [[#which-key][Which-key]]
+    - [[#source-control][Source Control]]
+      - [[#magit][Magit]]
   - [[#keybindings][KeyBindings]]
     - [[#global-constants][Global constants]]
     - [[#a-leader][A leader]]
@@ -137,8 +141,6 @@ Backup in one place. flat, no tree structure
 Doom Emacs has consolidated a bunch of nice looking themes, we would
 like to get them all.
 
-I love how Org files look with poet theme. So that's a must.
-
 #+BEGIN_SRC elisp
   (use-package doom-themes
   :ensure t
@@ -146,7 +148,7 @@ I love how Org files look with poet theme. So that's a must.
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
 	doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-gruvbox t)
+  (load-theme 'doom-old-hope t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -158,8 +160,14 @@ I love how Org files look with poet theme. So that's a must.
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-  (use-package poet-theme)
 #+END_SRC
+
+
+I love how Org files look with poet theme, so it's a must.
+
+#+begin_src elisp
+  (use-package poet-theme)
+#+end_src
 
 **** Dashboard
 
@@ -274,7 +282,7 @@ Set a conservative indentation, By default the value is set to 2
 Emacs shouldn't add whitespace to indent text.
 
 #+begin_src elisp
-  (setq org-adapt-indentation nil
+  (setq org-adapt-indentation nil)
 #+end_src
 
 
@@ -336,6 +344,39 @@ install it manually.
 
 #+end_src
 
+**** Org Roam
+
+A sophisticated note taking mechanishm. Essentially a clone of
+[[https://roamresearch.com/][Roam-research]] running on Emacs.
+
+#+begin_src elisp
+  (use-package org-roam
+    :ensure t
+    :pin melpa-stable)
+#+end_src
+
+Set the notes directory
+
+#+begin_src elisp
+  (setq org-roam-directory "~/dev/notes/org-roam")
+#+end_src
+
+***** Full text search with Deft
+
+Deft is an Emacs mode for quickly browsing and filtering plain text
+notes.
+
+#+begin_src elisp
+  (use-package deft
+    :after org
+    :bind
+    ("C-c n d" . deft)
+    :custom
+    (deft-recursive t)
+    (deft-use-filter-string-for-filename t)
+    (deft-default-extension "org")
+    (deft-directory org-roam-directory))
+#+end_src
 
 *** Projectile
 
@@ -464,6 +505,18 @@ It's a minor mode that shows kebindings for an incomplete command.
     (which-key-mode))
 #+end_src
 
+*** Source Control
+
+**** Magit
+
+The magical Git client for emacs. 
+
+#+begin_src elisp
+  (use-package magit
+    :ensure t
+    :pin melpa-stable)
+#+end_src
+
 
 ** KeyBindings
 
@@ -530,7 +583,7 @@ Mac =command= should act like =super=
 
 ** Programming stuff
 
-This section has configurations for various language programming modes.
+This section has configurations for various programming language modes.
 
 *** LSP mode
 
