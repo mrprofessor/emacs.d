@@ -22,6 +22,8 @@
       - [[#which-key][Which-key]]
     - [[#source-control][Source Control]]
       - [[#magit][Magit]]
+  - [[#system-configuration][System configuration]]
+    - [[#emacs-environment-variables][Emacs environment variables]]
   - [[#keybindings][KeyBindings]]
     - [[#global-constants][Global constants]]
     - [[#a-leader][A leader]]
@@ -29,6 +31,7 @@
   - [[#programming-stuff][Programming stuff]]
     - [[#lsp-mode][LSP mode]]
     - [[#yaml][Yaml]]
+    - [[#go][Go]]
 
 ** Initialization
 *** Basics
@@ -58,7 +61,7 @@
 - Set Fonts
 
 #+BEGIN_SRC elisp
-  (set-face-attribute 'default nil :font "Cascadia Code PL" :height 160)
+  (set-face-attribute 'default nil :font "Cascadia Code PL" :height 180)
 #+END_SRC
 
 
@@ -388,7 +391,7 @@ on them.
   (use-package counsel-projectile
     :after projectile
     :config (counsel-projectile-mode))
-  
+
   (counsel-projectile-mode)
 
   (use-package projectile
@@ -396,13 +399,14 @@ on them.
     :config (projectile-mode)
     :custom ((projectile-completion-system 'ivy))
     :bind (:map projectile-mode-map
-		("C-c p" . projectile-command-map))
+                ("C-c p" . projectile-command-map))
     :init
     ;; NOTE: Set this to the folder where you keep your Git repos!
     (when (file-directory-p "~/dev")
       (setq projectile-project-search-path '("~/dev"))
       (setq projectile-project-search-path '("~/rocket")))
     (setq projectile-switch-project-action #'projectile-dired))
+  
 #+end_src
 
 
@@ -516,7 +520,19 @@ The magical Git client for emacs.
     :ensure t
     :pin melpa-stable)
 #+end_src
+** System configuration
 
+*** Emacs environment variables
+
+Ensure Emacs env variables match system variables.
+
+#+begin_src elisp
+  (use-package exec-path-from-shell
+    :ensure t)
+
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+#+end_src
 
 ** KeyBindings
 
@@ -611,15 +627,40 @@ programming languages on Emacs.
 
 *** Yaml
 
+Emacs should automatically switch on to yaml-mode while editing =yml=
+or =yaml= files.
+
 #+begin_src elisp
   (use-package yaml-mode
-  :ensure t)
+  :ensure t
+  :init
+  (push '("\\.yaml$" . yaml-mode) auto-mode-alist))
+
 #+end_src
 
-Emacs should automatically switch on to yaml-mode while editing 'yml' or 'yaml'
-files.
+
+*** Go
 
 #+begin_src elisp
-  (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-  (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+  (use-package go-mode
+    :ensure t
+    :init
+    (push '("\\.go\\'" . go-mode) auto-mode-alist))
+#+end_src
+
+Lsp hooks for Go
+
+#+begin_src elisp
+
+  (defun lsp-go-install-save-hooks ()
+    ;; Format before save
+    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+    ;; Sort imports before save
+    (add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+  ;; Start lsp mode
+  (add-hook 'go-mode-hook #'lsp-deferred)
+
 #+end_src
