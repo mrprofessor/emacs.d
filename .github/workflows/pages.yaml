@@ -23,14 +23,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
-          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
       
       - name: Org Knit
         uses: tecosaur/org-knit-action@v0.3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PUBLISH_TOKEN }}
           export: html
           files: config.org
+          branch: gh-pages
           commit_message: "Publish: !#!"
