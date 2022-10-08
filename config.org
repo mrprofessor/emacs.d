@@ -1,4 +1,9 @@
-* Literate Config :TOC_5_gh:
+#+TITLE: Emacs Literate Config
+#+EXPORT_FILE_NAME: docs/index.html
+#+OPTIONS: toc:5
+
+
+** Table of contents                                      :TOC_5_gh:noexport:
   - [[#initialization][Initialization]]
     - [[#basics][Basics]]
     - [[#emacs-backups][Emacs Backups]]
