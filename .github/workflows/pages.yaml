@@ -1,0 +1,32 @@
+name: Deploy emacs config site to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["master"]
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Export Org files to GitHub Pages
+        uses: tecosaur/org-knit-action@v0.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          export:
+            - html
+          files:
+            - config.org
