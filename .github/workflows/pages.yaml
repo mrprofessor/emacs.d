@@ -18,17 +18,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  export:
+  publish:
     runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
 
-    - name: Export Org files to GitHub Pages
-      uses: tecosaur/org-knit-action@v0.3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: gh-pages
-        export: html
-        files: config.org
-        commit_message: "Publish: !#!"
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Org Knit
+        uses: tecosaur/org-knit-action@v0.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          export: html
+          files: config.org
+          commit_message: "Publish: !#!"
