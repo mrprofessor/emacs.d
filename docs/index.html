@@ -1,0 +1,1199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-10-08 Sat 16:54 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs Literate Config</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Docker image runner" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Emacs Literate Config</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2888b29">1. Initialization</a>
+<ul>
+<li><a href="#org191f2eb">1.1. Basics</a></li>
+<li><a href="#org3cf21db">1.2. Emacs Backups</a></li>
+</ul>
+</li>
+<li><a href="#org4836416">2. Packages</a>
+<ul>
+<li><a href="#orgd35169f">2.1. Intialize packages</a></li>
+<li><a href="#orgab3d107">2.2. Appearence</a>
+<ul>
+<li><a href="#orgdbbf43f">2.2.1. Themes</a></li>
+<li><a href="#org5f19b71">2.2.2. Dashboard</a></li>
+<li><a href="#org6da4065">2.2.3. Modeline</a></li>
+</ul>
+</li>
+<li><a href="#org1b90451">2.3. Evil Mode</a></li>
+<li><a href="#org1f1bd56">2.4. Org Mode</a>
+<ul>
+<li><a href="#org082da31">2.4.1. Org TOC</a></li>
+<li><a href="#orgf2987b1">2.4.2. Org Babel</a></li>
+<li><a href="#orgb0fe176">2.4.3. Org Hugo(ox-hugo)</a></li>
+<li><a href="#org7a4825c">2.4.4. Org Roam</a></li>
+</ul>
+</li>
+<li><a href="#orge4d6ec3">2.5. Projectile</a></li>
+<li><a href="#orgef50239">2.6. Completions(ivy/counsel/swiper)</a>
+<ul>
+<li><a href="#orgdc85868">2.6.1. Ivy rich</a></li>
+<li><a href="#org25e94d3">2.6.2. Hydra</a></li>
+<li><a href="#org97ac3cc">2.6.3. Which-key</a></li>
+</ul>
+</li>
+<li><a href="#orga424794">2.7. Source Control</a>
+<ul>
+<li><a href="#orgc0f5d95">2.7.1. Magit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga1b12bf">3. System configuration</a>
+<ul>
+<li><a href="#org2a0320e">3.1. Emacs environment variables</a></li>
+</ul>
+</li>
+<li><a href="#org03c8c8a">4. KeyBindings</a>
+<ul>
+<li><a href="#org2f4a5c8">4.1. Global constants</a></li>
+<li><a href="#orgf97473c">4.2. A leader</a></li>
+<li><a href="#org00c067d">4.3. Random goodness</a></li>
+</ul>
+</li>
+<li><a href="#orgd316a87">5. Programming stuff</a>
+<ul>
+<li><a href="#org1716277">5.1. LSP mode</a></li>
+<li><a href="#orgf13f815">5.2. Yaml</a></li>
+<li><a href="#org8b9da33">5.3. Go</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org2888b29" class="outline-2">
+<h2 id="org2888b29"><span class="section-number-2">1</span> Initialization</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org191f2eb" class="outline-3">
+<h3 id="org191f2eb"><span class="section-number-3">1.1</span> Basics</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Menu and toobars</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(scroll-bar-mode -1)                  ; Disable visible scrollbar
+(tool-bar-mode -1)                    ; Disable tool bar
+(tooltip-mode -1)                     ; Disable tooltip
+(set-fringe-mode 30)                  ; Give some breathing room?
+(menu-bar-mode -1)                    ; Go full spartan
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Scroll Emacs</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(setq scroll-step    1
+    scroll-conservatively 10000)
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Set up the visible bell</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(setq visible-bell t)
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Set Fonts</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(set-face-attribute 'default nil :font "Cascadia Code PL" :height 180)
+</pre>
+</div>
+
+
+<ul class="org-ul">
+<li>Display line numbers</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(global-display-line-numbers-mode t)
+
+;; We don't want line numbers everywhere, e.g shell
+(dolist (mode '(org-hook-mode
+		term-mode-hook
+		eshell-mode-hook
+		shell-mode-hook))
+  (add-hook mode(lambda() (display-line-numbers-mode 0))))
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Truncate long lines in certain modes</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(add-hook 'org-mode-hook (lambda() (setq truncate-lines nil)))
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><p>
+Display a vertical line on 80th character
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(setq-default display-fill-column-indicator-column 79)
+(global-display-fill-column-indicator-mode 1)
+</pre>
+</div></li>
+
+<li>Start emacs in a fullscreen mode</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp">;; start the initial frame maximized
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+;; start every frame maximized
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3cf21db" class="outline-3">
+<h3 id="org3cf21db"><span class="section-number-3">1.2</span> Emacs Backups</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Backup in one place. flat, no tree structure
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup")))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4836416" class="outline-2">
+<h2 id="org4836416"><span class="section-number-2">2</span> Packages</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgd35169f" class="outline-3">
+<h3 id="orgd35169f"><span class="section-number-3">2.1</span> Intialize packages</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>Initialize Melpa</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(require 'package)
+(setq package-archives '(("elpa"   . "https://elpa.gnu.org/packages/")
+			 ("melpa"  . "https://melpa.org/packages/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
+			 ("org" . "https://orgmode.org/elpa/")))
+
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+;; Initialize use-package on non-linux platforms
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><p>
+Install local packages manually
+</p>
+
+<p>
+TODO
+</p>
+<ul class="org-ul">
+<li>Certain packages are needed to be installed maually, e.g tomelr</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgab3d107" class="outline-3">
+<h3 id="orgab3d107"><span class="section-number-3">2.2</span> Appearence</h3>
+<div class="outline-text-3" id="text-2-2">
+</div>
+<div id="outline-container-orgdbbf43f" class="outline-4">
+<h4 id="orgdbbf43f"><span class="section-number-4">2.2.1</span> Themes</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+Doom Emacs has consolidated a bunch of nice looking themes, we would
+like to get them all.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package doom-themes
+:ensure t
+:config
+;; Global settings (defaults)
+(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+      doom-themes-enable-italic t) ; if nil, italics is universally disabled
+(load-theme 'doom-old-hope t)
+
+;; Enable flashing mode-line on errors
+(doom-themes-visual-bell-config)
+;; Enable custom neotree theme (all-the-icons must be installed!)
+(doom-themes-neotree-config)
+;; or for treemacs users
+(setq doom-themes-treemacs-theme "doom-solarized-light") ; use "doom-colors" for less minimal icon theme
+(doom-themes-treemacs-config)
+;; Corrects (and improves) org-mode's native fontification.
+(doom-themes-org-config))
+
+</pre>
+</div>
+
+
+<p>
+I love how Org files look with poet theme, so it's a must.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package poet-theme)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5f19b71" class="outline-4">
+<h4 id="org5f19b71"><span class="section-number-4">2.2.2</span> Dashboard</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<p>
+We would need emacs-dashboard package for an easier configuration.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package dashboard
+  :config
+  (setq dashboard-center-content t)
+  (setq dashboard-show-shortcuts nil)
+  :init
+  (dashboard-setup-startup-hook))
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6da4065" class="outline-4">
+<h4 id="org6da4065"><span class="section-number-4">2.2.3</span> Modeline</h4>
+<div class="outline-text-4" id="text-2-2-3">
+<p>
+A custom modeline until we figure out the issue with doom-modeline.
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(set-face-attribute 'mode-line nil
+		    :background "#353644"
+		    :foreground "white"
+		    :box '(:line-width 8 :color "#353644")
+		    :overline nil
+		    :underline nil)
+
+(set-face-attribute 'mode-line-inactive nil
+		    :background "#565063"
+		    :foreground "white"
+		    :box '(:line-width 8 :color "#565063")
+		    :overline nil
+		    :underline nil)
+</pre>
+</div>
+
+<p>
+Show the git branch on the mode-line
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">;; (defun vc-branch ()
+;;   (let ((backend (vc-backend buffer-file-name)))
+;;     (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))))
+;; (vc-branch)
+</pre>
+</div>
+
+
+
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package all-the-icons
+  :ensure t)
+
+;; (use-package doom-modeline
+;; :init (doom-modeline-mode 1)
+;; :custom ((doom-modeline-height 30)))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1b90451" class="outline-3">
+<h3 id="org1b90451"><span class="section-number-3">2.3</span> Evil Mode</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>Since I have been using VI for quite sometime now, I don't want to
+train myself to learn Emacs</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-elisp">;; package: evil
+;; First thing first. Be EVIL!
+(use-package evil
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  :config
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+  ;; Use visual line motions even outside of visual-line-mode buffers
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal))
+
+
+;; package: evil-collection
+;; Now be EVIL on every mode
+;; TODO: Doesn't work
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1f1bd56" class="outline-3">
+<h3 id="org1f1bd56"><span class="section-number-3">2.4</span> Org Mode</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Org mode is probably the best thing happened to the mankind. j/k
+By default Org mode doesn't look very nice, at least not as a word
+processor. Our goal is to make it look like one.
+</p>
+
+<p>
+Enable indentation(org-indent-mode). To control individual files, use
+<code>#+STARTUP: indent</code> or <code>#+STARTUP: noindent</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(setq org-startup-indented t)
+</pre>
+</div>
+
+<p>
+Set a conservative indentation, By default the value is set to 2
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(setq org-indent-indentation-per-level 2)
+</pre>
+</div>
+
+<p>
+Emacs shouldn't add whitespace to indent text.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(setq org-adapt-indentation nil)
+</pre>
+</div>
+
+
+<p>
+There are a couple of nice blog posts on beautifying the Org mode,
+but I plan to go with the "org-modern" package. It looks nice enough for
+now. However, Certain features don't work wit org-indent-mode, which I
+have turned on.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package org-modern
+  :config
+  (global-org-modern-mode))
+
+;; For shorthand completions, lile &lt;s-TAB for source code blocks.
+(require'org-tempo)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org082da31" class="outline-4">
+<h4 id="org082da31"><span class="section-number-4">2.4.1</span> Org TOC</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+Create table of contents for Org files.
+Usage:
+</p>
+<ul class="org-ul">
+<li>Add table of content tags such as <code>TOC_2</code> and <code>TOC_2_gh</code></li>
+<li>While at the TOC entry call <code>M-x org-open-at-point</code> (<code>C-c C-o</code>) to</li>
+</ul>
+<p>
+jump to the corresponding heading.
+</p>
+
+<p>
+ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package toc-org
+  :hook (org-mode . toc-org-enable)
+  :config
+  (setq toc-org-hrefify-default "gh"))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf2987b1" class="outline-4">
+<h4 id="orgf2987b1"><span class="section-number-4">2.4.2</span> Org Babel</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+Active Babel languages
+</p>
+
+<p>
+;; TODO
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '((C . t) (elisp . t) (python . t) ))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb0fe176" class="outline-4">
+<h4 id="orgb0fe176"><span class="section-number-4">2.4.3</span> Org Hugo(ox-hugo)</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+ox-hugo helps me manage my website using org files.
+</p>
+
+<p>
+I couldn't install <code>tomelr</code> package, using <code>use-package</code>, so had to
+install it manually.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+(use-package ox-hugo
+  :ensure t   ;Auto-install the package from Melpa
+  :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
+  :after ox)    
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7a4825c" class="outline-4">
+<h4 id="org7a4825c"><span class="section-number-4">2.4.4</span> Org Roam</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<p>
+A sophisticated note taking mechanishm. Essentially a clone of
+<a href="https://roamresearch.com/">Roam-research</a> running on Emacs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package org-roam
+  :ensure t
+  :pin melpa-stable)
+</pre>
+</div>
+
+<p>
+Set the notes directory
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(setq org-roam-directory "~/dev/notes/org-roam")
+</pre>
+</div>
+</div>
+
+<ol class="org-ol">
+<li><a id="org196c7b1"></a>Full text search with Deft<br />
+<div class="outline-text-5" id="text-2-4-4-1">
+<p>
+Deft is an Emacs mode for quickly browsing and filtering plain text
+notes.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package deft
+  :after org
+  :bind
+  ("C-c n d" . deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory org-roam-directory))
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orge4d6ec3" class="outline-3">
+<h3 id="orge4d6ec3"><span class="section-number-3">2.5</span> Projectile</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Projectile is instrumental in managing different projects and working
+on them.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+(use-package counsel-projectile
+  :after projectile
+  :config (counsel-projectile-mode))
+
+(counsel-projectile-mode)
+
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind (:map projectile-mode-map
+	      ("C-c p" . projectile-command-map))
+  :init
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/dev")
+    (setq projectile-project-search-path '("~/dev"))
+    (setq projectile-project-search-path '("~/rocket")))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgef50239" class="outline-3">
+<h3 id="orgef50239"><span class="section-number-3">2.6</span> Completions(ivy/counsel/swiper)</h3>
+<div class="outline-text-3" id="text-2-6">
+<div class="org-src-container">
+<pre class="src src-elisp">;; package: ivy/counsel/swiper
+;; Set up Ivy for better completions
+;; Installing counsel will install ivy and swiper.
+(use-package counsel
+  :diminish
+  :bind (("C-s" . swiper)
+	 ;; Counsel stuff
+	 ("M-x" . counsel-M-x)
+	 ("M-x" . counsel-M-x)
+	 ("s-x" . counsel-M-x) ;; Super-X should do M-X
+	 ("C-x b" . counsel-ibuffer)
+	 ("C-x C-f" . counsel-find-file)
+	 :map minibuffer-local-map
+	 ("C-x C-r" . 'counsel-minibuffer-history)
+	 :map ivy-minibuffer-map
+	 ;; ("TAB" . ivy-alt-done)
+	 ;; ("TAB" . ivy-partial-or-done)
+	 ("C-f" . ivy-alt-done)
+	 ("C-l" . ivy-alt-done)
+	 ("C-j" . ivy-next-line)
+	 ("C-k" . ivy-previous-line)
+	 :map ivy-switch-buffer-map
+	 ("C-k" . ivy-previous-line)
+	 ("C-l" . ivy-done)
+	 ("C-d" . ivy-switch-buffer-kill)
+	 :map ivy-reverse-i-search-map
+	 ("C-k" . ivy-previous-line)
+	 ("C-d" . ivy-reverse-i-search-kill))
+  :init
+  (ivy-mode 1))
+
+(use-package counsel
+  :bind (("C-M-j" . 'counsel-switch-buffer)
+	 :map minibuffer-local-map
+	 ("C-r" . 'counsel-minibuffer-history))
+  :custom
+  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+  :config
+  (counsel-mode 1))
+
+(use-package ivy-prescient
+  :after counsel
+  :custom
+  (ivy-prescient-enable-filtering nil)
+  :config
+  ;; Uncomment the following line to have sorting remembered across sessions!
+					;(prescient-persist-mode 1)
+
+
+  (ivy-prescient-mode 1))
+
+;; Remove the "^" character from counsel-M-X 
+(setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "") 
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-orgdc85868" class="outline-4">
+<h4 id="orgdc85868"><span class="section-number-4">2.6.1</span> Ivy rich</h4>
+<div class="outline-text-4" id="text-2-6-1">
+<p>
+A more friendly interface for Ivy.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">;; package: ivy-rich
+;; More friendly interface (display transformer) for ivy.
+(use-package ivy-rich
+  :init
+  (ivy-rich-mode 1))
+
+;; All the icons + Ivy
+(use-package all-the-icons-ivy-rich
+  :ensure t
+  :init (all-the-icons-ivy-rich-mode 1))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org25e94d3" class="outline-4">
+<h4 id="org25e94d3"><span class="section-number-4">2.6.2</span> Hydra</h4>
+<div class="outline-text-4" id="text-2-6-2">
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package hydra
+  :defer t)
+
+(defhydra hydra-text-scale (:timeout 4)
+  "scale text"
+  ("j" text-scale-increase "in")
+  ("k" text-scale-decrease "out")
+  ("f" nil "finished" :exit t))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org97ac3cc" class="outline-4">
+<h4 id="org97ac3cc"><span class="section-number-4">2.6.3</span> Which-key</h4>
+<div class="outline-text-4" id="text-2-6-3">
+<p>
+It's a minor mode that shows kebindings for an incomplete command.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package which-key
+  :init
+  (which-key-mode))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga424794" class="outline-3">
+<h3 id="orga424794"><span class="section-number-3">2.7</span> Source Control</h3>
+<div class="outline-text-3" id="text-2-7">
+</div>
+<div id="outline-container-orgc0f5d95" class="outline-4">
+<h4 id="orgc0f5d95"><span class="section-number-4">2.7.1</span> Magit</h4>
+<div class="outline-text-4" id="text-2-7-1">
+<p>
+The magical Git client for emacs. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package magit
+  :ensure t
+  :pin melpa-stable)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orga1b12bf" class="outline-2">
+<h2 id="orga1b12bf"><span class="section-number-2">3</span> System configuration</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org2a0320e" class="outline-3">
+<h3 id="org2a0320e"><span class="section-number-3">3.1</span> Emacs environment variables</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Ensure Emacs env variables match system variables.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package exec-path-from-shell
+  :ensure t)
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org03c8c8a" class="outline-2">
+<h2 id="org03c8c8a"><span class="section-number-2">4</span> KeyBindings</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Custom keybindings for emacs. This section is expected to be edited
+frequently, as my requirements evolve.
+</p>
+</div>
+
+<div id="outline-container-org2f4a5c8" class="outline-3">
+<h3 id="org2f4a5c8"><span class="section-number-3">4.1</span> Global constants</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-elisp">
+(defconst t-version "0.0.1-a0"
+  "Current version of the tmacs.")
+
+
+;; DEPRECATED
+(defconst IS-MAC      (eq system-type 'darwin))
+(defconst IS-LINUX    (eq system-type 'gnu/linux))
+(defconst IS-WINDOWS  (memq system-type '(cygwin windows-nt ms-dos)))
+(defconst IS-BSD      (memq system-type '(darwin berkeley-unix gnu/kfreebsd)))
+
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf97473c" class="outline-3">
+<h3 id="orgf97473c"><span class="section-number-3">4.2</span> A leader</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Both Doom and Spacemacs use a leader key as a prefix to many commands.
+</p>
+
+<p>
+Inspiration: <a href="https://github.com/doomemacs/doomemacs/blob/e0385052a8004ec54a402c27357b1352840eb798/lisp/doom-keybinds.el">Doom keybindings</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+(defvar t-leader-key "SPC"
+"The leader prefix key for Evil users.")
+
+</pre>
+</div>
+
+<p>
+Mac <code>command</code> should act like <code>super</code>
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-elisp">;; (cond
+;;  (IS-MAC
+;;   ;; mac-* variables are used by the special emacs-mac build of Emacs by
+;;   ;; Yamamoto Mitsuharu, while other builds use ns-*.
+;;   (setq mac-command-modifier      'super
+;; 	ns-command-modifier       'super
+;; 	mac-option-modifier       'meta
+;; 	ns-option-modifier        'meta
+;; 	;; Free up the right option for character composition
+;; 	mac-right-option-modifier 'none
+;; 	ns-right-option-modifier  'none))
+;;  (IS-WINDOWS
+;;   (setq w32-lwindow-modifier 'super
+;; 	w32-rwindow-modifier 'super)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org00c067d" class="outline-3">
+<h3 id="org00c067d"><span class="section-number-3">4.3</span> Random goodness</h3>
+<div class="outline-text-3" id="text-4-3">
+<ul class="org-ul">
+<li><p>
+<code>ESC</code> Quit prompts
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(global-set-key  (kbd "&lt;escape&gt;") 'keyboard-escape-quit)
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd316a87" class="outline-2">
+<h2 id="orgd316a87"><span class="section-number-2">5</span> Programming stuff</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+This section has configurations for various programming language modes.
+</p>
+</div>
+
+<div id="outline-container-org1716277" class="outline-3">
+<h3 id="org1716277"><span class="section-number-3">5.1</span> LSP mode</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Language Server Protocol can provide IDE like support for multiple
+programming languages on Emacs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+	 (XXX-mode . lsp)
+	 ;; if you want which-key integration
+	 (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+;; lsp-ui
+(use-package lsp-ui :commands lsp-ui-mode)
+
+;; lsp-ivy bindings
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf13f815" class="outline-3">
+<h3 id="orgf13f815"><span class="section-number-3">5.2</span> Yaml</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Emacs should automatically switch on to yaml-mode while editing <code>yml</code>
+or <code>yaml</code> files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package yaml-mode
+:ensure t
+:init
+(push '("\\.yaml$" . yaml-mode) auto-mode-alist))
+
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org8b9da33" class="outline-3">
+<h3 id="org8b9da33"><span class="section-number-3">5.3</span> Go</h3>
+<div class="outline-text-3" id="text-5-3">
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package go-mode
+  :ensure t
+  :init
+  (push '("\\.go\\'" . go-mode) auto-mode-alist))
+</pre>
+</div>
+
+<p>
+Lsp hooks for Go
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+(defun lsp-go-install-save-hooks ()
+  ;; Format before save
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  ;; Sort imports before save
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+;; Start lsp mode
+(add-hook 'go-mode-hook #'lsp-deferred)
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Docker image runner</p>
+<p class="date">Created: 2022-10-08 Sat 16:54</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
