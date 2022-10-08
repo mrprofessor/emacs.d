@@ -1,5 +1,7 @@
 #+TITLE: Emacs Literate Config
 #+EXPORT_FILE_NAME: docs/index.html
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="main.css" />
+#+HTML_HEAD: <script src="main.js"></script>
 #+OPTIONS: toc:5
 
 
