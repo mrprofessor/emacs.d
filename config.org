@@ -1,7 +1,7 @@
 #+TITLE: The Emacs Operating System
 #+EXPORT_FILE_NAME: docs/index.html
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
-#+OPTIONS: toc:3 author:nil date:nil html-postamble:nil html:nil result:nil
+#+OPTIONS: toc:3 author:nil date:nil html-postamble:nil result:nil
 
 ** Table of contents                                      :TOC_5_gh:noexport:
 :PROPERTIES:

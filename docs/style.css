@@ -271,6 +271,7 @@ pre.example {
 
 pre.src {
     padding: 1.3125rem;
+    overflow: auto;
 }
 
 pre.src:before {
