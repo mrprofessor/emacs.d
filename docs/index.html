@@ -3,12 +3,11 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-10-08 Sat 19:42 -->
+<!-- 2022-10-10 Mon 00:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Emacs Literate Config</title>
+<title>The Emacs Operating System</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Docker image runner" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -193,8 +192,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="main.css" />
-<script src="main.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -244,84 +242,85 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Emacs Literate Config</h1>
+<h1 class="title">The Emacs Operating System</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgebab0ec">1. Initialization</a>
+<li><a href="#initialization">1. Initialization</a>
 <ul>
-<li><a href="#orgf34ef64">1.1. Basics</a></li>
-<li><a href="#org86412d8">1.2. Emacs Backups</a></li>
+<li><a href="#basics">1.1. Basics</a></li>
+<li><a href="#emacs-backups">1.2. Emacs Backups</a></li>
 </ul>
 </li>
-<li><a href="#orgaea8c07">2. Packages</a>
+<li><a href="#packages">2. Packages</a>
 <ul>
-<li><a href="#org7564351">2.1. Intialize packages</a></li>
-<li><a href="#org3f482da">2.2. Appearence</a>
+<li><a href="#intialize-packages">2.1. Intialize packages</a></li>
+<li><a href="#appearence">2.2. Appearence</a>
 <ul>
-<li><a href="#orgdfefe8f">2.2.1. Themes</a></li>
-<li><a href="#orge046bb3">2.2.2. Dashboard</a></li>
-<li><a href="#orgd1ada09">2.2.3. Modeline</a></li>
+<li><a href="#org8778a4f">2.2.1. Themes</a></li>
+<li><a href="#org2ac60a2">2.2.2. Dashboard</a></li>
+<li><a href="#org9bc6822">2.2.3. Modeline</a></li>
 </ul>
 </li>
-<li><a href="#org0e8bb7b">2.3. Evil Mode</a></li>
-<li><a href="#org638d957">2.4. Org Mode</a>
+<li><a href="#evil-mode">2.3. Evil Mode</a></li>
+<li><a href="#org-mode">2.4. Org Mode</a>
 <ul>
-<li><a href="#org6f0e266">2.4.1. Org TOC</a></li>
-<li><a href="#org95810f7">2.4.2. Org Babel</a></li>
-<li><a href="#org8c864f8">2.4.3. Org Hugo(ox-hugo)</a></li>
-<li><a href="#org184dd58">2.4.4. Org Roam</a></li>
+<li><a href="#orgc680460">2.4.1. Org TOC</a></li>
+<li><a href="#org58cd6ef">2.4.2. Org Babel</a></li>
+<li><a href="#org92c0df1">2.4.3. Org Hugo(ox-hugo)</a></li>
+<li><a href="#org20c5992">2.4.4. Org Roam</a></li>
+<li><a href="#org0ff6891">2.4.5. Org export settings(htmlize)</a></li>
+<li><a href="#org13a63d1">2.4.6. Human readable IDs</a></li>
 </ul>
 </li>
-<li><a href="#orgb18d966">2.5. Projectile</a></li>
-<li><a href="#org508f1bd">2.6. Completions(ivy/counsel/swiper)</a>
+<li><a href="#projectile">2.5. Projectile</a></li>
+<li><a href="#source-control">2.6. Source Control</a>
 <ul>
-<li><a href="#org808bdf5">2.6.1. Ivy rich</a></li>
-<li><a href="#orgb657f12">2.6.2. Hydra</a></li>
-<li><a href="#org7fa6e4e">2.6.3. Which-key</a></li>
+<li><a href="#org002b912">2.6.1. Magit</a></li>
 </ul>
 </li>
-<li><a href="#org9166d82">2.7. Source Control</a>
+<li><a href="#completions">2.7. Completions</a>
 <ul>
-<li><a href="#org7e65803">2.7.1. Magit</a></li>
+<li><a href="#org8e5a5b7">2.7.1. Ivy rich</a></li>
+<li><a href="#org7830e7f">2.7.2. Hydra</a></li>
+<li><a href="#orgbb4f09d">2.7.3. Which-key</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org4b50695">3. System configuration</a>
+<li><a href="#system-configuration">3. System configuration</a>
 <ul>
-<li><a href="#org1f0d8f1">3.1. Emacs environment variables</a></li>
+<li><a href="#emacs-environment-variables">3.1. Emacs environment variables</a></li>
 </ul>
 </li>
-<li><a href="#orga86e714">4. KeyBindings</a>
+<li><a href="#keybindings">4. KeyBindings</a>
 <ul>
-<li><a href="#org8fbda5b">4.1. Global constants</a></li>
-<li><a href="#orgbbc9068">4.2. A leader</a></li>
-<li><a href="#org625e473">4.3. Random goodness</a></li>
+<li><a href="#global-constants">4.1. Global constants</a></li>
+<li><a href="#a-leader">4.2. A leader</a></li>
+<li><a href="#random-goodness">4.3. Random goodness</a></li>
 </ul>
 </li>
-<li><a href="#org2389c04">5. Programming stuff</a>
+<li><a href="#programming-stuff">5. Programming stuff</a>
 <ul>
-<li><a href="#org4dd1374">5.1. LSP mode</a></li>
-<li><a href="#orgeb40ae8">5.2. Yaml</a></li>
-<li><a href="#org654e2a9">5.3. Go</a></li>
+<li><a href="#lsp-mode">5.1. LSP mode</a></li>
+<li><a href="#yaml">5.2. Yaml</a></li>
+<li><a href="#go">5.3. Go</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-
-<div id="outline-container-orgebab0ec" class="outline-2">
-<h2 id="orgebab0ec"><span class="section-number-2">1</span> Initialization</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org3bdcfef" class="outline-2">
+<h2 id="initialization"><span class="section-number-2">1</span> Initialization</h2>
+<div class="outline-text-2" id="text-initialization">
 </div>
-<div id="outline-container-orgf34ef64" class="outline-3">
-<h3 id="orgf34ef64"><span class="section-number-3">1.1</span> Basics</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-org80f4287" class="outline-3">
+<h3 id="basics"><span class="section-number-3">1.1</span> Basics</h3>
+<div class="outline-text-3" id="text-basics">
 <ul class="org-ul">
-<li>Menu and toobars</li>
+<li>Menu and toolbars</li>
 </ul>
 
 <div class="org-src-container">
@@ -332,6 +331,7 @@ for the JavaScript code in this tag.
 (menu-bar-mode -1)                    ; Go full spartan
 </pre>
 </div>
+
 
 <ul class="org-ul">
 <li>Scroll Emacs</li>
@@ -412,9 +412,9 @@ Display a vertical line on 80th character
 </div>
 </div>
 
-<div id="outline-container-org86412d8" class="outline-3">
-<h3 id="org86412d8"><span class="section-number-3">1.2</span> Emacs Backups</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-orgb8f6d50" class="outline-3">
+<h3 id="emacs-backups"><span class="section-number-3">1.2</span> Emacs Backups</h3>
+<div class="outline-text-3" id="text-emacs-backups">
 <p>
 Backup in one place. flat, no tree structure
 </p>
@@ -426,13 +426,13 @@ Backup in one place. flat, no tree structure
 </div>
 </div>
 
-<div id="outline-container-orgaea8c07" class="outline-2">
-<h2 id="orgaea8c07"><span class="section-number-2">2</span> Packages</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orgee9ca5d" class="outline-2">
+<h2 id="packages"><span class="section-number-2">2</span> Packages</h2>
+<div class="outline-text-2" id="text-packages">
 </div>
-<div id="outline-container-org7564351" class="outline-3">
-<h3 id="org7564351"><span class="section-number-3">2.1</span> Intialize packages</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-org9ca6d1a" class="outline-3">
+<h3 id="intialize-packages"><span class="section-number-3">2.1</span> Intialize packages</h3>
+<div class="outline-text-3" id="text-intialize-packages">
 <ul class="org-ul">
 <li>Initialize Melpa</li>
 </ul>
@@ -472,12 +472,13 @@ TODO
 </div>
 </div>
 
-<div id="outline-container-org3f482da" class="outline-3">
-<h3 id="org3f482da"><span class="section-number-3">2.2</span> Appearence</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-org7bef330" class="outline-3">
+<h3 id="appearence"><span class="section-number-3">2.2</span> Appearence</h3>
+<div class="outline-text-3" id="text-appearence">
 </div>
-<div id="outline-container-orgdfefe8f" class="outline-4">
-<h4 id="orgdfefe8f"><span class="section-number-4">2.2.1</span> Themes</h4>
+
+<div id="outline-container-org8778a4f" class="outline-4">
+<h4 id="org8778a4f"><span class="section-number-4">2.2.1</span> Themes</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Doom Emacs has consolidated a bunch of nice looking themes, we would
@@ -518,8 +519,8 @@ I love how Org files look with poet theme, so it's a must.
 </div>
 </div>
 
-<div id="outline-container-orge046bb3" class="outline-4">
-<h4 id="orge046bb3"><span class="section-number-4">2.2.2</span> Dashboard</h4>
+<div id="outline-container-org2ac60a2" class="outline-4">
+<h4 id="org2ac60a2"><span class="section-number-4">2.2.2</span> Dashboard</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
 We would need emacs-dashboard package for an easier configuration.
@@ -538,8 +539,8 @@ We would need emacs-dashboard package for an easier configuration.
 </div>
 </div>
 
-<div id="outline-container-orgd1ada09" class="outline-4">
-<h4 id="orgd1ada09"><span class="section-number-4">2.2.3</span> Modeline</h4>
+<div id="outline-container-org9bc6822" class="outline-4">
+<h4 id="org9bc6822"><span class="section-number-4">2.2.3</span> Modeline</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 A custom modeline until we figure out the issue with doom-modeline.
@@ -589,9 +590,9 @@ Show the git branch on the mode-line
 </div>
 </div>
 
-<div id="outline-container-org0e8bb7b" class="outline-3">
-<h3 id="org0e8bb7b"><span class="section-number-3">2.3</span> Evil Mode</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-org0cff137" class="outline-3">
+<h3 id="evil-mode"><span class="section-number-3">2.3</span> Evil Mode</h3>
+<div class="outline-text-3" id="text-evil-mode">
 <ul class="org-ul">
 <li>Since I have been using VI for quite sometime now, I don't want to
 train myself to learn Emacs</li>
@@ -629,12 +630,24 @@ train myself to learn Emacs</li>
   (evil-collection-init))
 </pre>
 </div>
+
+<p>
+Unbind certain keys.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(with-eval-after-load 'evil-maps
+  (define-key evil-motion-state-map (kbd "SPC") nil)
+  (define-key evil-motion-state-map (kbd "RET") nil)
+  (define-key evil-motion-state-map (kbd "TAB") nil))
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org638d957" class="outline-3">
-<h3 id="org638d957"><span class="section-number-3">2.4</span> Org Mode</h3>
-<div class="outline-text-3" id="text-2-4">
+<div id="outline-container-org3067249" class="outline-3">
+<h3 id="org-mode"><span class="section-number-3">2.4</span> Org Mode</h3>
+<div class="outline-text-3" id="text-org-mode">
 <p>
 Org mode is probably the best thing happened to the mankind. j/k
 By default Org mode doesn't look very nice, at least not as a word
@@ -669,6 +682,15 @@ Emacs shouldn't add whitespace to indent text.
 </pre>
 </div>
 
+<p>
+RETURN will follow links in org mode.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(setq org-return-follows-link  t)
+</pre>
+</div>
+
 
 <p>
 There are a couple of nice blog posts on beautifying the Org mode,
@@ -688,8 +710,8 @@ have turned on.
 </div>
 </div>
 
-<div id="outline-container-org6f0e266" class="outline-4">
-<h4 id="org6f0e266"><span class="section-number-4">2.4.1</span> Org TOC</h4>
+<div id="outline-container-orgc680460" class="outline-4">
+<h4 id="orgc680460"><span class="section-number-4">2.4.1</span> Org TOC</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <p>
 Create table of contents for Org files.
@@ -716,8 +738,8 @@ ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
 </div>
 </div>
 
-<div id="outline-container-org95810f7" class="outline-4">
-<h4 id="org95810f7"><span class="section-number-4">2.4.2</span> Org Babel</h4>
+<div id="outline-container-org58cd6ef" class="outline-4">
+<h4 id="org58cd6ef"><span class="section-number-4">2.4.2</span> Org Babel</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 Active Babel languages
@@ -736,8 +758,8 @@ Active Babel languages
 </div>
 </div>
 
-<div id="outline-container-org8c864f8" class="outline-4">
-<h4 id="org8c864f8"><span class="section-number-4">2.4.3</span> Org Hugo(ox-hugo)</h4>
+<div id="outline-container-org92c0df1" class="outline-4">
+<h4 id="org92c0df1"><span class="section-number-4">2.4.3</span> Org Hugo(ox-hugo)</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
 ox-hugo helps me manage my website using org files.
@@ -760,8 +782,8 @@ install it manually.
 </div>
 </div>
 
-<div id="outline-container-org184dd58" class="outline-4">
-<h4 id="org184dd58"><span class="section-number-4">2.4.4</span> Org Roam</h4>
+<div id="outline-container-org20c5992" class="outline-4">
+<h4 id="org20c5992"><span class="section-number-4">2.4.4</span> Org Roam</h4>
 <div class="outline-text-4" id="text-2-4-4">
 <p>
 A sophisticated note taking mechanishm. Essentially a clone of
@@ -786,7 +808,7 @@ Set the notes directory
 </div>
 
 <ol class="org-ol">
-<li><a id="org34dae38"></a>Full text search with Deft<br />
+<li><a id="orge5f6d46"></a>Full text search with Deft<br />
 <div class="outline-text-5" id="text-2-4-4-1">
 <p>
 Deft is an Emacs mode for quickly browsing and filtering plain text
@@ -809,11 +831,106 @@ notes.
 </li>
 </ol>
 </div>
+
+<div id="outline-container-org0ff6891" class="outline-4">
+<h4 id="org0ff6891"><span class="section-number-4">2.4.5</span> Org export settings(htmlize)</h4>
+<div class="outline-text-4" id="text-2-4-5">
+<p>
+Org mode usually ships with this package, However in certain cases you
+might need to install it manually.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+(use-package htmlize
+  :ensure t
+  :init
+  (setq org-html-htmlize-output-type 'css)
+  (setq org-html-htmlize-font-prefix "org-"))
+
+</pre>
+</div>
+</div>
 </div>
 
-<div id="outline-container-orgb18d966" class="outline-3">
-<h3 id="orgb18d966"><span class="section-number-3">2.5</span> Projectile</h3>
-<div class="outline-text-3" id="text-2-5">
+
+<div id="outline-container-org13a63d1" class="outline-4">
+<h4 id="org13a63d1"><span class="section-number-4">2.4.6</span> Human readable IDs</h4>
+<div class="outline-text-4" id="text-2-4-6">
+<p>
+While exporting html, <code>org-html-export-to-html</code>  function generates
+<code>IDs</code> for each header, so that it can get linked to from the Table of
+contents. However, the default generated IDs aren't human-redable.
+</p>
+
+<p>
+Also the default generated IDs can change every time you generate a new
+version, which can be annoying while hosting a public website.
+</p>
+
+<p>
+I have found some hacks on the internet and <a href="https://amitp.blogspot.com/2021/04/automatically-generate-ids-for-emacs.html">Amit Patel's</a> implementation
+seemed like the simplest.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+;; The only dependency
+(use-package s
+  :ensure t)
+
+(defun t/org-generate-custom-ids ()
+  "Generate CUSTOM_ID for any headings that are missing one"
+  (let ((existing-ids (org-map-entries 
+		       (lambda () (org-entry-get nil "CUSTOM_ID")))))
+    (org-map-entries
+     (lambda ()
+       (let* ((custom-id (org-entry-get nil "CUSTOM_ID"))
+	      (heading (org-heading-components))
+	      (level (nth 0 heading))
+	      (todo (nth 2 heading))
+	      (headline (nth 4 heading))
+	      (slug (t/title-to-filename headline))
+	      (duplicate-id (member slug existing-ids)))
+	 (when (and (not custom-id)
+		    (&lt; level 4)
+		    (not todo)
+		    (not duplicate-id))
+	   (message "Adding entry %s to %s" slug headline)
+	   (org-entry-put nil "CUSTOM_ID" slug)))))))
+
+(defun t/title-to-filename (title)
+  "Convert TITLE to a reasonable filename."
+  ;; Based on the slug logic in org-roam, but org-roam also uses a
+  ;; timestamp, and I use only the slug. BTW "slug" comes from
+  ;; &lt;https://en.wikipedia.org/wiki/Clean_URL#Slug&gt;
+  (setq title (s-downcase title))
+  (setq title (s-replace-regexp "[^a-zA-Z0-9]+" "-" title))
+  (setq title (s-replace-regexp "-+" "-" title))
+  (setq title (s-replace-regexp "^-" "" title))
+  (setq title (s-replace-regexp "-$" "" title))
+  title)
+</pre>
+</div>
+
+
+<p>
+Run the function on save, while in org-mode.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(add-hook 'after-save-hook 't/org-generate-custom-ids)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org9a108fe" class="outline-3">
+<h3 id="projectile"><span class="section-number-3">2.5</span> Projectile</h3>
+<div class="outline-text-3" id="text-projectile">
 <p>
 Projectile is instrumental in managing different projects and working
 on them.
@@ -846,9 +963,32 @@ on them.
 </div>
 
 
-<div id="outline-container-org508f1bd" class="outline-3">
-<h3 id="org508f1bd"><span class="section-number-3">2.6</span> Completions(ivy/counsel/swiper)</h3>
-<div class="outline-text-3" id="text-2-6">
+<div id="outline-container-orga3611b4" class="outline-3">
+<h3 id="source-control"><span class="section-number-3">2.6</span> Source Control</h3>
+<div class="outline-text-3" id="text-source-control">
+</div>
+
+<div id="outline-container-org002b912" class="outline-4">
+<h4 id="org002b912"><span class="section-number-4">2.6.1</span> Magit</h4>
+<div class="outline-text-4" id="text-2-6-1">
+<p>
+The magical Git client for emacs. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(use-package magit
+  :ensure t
+  :pin melpa-stable)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org402a0e3" class="outline-3">
+<h3 id="completions"><span class="section-number-3">2.7</span> Completions</h3>
+<div class="outline-text-3" id="text-completions">
 <div class="org-src-container">
 <pre class="src src-elisp">;; package: ivy/counsel/swiper
 ;; Set up Ivy for better completions
@@ -908,9 +1048,9 @@ on them.
 </div>
 
 
-<div id="outline-container-org808bdf5" class="outline-4">
-<h4 id="org808bdf5"><span class="section-number-4">2.6.1</span> Ivy rich</h4>
-<div class="outline-text-4" id="text-2-6-1">
+<div id="outline-container-org8e5a5b7" class="outline-4">
+<h4 id="org8e5a5b7"><span class="section-number-4">2.7.1</span> Ivy rich</h4>
+<div class="outline-text-4" id="text-2-7-1">
 <p>
 A more friendly interface for Ivy.
 </p>
@@ -931,9 +1071,9 @@ A more friendly interface for Ivy.
 </div>
 </div>
 
-<div id="outline-container-orgb657f12" class="outline-4">
-<h4 id="orgb657f12"><span class="section-number-4">2.6.2</span> Hydra</h4>
-<div class="outline-text-4" id="text-2-6-2">
+<div id="outline-container-org7830e7f" class="outline-4">
+<h4 id="org7830e7f"><span class="section-number-4">2.7.2</span> Hydra</h4>
+<div class="outline-text-4" id="text-2-7-2">
 <div class="org-src-container">
 <pre class="src src-elisp">(use-package hydra
   :defer t)
@@ -948,9 +1088,9 @@ A more friendly interface for Ivy.
 </div>
 </div>
 
-<div id="outline-container-org7fa6e4e" class="outline-4">
-<h4 id="org7fa6e4e"><span class="section-number-4">2.6.3</span> Which-key</h4>
-<div class="outline-text-4" id="text-2-6-3">
+<div id="outline-container-orgbb4f09d" class="outline-4">
+<h4 id="orgbb4f09d"><span class="section-number-4">2.7.3</span> Which-key</h4>
+<div class="outline-text-4" id="text-2-7-3">
 <p>
 It's a minor mode that shows kebindings for an incomplete command.
 </p>
@@ -964,35 +1104,16 @@ It's a minor mode that shows kebindings for an incomplete command.
 </div>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org9166d82" class="outline-3">
-<h3 id="org9166d82"><span class="section-number-3">2.7</span> Source Control</h3>
-<div class="outline-text-3" id="text-2-7">
+<div id="outline-container-org7e05feb" class="outline-2">
+<h2 id="system-configuration"><span class="section-number-2">3</span> System configuration</h2>
+<div class="outline-text-2" id="text-system-configuration">
 </div>
-<div id="outline-container-org7e65803" class="outline-4">
-<h4 id="org7e65803"><span class="section-number-4">2.7.1</span> Magit</h4>
-<div class="outline-text-4" id="text-2-7-1">
-<p>
-The magical Git client for emacs. 
-</p>
 
-<div class="org-src-container">
-<pre class="src src-elisp">(use-package magit
-  :ensure t
-  :pin melpa-stable)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-org4b50695" class="outline-2">
-<h2 id="org4b50695"><span class="section-number-2">3</span> System configuration</h2>
-<div class="outline-text-2" id="text-3">
-</div>
-<div id="outline-container-org1f0d8f1" class="outline-3">
-<h3 id="org1f0d8f1"><span class="section-number-3">3.1</span> Emacs environment variables</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-org6fa69a0" class="outline-3">
+<h3 id="emacs-environment-variables"><span class="section-number-3">3.1</span> Emacs environment variables</h3>
+<div class="outline-text-3" id="text-emacs-environment-variables">
 <p>
 Ensure Emacs env variables match system variables.
 </p>
@@ -1009,18 +1130,18 @@ Ensure Emacs env variables match system variables.
 </div>
 </div>
 
-<div id="outline-container-orga86e714" class="outline-2">
-<h2 id="orga86e714"><span class="section-number-2">4</span> KeyBindings</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org88e3a9b" class="outline-2">
+<h2 id="keybindings"><span class="section-number-2">4</span> KeyBindings</h2>
+<div class="outline-text-2" id="text-keybindings">
 <p>
 Custom keybindings for emacs. This section is expected to be edited
 frequently, as my requirements evolve.
 </p>
 </div>
 
-<div id="outline-container-org8fbda5b" class="outline-3">
-<h3 id="org8fbda5b"><span class="section-number-3">4.1</span> Global constants</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-orge045f60" class="outline-3">
+<h3 id="global-constants"><span class="section-number-3">4.1</span> Global constants</h3>
+<div class="outline-text-3" id="text-global-constants">
 <div class="org-src-container">
 <pre class="src src-elisp">
 (defconst t-version "0.0.1-a0"
@@ -1039,9 +1160,9 @@ frequently, as my requirements evolve.
 </div>
 </div>
 
-<div id="outline-container-orgbbc9068" class="outline-3">
-<h3 id="orgbbc9068"><span class="section-number-3">4.2</span> A leader</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-org0e2093e" class="outline-3">
+<h3 id="a-leader"><span class="section-number-3">4.2</span> A leader</h3>
+<div class="outline-text-3" id="text-a-leader">
 <p>
 Both Doom and Spacemacs use a leader key as a prefix to many commands.
 </p>
@@ -1083,9 +1204,9 @@ Mac <code>command</code> should act like <code>super</code>
 </div>
 </div>
 
-<div id="outline-container-org625e473" class="outline-3">
-<h3 id="org625e473"><span class="section-number-3">4.3</span> Random goodness</h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-org0c1b7a2" class="outline-3">
+<h3 id="random-goodness"><span class="section-number-3">4.3</span> Random goodness</h3>
+<div class="outline-text-3" id="text-random-goodness">
 <ul class="org-ul">
 <li><p>
 <code>ESC</code> Quit prompts
@@ -1100,17 +1221,17 @@ Mac <code>command</code> should act like <code>super</code>
 </div>
 </div>
 
-<div id="outline-container-org2389c04" class="outline-2">
-<h2 id="org2389c04"><span class="section-number-2">5</span> Programming stuff</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-org3435c04" class="outline-2">
+<h2 id="programming-stuff"><span class="section-number-2">5</span> Programming stuff</h2>
+<div class="outline-text-2" id="text-programming-stuff">
 <p>
 This section has configurations for various programming language modes.
 </p>
 </div>
 
-<div id="outline-container-org4dd1374" class="outline-3">
-<h3 id="org4dd1374"><span class="section-number-3">5.1</span> LSP mode</h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-org305a0fc" class="outline-3">
+<h3 id="lsp-mode"><span class="section-number-3">5.1</span> LSP mode</h3>
+<div class="outline-text-3" id="text-lsp-mode">
 <p>
 Language Server Protocol can provide IDE like support for multiple
 programming languages on Emacs.
@@ -1138,9 +1259,9 @@ programming languages on Emacs.
 </div>
 
 
-<div id="outline-container-orgeb40ae8" class="outline-3">
-<h3 id="orgeb40ae8"><span class="section-number-3">5.2</span> Yaml</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-org337c65f" class="outline-3">
+<h3 id="yaml"><span class="section-number-3">5.2</span> Yaml</h3>
+<div class="outline-text-3" id="text-yaml">
 <p>
 Emacs should automatically switch on to yaml-mode while editing <code>yml</code>
 or <code>yaml</code> files.
@@ -1158,9 +1279,9 @@ or <code>yaml</code> files.
 </div>
 
 
-<div id="outline-container-org654e2a9" class="outline-3">
-<h3 id="org654e2a9"><span class="section-number-3">5.3</span> Go</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-org0e0ab9f" class="outline-3">
+<h3 id="go"><span class="section-number-3">5.3</span> Go</h3>
+<div class="outline-text-3" id="text-go">
 <div class="org-src-container">
 <pre class="src src-elisp">(use-package go-mode
   :ensure t
@@ -1191,11 +1312,6 @@ Lsp hooks for Go
 </div>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="author">Author: Docker image runner</p>
-<p class="date">Created: 2022-10-08 Sat 19:42</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
