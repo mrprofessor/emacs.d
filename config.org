@@ -1,11 +1,12 @@
-#+TITLE: Emacs Literate Config
+#+TITLE: The Emacs Operating System
 #+EXPORT_FILE_NAME: docs/index.html
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="main.css" />
-#+HTML_HEAD: <script src="main.js"></script>
-#+OPTIONS: toc:5
-
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
+#+OPTIONS: toc:3 author:nil date:nil html-postamble:nil html:nil result:nil
 
 ** Table of contents                                      :TOC_5_gh:noexport:
+:PROPERTIES:
+:CUSTOM_ID: table-of-contents
+:END:
   - [[#initialization][Initialization]]
     - [[#basics][Basics]]
     - [[#emacs-backups][Emacs Backups]]
@@ -22,13 +23,15 @@
       - [[#org-hugoox-hugo][Org Hugo(ox-hugo)]]
       - [[#org-roam][Org Roam]]
         - [[#full-text-search-with-deft][Full text search with Deft]]
+      - [[#org-export-settingshtmlize][Org export settings(htmlize)]]
+      - [[#human-readable-ids][Human readable IDs]]
     - [[#projectile][Projectile]]
-    - [[#completionsivycounselswiper][Completions(ivy/counsel/swiper)]]
+    - [[#source-control][Source Control]]
+      - [[#magit][Magit]]
+    - [[#completions][Completions]]
       - [[#ivy-rich][Ivy rich]]
       - [[#hydra][Hydra]]
       - [[#which-key][Which-key]]
-    - [[#source-control][Source Control]]
-      - [[#magit][Magit]]
   - [[#system-configuration][System configuration]]
     - [[#emacs-environment-variables][Emacs environment variables]]
   - [[#keybindings][KeyBindings]]
@@ -41,8 +44,14 @@
     - [[#go][Go]]
 
 ** Initialization
+:PROPERTIES:
+:CUSTOM_ID: initialization
+:END:
 *** Basics
-- Menu and toobars
+:PROPERTIES:
+:CUSTOM_ID: basics
+:END:
+- Menu and toolbars
 
 #+BEGIN_SRC elisp
   (scroll-bar-mode -1)                  ; Disable visible scrollbar
@@ -51,6 +60,7 @@
   (set-fringe-mode 30)                  ; Give some breathing room?
   (menu-bar-mode -1)                    ; Go full spartan
 #+END_SRC
+
 
 - Scroll Emacs
 
@@ -109,6 +119,9 @@
 #+end_src
 
 *** Emacs Backups
+:PROPERTIES:
+:CUSTOM_ID: emacs-backups
+:END:
 
 Backup in one place. flat, no tree structure
 #+begin_src elisp
@@ -116,7 +129,13 @@ Backup in one place. flat, no tree structure
 #+end_src
 
 ** Packages
+:PROPERTIES:
+:CUSTOM_ID: packages
+:END:
 *** Intialize packages
+:PROPERTIES:
+:CUSTOM_ID: intialize-packages
+:END:
 
 - Initialize Melpa
 
@@ -145,6 +164,9 @@ Backup in one place. flat, no tree structure
   - Certain packages are needed to be installed maually, e.g tomelr
     
 *** Appearence
+:PROPERTIES:
+:CUSTOM_ID: appearence
+:END:
 
 **** Themes
 
@@ -234,6 +256,9 @@ Show the git branch on the mode-line
 #+end_src
 
 *** Evil Mode
+:PROPERTIES:
+:CUSTOM_ID: evil-mode
+:END:
 
 - Since I have been using VI for quite sometime now, I don't want to
   train myself to learn Emacs
@@ -270,7 +295,19 @@ Show the git branch on the mode-line
   (evil-collection-init))
 #+END_SRC
 
+Unbind certain keys.
+
+#+begin_src elisp
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "SPC") nil)
+    (define-key evil-motion-state-map (kbd "RET") nil)
+    (define-key evil-motion-state-map (kbd "TAB") nil))
+#+end_src
+
 *** Org Mode
+:PROPERTIES:
+:CUSTOM_ID: org-mode
+:END:
 
 Org mode is probably the best thing happened to the mankind. j/k
 By default Org mode doesn't look very nice, at least not as a word
@@ -293,6 +330,12 @@ Emacs shouldn't add whitespace to indent text.
 
 #+begin_src elisp
   (setq org-adapt-indentation nil)
+#+end_src
+
+RETURN will follow links in org mode.
+
+#+begin_src elisp
+  (setq org-return-follows-link  t)
 #+end_src
 
 
@@ -388,7 +431,86 @@ notes.
     (deft-directory org-roam-directory))
 #+end_src
 
+**** Org export settings(htmlize)
+
+Org mode usually ships with this package, However in certain cases you
+might need to install it manually.
+
+#+begin_src elisp
+
+  (use-package htmlize
+    :ensure t
+    :init
+    (setq org-html-htmlize-output-type 'css)
+    (setq org-html-htmlize-font-prefix "org-"))
+
+#+end_src
+
+
+**** Human readable IDs
+
+While exporting html, =org-html-export-to-html=  function generates
+=IDs= for each header, so that it can get linked to from the Table of
+contents. However, the default generated IDs aren't human-redable.
+
+Also the default generated IDs can change every time you generate a new
+version, which can be annoying while hosting a public website.
+
+I have found some hacks on the internet and [[https://amitp.blogspot.com/2021/04/automatically-generate-ids-for-emacs.html][Amit Patel's]] implementation
+seemed like the simplest.
+
+
+#+begin_src elisp
+
+  ;; The only dependency
+  (use-package s
+    :ensure t)
+
+  (defun t/org-generate-custom-ids ()
+    "Generate CUSTOM_ID for any headings that are missing one"
+    (let ((existing-ids (org-map-entries 
+                         (lambda () (org-entry-get nil "CUSTOM_ID")))))
+      (org-map-entries
+       (lambda ()
+         (let* ((custom-id (org-entry-get nil "CUSTOM_ID"))
+                (heading (org-heading-components))
+                (level (nth 0 heading))
+                (todo (nth 2 heading))
+                (headline (nth 4 heading))
+                (slug (t/title-to-filename headline))
+                (duplicate-id (member slug existing-ids)))
+           (when (and (not custom-id)
+                      (< level 4)
+                      (not todo)
+                      (not duplicate-id))
+             (message "Adding entry %s to %s" slug headline)
+             (org-entry-put nil "CUSTOM_ID" slug)))))))
+
+  (defun t/title-to-filename (title)
+    "Convert TITLE to a reasonable filename."
+    ;; Based on the slug logic in org-roam, but org-roam also uses a
+    ;; timestamp, and I use only the slug. BTW "slug" comes from
+    ;; <https://en.wikipedia.org/wiki/Clean_URL#Slug>
+    (setq title (s-downcase title))
+    (setq title (s-replace-regexp "[^a-zA-Z0-9]+" "-" title))
+    (setq title (s-replace-regexp "-+" "-" title))
+    (setq title (s-replace-regexp "^-" "" title))
+    (setq title (s-replace-regexp "-$" "" title))
+    title)
+#+end_src
+
+
+Run the function on save, while in org-mode.
+
+#+begin_src elisp
+  (add-hook 'after-save-hook 't/org-generate-custom-ids)
+#+end_src
+
+
 *** Projectile
+:PROPERTIES:
+:CUSTOM_ID: projectile
+:END:
 
 Projectile is instrumental in managing different projects and working
 on them.
@@ -417,7 +539,26 @@ on them.
 #+end_src
 
 
-*** Completions(ivy/counsel/swiper)
+*** Source Control
+:PROPERTIES:
+:CUSTOM_ID: source-control
+:END:
+
+**** Magit
+
+The magical Git client for emacs. 
+
+#+begin_src elisp
+  (use-package magit
+    :ensure t
+    :pin melpa-stable)
+#+end_src
+
+
+*** Completions
+:PROPERTIES:
+:CUSTOM_ID: completions
+:END:
 
 #+begin_src elisp
   ;; package: ivy/counsel/swiper
@@ -516,20 +657,15 @@ It's a minor mode that shows kebindings for an incomplete command.
     (which-key-mode))
 #+end_src
 
-*** Source Control
-
-**** Magit
-
-The magical Git client for emacs. 
-
-#+begin_src elisp
-  (use-package magit
-    :ensure t
-    :pin melpa-stable)
-#+end_src
 ** System configuration
+:PROPERTIES:
+:CUSTOM_ID: system-configuration
+:END:
 
 *** Emacs environment variables
+:PROPERTIES:
+:CUSTOM_ID: emacs-environment-variables
+:END:
 
 Ensure Emacs env variables match system variables.
 
@@ -542,11 +678,17 @@ Ensure Emacs env variables match system variables.
 #+end_src
 
 ** KeyBindings
+:PROPERTIES:
+:CUSTOM_ID: keybindings
+:END:
 
 Custom keybindings for emacs. This section is expected to be edited
 frequently, as my requirements evolve.
 
 *** Global constants
+:PROPERTIES:
+:CUSTOM_ID: global-constants
+:END:
 
 #+begin_src elisp
   
@@ -564,6 +706,9 @@ frequently, as my requirements evolve.
 #+end_src
 
 *** A leader
+:PROPERTIES:
+:CUSTOM_ID: a-leader
+:END:
 
 Both Doom and Spacemacs use a leader key as a prefix to many commands.
 
@@ -597,6 +742,9 @@ Mac =command= should act like =super=
 #+end_src
 
 *** Random goodness
+:PROPERTIES:
+:CUSTOM_ID: random-goodness
+:END:
 
 - =ESC= Quit prompts
 
@@ -605,10 +753,16 @@ Mac =command= should act like =super=
   #+end_src
 
 ** Programming stuff
+:PROPERTIES:
+:CUSTOM_ID: programming-stuff
+:END:
 
 This section has configurations for various programming language modes.
 
 *** LSP mode
+:PROPERTIES:
+:CUSTOM_ID: lsp-mode
+:END:
 
 Language Server Protocol can provide IDE like support for multiple
 programming languages on Emacs.
@@ -633,6 +787,9 @@ programming languages on Emacs.
 
 
 *** Yaml
+:PROPERTIES:
+:CUSTOM_ID: yaml
+:END:
 
 Emacs should automatically switch on to yaml-mode while editing =yml=
 or =yaml= files.
@@ -647,6 +804,9 @@ or =yaml= files.
 
 
 *** Go
+:PROPERTIES:
+:CUSTOM_ID: go
+:END:
 
 #+begin_src elisp
   (use-package go-mode
