@@ -30,6 +30,11 @@ a {
     color: #b58900
 }
 
+#content {
+    max-width: 75rem;
+    margin: auto;
+}
+
 code {
     font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
     font-size: 1rem;
