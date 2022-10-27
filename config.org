@@ -1,7 +1,8 @@
 #+TITLE: The Emacs Operating System
 #+EXPORT_FILE_NAME: docs/index.html
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
-#+OPTIONS: toc:3 author:nil date:nil html-postamble:nil result:nil
+#+OPTIONS: toc:3 author:nil date:nil html-postamble:nil results:none
+#+PROPERTY: header-args    :results none
 
 ** Table of contents                                      :TOC_5_gh:noexport:
 :PROPERTIES:
@@ -26,12 +27,13 @@
       - [[#org-export-settingshtmlize][Org export settings(htmlize)]]
       - [[#human-readable-ids][Human readable IDs]]
     - [[#projectile][Projectile]]
-    - [[#source-control][Source Control]]
-      - [[#magit][Magit]]
+    - [[#magit][Magit]]
     - [[#completions][Completions]]
       - [[#ivy-rich][Ivy rich]]
       - [[#hydra][Hydra]]
       - [[#which-key][Which-key]]
+    - [[#treemacs][Treemacs]]
+    - [[#restclient][RestClient]]
   - [[#system-configuration][System configuration]]
     - [[#emacs-environment-variables][Emacs environment variables]]
   - [[#keybindings][KeyBindings]]
@@ -39,7 +41,7 @@
     - [[#a-leader][A leader]]
     - [[#random-goodness][Random goodness]]
   - [[#programming-stuff][Programming stuff]]
-    - [[#lsp-mode][LSP mode]]
+    - [[#eglot][Eglot]]
     - [[#yaml][Yaml]]
     - [[#go][Go]]
 
@@ -60,7 +62,6 @@
   (set-fringe-mode 30)                  ; Give some breathing room?
   (menu-bar-mode -1)                    ; Go full spartan
 #+END_SRC
-
 
 - Scroll Emacs
 
@@ -193,6 +194,7 @@ like to get them all.
   (doom-themes-org-config))
 
 #+END_SRC
+
 
 
 I love how Org files look with poet theme, so it's a must.
@@ -539,12 +541,11 @@ on them.
 #+end_src
 
 
-*** Source Control
+*** Magit
 :PROPERTIES:
-:CUSTOM_ID: source-control
+:CUSTOM_ID: magit
 :END:
 
-**** Magit
 
 The magical Git client for emacs. 
 
@@ -657,6 +658,49 @@ It's a minor mode that shows kebindings for an incomplete command.
     (which-key-mode))
 #+end_src
 
+*** Treemacs
+:PROPERTIES:
+:CUSTOM_ID: treemacs
+:END:
+
+#+begin_src elisp
+  (use-package treemacs
+    :ensure t
+    :pin melpa
+    :defer t
+    :init
+    (with-eval-after-load 'winum
+      (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+    :config
+    (progn
+      (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0))))
+
+
+  (use-package treemacs-evil
+    :after (treemacs evil)
+    :ensure t
+    :pin melpa)
+
+  (use-package treemacs-projectile
+    :after (treemacs projectile)
+    :ensure t
+    :pin melpa)
+#+end_src
+
+*** RestClient
+:PROPERTIES:
+:CUSTOM_ID: restclient
+:END:
+
+Postman for Emacs, A mode to run HTTP queries.
+
+#+begin_src elisp
+  (use-package restclient
+    :ensure t
+    :pin melpa
+    :mode (("\\.http\\'" . restclient-mode)))
+#+end_src
+
 ** System configuration
 :PROPERTIES:
 :CUSTOM_ID: system-configuration
@@ -759,30 +803,16 @@ Mac =command= should act like =super=
 
 This section has configurations for various programming language modes.
 
-*** LSP mode
+*** Eglot
 :PROPERTIES:
-:CUSTOM_ID: lsp-mode
+:CUSTOM_ID: eglot
 :END:
 
 Language Server Protocol can provide IDE like support for multiple
 programming languages on Emacs.
 
 #+begin_src elisp
-  (use-package lsp-mode
-    :init
-    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-    (setq lsp-keymap-prefix "C-c l")
-    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-           (XXX-mode . lsp)
-           ;; if you want which-key integration
-           (lsp-mode . lsp-enable-which-key-integration))
-    :commands lsp)
-
-  ;; lsp-ui
-  (use-package lsp-ui :commands lsp-ui-mode)
-
-  ;; lsp-ivy bindings
-  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+ (setq eglot-ensure "C-c l")
 #+end_src
 
 
@@ -815,19 +845,20 @@ or =yaml= files.
     (push '("\\.go\\'" . go-mode) auto-mode-alist))
 #+end_src
 
-Lsp hooks for Go
+
+
+Eglot hooks for Go
 
 #+begin_src elisp
-
   (defun lsp-go-install-save-hooks ()
     ;; Format before save
-    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+    (add-hook 'before-save-hook #'eglot-format-buffer t t)
     ;; Sort imports before save
-    (add-hook 'before-save-hook #'lsp-organize-imports t t))
+    (add-hook 'before-save-hook #'eglot-code-action-organize-imports t t))
+
 
   (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
-  ;; Start lsp mode
-  (add-hook 'go-mode-hook #'lsp-deferred)
-
+  ;; Start eglot mode
+  (add-hook 'go-mode-hook 'eglot-ensure)
 #+end_src

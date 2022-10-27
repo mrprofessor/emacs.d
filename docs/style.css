@@ -2,21 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Enriqueta:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
 
-
-
-
-
 * {
     box-sizing: border-box;
 }
-/* body { */
-/*     margin: 0; */
-/*     font-family: 'Enriqueta','Georgia',sans-serif; */
-/* } */
-/* h1, h2, h3, h4 { */
-/*     font-family: 'Operator A', 'Operator B'; */
-/*     font-weight: 400; */
-/* } */
 
 body {
     font-family: 'Enriqueta','Georgia',sans-serif;
