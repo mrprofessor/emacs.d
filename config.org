@@ -862,3 +862,4 @@ Eglot hooks for Go
   ;; Start eglot mode
   (add-hook 'go-mode-hook 'eglot-ensure)
 #+end_src
+

@@ -1,6 +1,11 @@
 * Emacs config
+:PROPERTIES:
+:CUSTOM_ID: emacs-config
+:END:
 
-An attempt to finally mod emacs to my own will.
+An attempt to finally mod Emacs to my own will.
+
+[[file:screenshot_01.png]]
 
 # Setup
 
