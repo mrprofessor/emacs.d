@@ -34,12 +34,15 @@
       - [[#which-key][Which-key]]
     - [[#treemacs][Treemacs]]
     - [[#restclient][RestClient]]
+    - [[#command-log-mode][Command-log-mode]]
   - [[#system-configuration][System configuration]]
     - [[#emacs-environment-variables][Emacs environment variables]]
   - [[#keybindings][KeyBindings]]
     - [[#global-constants][Global constants]]
     - [[#a-leader][A leader]]
     - [[#random-goodness][Random goodness]]
+  - [[#code-completion][Code Completion]]
+    - [[#corfu][Corfu]]
   - [[#programming-stuff][Programming stuff]]
     - [[#eglot][Eglot]]
     - [[#yaml][Yaml]]
@@ -66,14 +69,14 @@
 - Scroll Emacs
 
 #+BEGIN_SRC elisp
-(setq scroll-step    1
-    scroll-conservatively 10000)
+  (setq scroll-step    1
+        scroll-conservatively 10000)
 #+END_SRC
 
 - Set up the visible bell
 
 #+BEGIN_SRC elisp
-(setq visible-bell t)
+  (setq visible-bell t)
 #+END_SRC
 
 - Set Fonts
@@ -86,37 +89,44 @@
 - Display line numbers
 
 #+BEGIN_SRC elisp
-(global-display-line-numbers-mode t)
+  (global-display-line-numbers-mode t)
 
-;; We don't want line numbers everywhere, e.g shell
-(dolist (mode '(org-hook-mode
-                term-mode-hook
-                eshell-mode-hook
-                shell-mode-hook))
-  (add-hook mode(lambda() (display-line-numbers-mode 0))))
+  ;; We don't want line numbers everywhere, e.g shell
+  (dolist (mode '(org-hook-mode
+                  term-mode-hook
+                  eshell-mode-hook
+                  shell-mode-hook))
+    (add-hook mode(lambda() (display-line-numbers-mode 0))))
 #+END_SRC
 
 - Truncate long lines in certain modes
   
 #+BEGIN_SRC elisp
-(add-hook 'org-mode-hook (lambda() (setq truncate-lines nil)))
+  (add-hook 'org-mode-hook (lambda() (setq truncate-lines nil)))
 #+END_SRC
+
+- Set tab-width
+#+begin_src elisp
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+  (setq indent-line-function 'insert-tab)
+#+end_src
 
 - Display a vertical line on 80th character
 
   #+begin_src elisp
-(setq-default display-fill-column-indicator-column 79)
-(global-display-fill-column-indicator-mode 1)
+    (setq-default display-fill-column-indicator-column 79)
+    (global-display-fill-column-indicator-mode 1)
   #+end_src
 
 - Start emacs in a fullscreen mode
   
 #+begin_src elisp
-;; start the initial frame maximized
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+  ;; start the initial frame maximized
+  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-;; start every frame maximized
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+  ;; start every frame maximized
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 
 *** Emacs Backups
@@ -126,13 +136,14 @@
 
 Backup in one place. flat, no tree structure
 #+begin_src elisp
-(setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup")))
+  (setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup")))
 #+end_src
 
 ** Packages
 :PROPERTIES:
 :CUSTOM_ID: packages
 :END:
+
 *** Intialize packages
 :PROPERTIES:
 :CUSTOM_ID: intialize-packages
@@ -143,9 +154,9 @@ Backup in one place. flat, no tree structure
 #+BEGIN_SRC elisp
   (require 'package)
   (setq package-archives '(("elpa"   . "https://elpa.gnu.org/packages/")
-			   ("melpa"  . "https://melpa.org/packages/")
-			   ("melpa-stable" . "https://stable.melpa.org/packages/")
-			   ("org" . "https://orgmode.org/elpa/")))
+                           ("melpa"  . "https://melpa.org/packages/")
+                           ("melpa-stable" . "https://stable.melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")))
 
   (package-initialize)
   (unless package-archive-contents
@@ -176,23 +187,26 @@ like to get them all.
 
 #+BEGIN_SRC elisp
   (use-package doom-themes
-  :ensure t
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-	doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-old-hope t)
+    :ensure t
+    :config
+    ;; Global settings (defaults)
+    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+          doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    ;; (load-theme 'doom-old-hope t)
+    (load-theme 'doom-gruvbox t)
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-solarized-light") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+    ;; Enable flashing mode-line on errors
+    (doom-themes-visual-bell-config)
+    ;; Enable custom neotree theme (all-the-icons must be installed!)
+    (doom-themes-neotree-config)
+    ;; or for treemacs users
+    (setq doom-themes-treemacs-theme "doom-gruvbox") ; use "doom-colors" for less minimal icon theme
+    (doom-themes-treemacs-config)
+    ;; Corrects (and improves) org-mode's native fontification.
 
+    (doom-themes-org-config))
+
+  
 #+END_SRC
 
 
@@ -222,18 +236,18 @@ We would need emacs-dashboard package for an easier configuration.
 A custom modeline until we figure out the issue with doom-modeline.
 #+begin_src elisp
   (set-face-attribute 'mode-line nil
-		      :background "#353644"
-		      :foreground "white"
-		      :box '(:line-width 8 :color "#353644")
-		      :overline nil
-		      :underline nil)
+                      :background "#353644"
+                      :foreground "white"
+                      :box '(:line-width 8 :color "#353644")
+                      :overline nil
+                      :underline nil)
 
   (set-face-attribute 'mode-line-inactive nil
-		      :background "#565063"
-		      :foreground "white"
-		      :box '(:line-width 8 :color "#565063")
-		      :overline nil
-		      :underline nil)
+                      :background "#565063"
+                      :foreground "white"
+                      :box '(:line-width 8 :color "#565063")
+                      :overline nil
+                      :underline nil)
 #+end_src
 
 Show the git branch on the mode-line
@@ -266,35 +280,35 @@ Show the git branch on the mode-line
   train myself to learn Emacs
 
 #+BEGIN_SRC elisp
-;; package: evil
-;; First thing first. Be EVIL!
-(use-package evil
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
-  :config
-  (evil-mode 1)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  ;; package: evil
+  ;; First thing first. Be EVIL!
+  (use-package evil
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-i-jump nil)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
-  ;; Use visual line motions even outside of visual-line-mode buffers
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+    ;; Use visual line motions even outside of visual-line-mode buffers
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal))
+    (evil-set-initial-state 'messages-buffer-mode 'normal)
+    (evil-set-initial-state 'dashboard-mode 'normal))
 
 
-;; package: evil-collection
-;; Now be EVIL on every mode
-;; TODO: Doesn't work
-(use-package evil-collection
-  :after evil
-  :ensure t
-  :config
-  (evil-collection-init))
+  ;; package: evil-collection
+  ;; Now be EVIL on every mode
+  ;; TODO: Doesn't work
+  (use-package evil-collection
+    :after evil
+    :ensure t
+    :config
+    (evil-collection-init))
 #+END_SRC
 
 Unbind certain keys.
@@ -537,7 +551,7 @@ on them.
       (setq projectile-project-search-path '("~/dev"))
       (setq projectile-project-search-path '("~/rocket")))
     (setq projectile-switch-project-action #'projectile-dired))
-  
+
 #+end_src
 
 
@@ -568,35 +582,35 @@ The magical Git client for emacs.
   (use-package counsel
     :diminish
     :bind (("C-s" . swiper)
-	   ;; Counsel stuff
-	   ("M-x" . counsel-M-x)
-	   ("M-x" . counsel-M-x)
-	   ("s-x" . counsel-M-x) ;; Super-X should do M-X
-	   ("C-x b" . counsel-ibuffer)
-	   ("C-x C-f" . counsel-find-file)
-	   :map minibuffer-local-map
-	   ("C-x C-r" . 'counsel-minibuffer-history)
-	   :map ivy-minibuffer-map
-	   ;; ("TAB" . ivy-alt-done)
-	   ;; ("TAB" . ivy-partial-or-done)
-	   ("C-f" . ivy-alt-done)
-	   ("C-l" . ivy-alt-done)
-	   ("C-j" . ivy-next-line)
-	   ("C-k" . ivy-previous-line)
-	   :map ivy-switch-buffer-map
-	   ("C-k" . ivy-previous-line)
-	   ("C-l" . ivy-done)
-	   ("C-d" . ivy-switch-buffer-kill)
-	   :map ivy-reverse-i-search-map
-	   ("C-k" . ivy-previous-line)
-	   ("C-d" . ivy-reverse-i-search-kill))
+           ;; Counsel stuff
+           ("M-x" . counsel-M-x)
+           ("M-x" . counsel-M-x)
+           ("s-x" . counsel-M-x) ;; Super-X should do M-X
+           ("C-x b" . counsel-ibuffer)
+           ("C-x C-f" . counsel-find-file)
+           :map minibuffer-local-map
+           ("C-x C-r" . 'counsel-minibuffer-history)
+           :map ivy-minibuffer-map
+           ;; ("TAB" . ivy-alt-done)
+           ;; ("TAB" . ivy-partial-or-done)
+           ("C-f" . ivy-alt-done)
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
     :init
     (ivy-mode 1))
 
   (use-package counsel
     :bind (("C-M-j" . 'counsel-switch-buffer)
-	   :map minibuffer-local-map
-	   ("C-r" . 'counsel-minibuffer-history))
+           :map minibuffer-local-map
+           ("C-r" . 'counsel-minibuffer-history))
     :custom
     (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
     :config
@@ -608,14 +622,14 @@ The magical Git client for emacs.
     (ivy-prescient-enable-filtering nil)
     :config
     ;; Uncomment the following line to have sorting remembered across sessions!
-					  ;(prescient-persist-mode 1)
+                                          ;(prescient-persist-mode 1)
 
 
     (ivy-prescient-mode 1))
 
   ;; Remove the "^" character from counsel-M-X 
   (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "") 
-	   #+end_src
+#+end_src
 
 
 **** Ivy rich
@@ -638,14 +652,14 @@ A more friendly interface for Ivy.
 **** Hydra
 
 #+begin_src elisp
-(use-package hydra
-  :defer t)
+  (use-package hydra
+    :defer t)
 
-(defhydra hydra-text-scale (:timeout 4)
-  "scale text"
-  ("j" text-scale-increase "in")
-  ("k" text-scale-decrease "out")
-  ("f" nil "finished" :exit t))
+  (defhydra hydra-text-scale (:timeout 4)
+    "scale text"
+    ("j" text-scale-increase "in")
+    ("k" text-scale-decrease "out")
+    ("f" nil "finished" :exit t))
 #+end_src
 
 **** Which-key
@@ -663,29 +677,51 @@ It's a minor mode that shows kebindings for an incomplete command.
 :CUSTOM_ID: treemacs
 :END:
 
+Unless it's a large project, I don't use Treemacs. However, it gets
+quite annoying while switching project since =treemacs-follow-mode=
+sometimes doesn't work as intended.
+
 #+begin_src elisp
   (use-package treemacs
     :ensure t
-    :pin melpa
     :defer t
     :init
     (with-eval-after-load 'winum
       (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
     :config
     (progn
-      (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0))))
+      (setq treemacs-collapse-dirs                 (if (treemacs--find-python3) 3 0)
+            treemacs-deferred-git-apply-delay      0.5
+            treemacs-width                         35)
 
+      (treemacs-resize-icons 18)
+      (treemacs-follow-mode t)
+      (treemacs-project-follow-mode t)
+      (treemacs-filewatch-mode t))
+     :bind
+     (:map global-map
+           ("M-0"       . treemacs-select-window)
+           ("C-x t 1"   . treemacs-delete-other-windows)
+           ("C-x t t"   . treemacs-add-and-display-current-project-exclusively)
+           ("C-x t d"   . treemacs-select-directory)
+           ("C-x t B"   . treemacs-bookmark)
+           ("C-x t C-t" . treemacs-find-file)
+           ("C-x t M-t" . treemacs-find-tag)))
 
-  (use-package treemacs-evil
-    :after (treemacs evil)
-    :ensure t
-    :pin melpa)
+    ;; (add-hook 'projectile-after-switch-project-hook 'treemacs-add-and-display-current-project-exclusively)
 
-  (use-package treemacs-projectile
-    :after (treemacs projectile)
-    :ensure t
-    :pin melpa)
+    (use-package treemacs-evil
+      :after (treemacs evil)
+      :ensure t
+      :pin melpa)
+
+    (use-package treemacs-projectile
+      :after (treemacs projectile)
+      :ensure t
+      :pin melpa) 
+
 #+end_src
+
 
 *** RestClient
 :PROPERTIES:
@@ -699,6 +735,22 @@ Postman for Emacs, A mode to run HTTP queries.
     :ensure t
     :pin melpa
     :mode (("\\.http\\'" . restclient-mode)))
+#+end_src
+
+*** Command-log-mode
+:PROPERTIES:
+:CUSTOM_ID: command-log-mode
+:END:
+
+Show event and command history, really helpful while debugging Emacs
+configs. Default binding to toggle is =C-c o=
+
+#+begin_src elisp
+  (use-package command-log-mode
+    :ensure t
+    :config
+    (global-command-log-mode t)
+    :pin melpa)
 #+end_src
 
 ** System configuration
@@ -761,7 +813,7 @@ Inspiration: [[https://github.com/doomemacs/doomemacs/blob/e0385052a8004ec54a402
 #+begin_src elisp
 
   (defvar t-leader-key "SPC"
-  "The leader prefix key for Evil users.")
+    "The leader prefix key for Evil users.")
 
 #+end_src
 
@@ -793,8 +845,60 @@ Mac =command= should act like =super=
 - =ESC= Quit prompts
 
   #+begin_src elisp
-(global-set-key  (kbd "<escape>") 'keyboard-escape-quit)
+    (global-set-key  (kbd "<escape>") 'keyboard-escape-quit)
   #+end_src
+
+** Code Completion
+:PROPERTIES:
+:CUSTOM_ID: code-completion
+:END:
+
+*** Corfu
+:PROPERTIES:
+:CUSTOM_ID: corfu
+:END:
+
+Corfu is a simpler alternative to Company-mode; However it doesn't show
+me the completion pop-ups automatically. #FIXME
+
+#+begin_src elisp
+  (use-package corfu
+    ;; Optional customizations
+    :custom
+    (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+    (corfu-preselect 'prompt)      ;; Always preselect the prompt
+    (corfu-auto t)                 ;; Enable auto-completion
+    (corfu-auto-delay 0)
+    (corfu-auto-prefix 0)
+    (completion-styles '(basic))
+    :init
+    (global-corfu-mode))
+
+  ;; A few more useful configurations...
+  (use-package emacs
+    :init
+    ;; TAB cycle if there are only few candidates
+    (setq completion-cycle-threshold 3)
+
+    (setq read-extended-command-predicate
+          #'command-completion-default-include-p)
+
+    ;; Enable indentation+completion using the TAB key.
+    ;; `completion-at-point' is often bound to M-TAB.
+    (setq tab-always-indent 'complete))
+#+end_src
+
+- Swap default Dabbrev completions.
+
+#+begin_src elisp
+  (use-package dabbrev
+    ;; Swap M-/ and C-M-/
+    :bind (("M-/" . dabbrev-completion)
+           ("C-M-/" . dabbrev-expand))
+    ;; Other useful Dabbrev configurations.
+    :custom
+    (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))
+#+end_src
 
 ** Programming stuff
 :PROPERTIES:
@@ -812,7 +916,7 @@ Language Server Protocol can provide IDE like support for multiple
 programming languages on Emacs.
 
 #+begin_src elisp
- (setq eglot-ensure "C-c l")
+  (setq eglot-ensure "C-c l")
 #+end_src
 
 
@@ -826,9 +930,9 @@ or =yaml= files.
 
 #+begin_src elisp
   (use-package yaml-mode
-  :ensure t
-  :init
-  (push '("\\.yaml$" . yaml-mode) auto-mode-alist))
+    :ensure t
+    :init
+    (push '("\\.yaml$" . yaml-mode) auto-mode-alist))
 
 #+end_src
 
