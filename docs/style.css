@@ -1,13 +1,13 @@
 // Font family
 @import url('https://fonts.googleapis.com/css2?family=Enriqueta:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'Enriqueta','Georgia',sans-serif;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 1rem;
     line-height: 1.4;
     color: #33333f;
@@ -24,7 +24,7 @@ a {
 }
 
 code {
-    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 1rem;
 }
 
@@ -34,8 +34,7 @@ p>code, li>code {
 }
 
 h1, h2, h3 {
-    font-family: 'Fira Code', monospace;
-    /* font-family: 'Enriqueta','Georgia',sans-serif; */
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 h2 {
@@ -239,7 +238,6 @@ div.notice-info:before {
 }
 
 pre {
-    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
     font-size: .85rem;
     border: 0;
     box-shadow: none;
@@ -337,7 +335,6 @@ div.figure {
 }
 
 .tag {
-    font-family: "Roboto Slab", Helvetica, Arial, sans-serif;
     font-size: 11px;
     font-weight: normal;
     float: right;
@@ -353,7 +350,6 @@ div.figure {
 }
 
 .todo, .done {
-    font-family: "Roboto Slab", Helvetica, Arial, sans-serif;
     font-weight: normal;
     padding: 0 0.25em;
     border-radius: 0.2em;
@@ -380,7 +376,6 @@ div.figure {
     }
 
     #table-of-contents {
-	font-family: 'Fira Code', monospace;
         position: fixed;
         top: 0;
         left: 0;
