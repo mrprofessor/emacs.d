@@ -13,6 +13,7 @@
     - [[#emacs-backups][Emacs Backups]]
   - [[#packages][Packages]]
     - [[#intialize-packages][Intialize packages]]
+      - [[#install-straightel][Install straight.el]]
     - [[#appearence][Appearence]]
       - [[#themes][Themes]]
       - [[#dashboard][Dashboard]]
@@ -45,8 +46,12 @@
     - [[#corfu][Corfu]]
   - [[#programming-stuff][Programming stuff]]
     - [[#eglot][Eglot]]
+    - [[#typst][Typst]]
     - [[#yaml][Yaml]]
     - [[#go][Go]]
+    - [[#rust][Rust]]
+  - [[#non-human-intelligence][Non-Human Intelligence]]
+    - [[#copilot][Copilot]]
 
 ** Initialization
 :PROPERTIES:
@@ -82,7 +87,7 @@
 - Set Fonts
 
 #+BEGIN_SRC elisp
-  (set-face-attribute 'default nil :font "Cascadia Code PL" :height 180)
+  (set-face-attribute 'default nil :font "IBM Plex Mono" :height 160)
 #+END_SRC
 
 
@@ -175,6 +180,40 @@ Backup in one place. flat, no tree structure
   TODO
   - Certain packages are needed to be installed maually, e.g tomelr
     
+**** Install straight.el
+
+=use-package= does not support the additional properties  like :type, :host, :repo, etc.). Instead, We want tose the straight.el package manager to handle packages from non-standard sources like Git repositories.
+
+#+begin_src elisp
+
+    (defvar bootstrap-version)
+  (let ((bootstrap-file
+	 (expand-file-name
+	  "straight/repos/straight.el/bootstrap.el"
+	  (or (bound-and-true-p straight-base-dir)
+	      user-emacs-directory)))
+	(bootstrap-version 7))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+	  (url-retrieve-synchronously
+	   "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+	   'silent 'inhibit-cookies)
+	(goto-char (point-max))
+	(eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+ #+end_src
+
+
+#+begin_src elisp
+  (setq straight-use-package-by-default t)
+#+end_src
+
+Avoid Org version mismatch with Straight.el
+
+#+begin_src elisp
+  (straight-use-package '(org :type built-in))
+#+end_src
+
 *** Appearence
 :PROPERTIES:
 :CUSTOM_ID: appearence
@@ -193,7 +232,6 @@ like to get them all.
     (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
           doom-themes-enable-italic t) ; if nil, italics is universally disabled
     ;; (load-theme 'doom-old-hope t)
-    (load-theme 'doom-gruvbox t)
 
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
@@ -205,11 +243,7 @@ like to get them all.
     ;; Corrects (and improves) org-mode's native fontification.
 
     (doom-themes-org-config))
-
-  
 #+END_SRC
-
-
 
 I love how Org files look with poet theme, so it's a must.
 
@@ -324,6 +358,7 @@ Unbind certain keys.
 :PROPERTIES:
 :CUSTOM_ID: org-mode
 :END:
+
 
 Org mode is probably the best thing happened to the mankind. j/k
 By default Org mode doesn't look very nice, at least not as a word
@@ -920,6 +955,75 @@ programming languages on Emacs.
 #+end_src
 
 
+
+Treesitter
+:PROPERTIES:
+:CUSTOM_ID: treesitter
+:END:
+
+Tree-sitter is a parser generator tool and an incremental parsing library. It can build a concrete syntax tree for a source file and efficiently update the syntax tree as the source file is edited. 
+
+#+begin_src elisp
+
+  (setq treesit-language-source-alist
+      '(  ; use `sort-lines' to sort
+        (bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
+        (c . ("https://github.com/tree-sitter/tree-sitter-c"))
+        (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (java "https://github.com/tree-sitter/tree-sitter-java")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (kotlin "https://github.com/fwcd/tree-sitter-kotlin")
+        (python . ("https://github.com/tree-sitter/tree-sitter-python"))
+        (rust "https://github.com/tree-sitter/tree-sitter-rust")
+        (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
+        (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
+        (typst "https://github.com/uben0/tree-sitter-typst")
+        (vue "https://github.com/ikatyang/tree-sitter-vue")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+        (toml "https://github.com/ikatyang/tree-sitter-toml")))
+
+
+  (defun t/treesit-install-all-languages ()
+  "Install all languages specified by `treesit-language-source-alist'."
+  (interactive)
+  (let ((languages (mapcar 'car treesit-language-source-alist)))
+    (dolist (lang languages)
+	    (treesit-install-language-grammar lang)
+	    (message "`%s' parser was installed." lang)
+	    (sit-for 0.75))))
+
+#+end_src
+
+
+
+*** Typst
+:PROPERTIES:
+:CUSTOM_ID: typst
+:END:
+
+Seems like a decent alternative to LaTex.
+
+
+#+begin_src elisp
+  ;; Requirement for typst-ts-mode
+  (treesit-install-language-grammar 'typst)
+#+end_src
+
+#+begin_src elisp
+  (use-package typst-ts-mode
+    :straight (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :files (:defaults "*.el"))
+    :custom
+    ;; (optional) If you want to ensure your typst tree sitter grammar version is greater than the minimum requirement
+    ;; Note this only checks and compares file modification time
+    (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory)))
+
+#+end_src
+
 *** Yaml
 :PROPERTIES:
 :CUSTOM_ID: yaml
@@ -967,3 +1071,37 @@ Eglot hooks for Go
   (add-hook 'go-mode-hook 'eglot-ensure)
 #+end_src
 
+*** Rust
+:PROPERTIES:
+:CUSTOM_ID: rust
+:END:
+
+#+begin_src elisp
+  (use-package rust-mode
+    :ensure t
+    :init
+    (push '("\\.rs\\'" . rust-mode) auto-mode-alist))
+#+end_src
+
+
+
+** Non-Human Intelligence
+:PROPERTIES:
+:CUSTOM_ID: ai-stuff
+:END:
+
+*** Copilot
+:PROPERTIES:
+:CUSTOM_ID: copilot
+:END:
+:PROPERTIES:
+:CUSTOM_ID: rust
+
+#+begin_src elisp
+
+  (use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :ensure t)
+;; you can utilize :map :hook and :config to customize copilot
+
+#+end_src
