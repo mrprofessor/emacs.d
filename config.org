@@ -44,12 +44,13 @@
     - [[#random-goodness][Random goodness]]
   - [[#code-completion][Code Completion]]
     - [[#corfu][Corfu]]
+    - [[#treesitter][Treesitter]]
   - [[#programming-stuff][Programming stuff]]
     - [[#eglot][Eglot]]
-    - [[#typst][Typst]]
-    - [[#yaml][Yaml]]
     - [[#go][Go]]
     - [[#rust][Rust]]
+    - [[#typst][Typst]]
+    - [[#yaml][Yaml]]
   - [[#non-human-intelligence][Non-Human Intelligence]]
     - [[#copilot][Copilot]]
 
@@ -87,7 +88,7 @@
 - Set Fonts
 
 #+BEGIN_SRC elisp
-  (set-face-attribute 'default nil :font "IBM Plex Mono" :height 160)
+  (set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
 #+END_SRC
 
 
@@ -146,6 +147,9 @@ Backup in one place. flat, no tree structure
 
 ** Packages
 :PROPERTIES:
+:CUSTOM_ID: packages
+:END:
+:PROPERTIES:
 :CUSTOM_ID: packages
 :END:
 
@@ -935,28 +939,9 @@ me the completion pop-ups automatically. #FIXME
     (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))
 #+end_src
 
-** Programming stuff
-:PROPERTIES:
-:CUSTOM_ID: programming-stuff
-:END:
-
-This section has configurations for various programming language modes.
-
-*** Eglot
-:PROPERTIES:
-:CUSTOM_ID: eglot
-:END:
-
-Language Server Protocol can provide IDE like support for multiple
-programming languages on Emacs.
-
-#+begin_src elisp
-  (setq eglot-ensure "C-c l")
-#+end_src
 
 
-
-Treesitter
+*** Treesitter
 :PROPERTIES:
 :CUSTOM_ID: treesitter
 :END:
@@ -1000,46 +985,24 @@ Tree-sitter is a parser generator tool and an incremental parsing library. It ca
 #+end_src
 
 
-
-*** Typst
+** Programming stuff
 :PROPERTIES:
-:CUSTOM_ID: typst
+:CUSTOM_ID: programming-stuff
 :END:
 
-Seems like a decent alternative to LaTex.
+This section has configurations for various programming language modes.
 
-
-#+begin_src elisp
-  ;; Requirement for typst-ts-mode
-  (treesit-install-language-grammar 'typst)
-#+end_src
-
-#+begin_src elisp
-  (use-package typst-ts-mode
-    :straight (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :files (:defaults "*.el"))
-    :custom
-    ;; (optional) If you want to ensure your typst tree sitter grammar version is greater than the minimum requirement
-    ;; Note this only checks and compares file modification time
-    (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory)))
-
-#+end_src
-
-*** Yaml
+*** Eglot
 :PROPERTIES:
-:CUSTOM_ID: yaml
+:CUSTOM_ID: eglot
 :END:
 
-Emacs should automatically switch on to yaml-mode while editing =yml=
-or =yaml= files.
+Language Server Protocol can provide IDE like support for multiple
+programming languages on Emacs.
 
 #+begin_src elisp
-  (use-package yaml-mode
-    :ensure t
-    :init
-    (push '("\\.yaml$" . yaml-mode) auto-mode-alist))
-
+  (setq eglot-ensure "C-c l")
 #+end_src
-
 
 *** Go
 :PROPERTIES:
@@ -1083,6 +1046,44 @@ Eglot hooks for Go
     (push '("\\.rs\\'" . rust-mode) auto-mode-alist))
 #+end_src
 
+*** Typst
+:PROPERTIES:
+:CUSTOM_ID: typst
+:END:
+
+Seems like a decent alternative to LaTex.
+
+
+#+begin_src elisp
+  ;; Requirement for typst-ts-mode
+  (treesit-install-language-grammar 'typst)
+#+end_src
+
+#+begin_src elisp
+  (use-package typst-ts-mode
+    :straight (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :files (:defaults "*.el"))
+    :custom
+    ;; (optional) If you want to ensure your typst tree sitter grammar version is greater than the minimum requirement
+    ;; Note this only checks and compares file modification time
+    (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory)))
+
+#+end_src
+
+*** Yaml
+:PROPERTIES:
+:CUSTOM_ID: yaml
+:END:
+
+Emacs should automatically switch on to yaml-mode while editing =yml=
+or =yaml= files.
+
+#+begin_src elisp
+  (use-package yaml-mode
+    :ensure t
+    :init
+    (push '("\\.yaml$" . yaml-mode) auto-mode-alist))
+
+#+end_src
 
 
 ** Non-Human Intelligence
@@ -1094,14 +1095,10 @@ Eglot hooks for Go
 :PROPERTIES:
 :CUSTOM_ID: copilot
 :END:
-:PROPERTIES:
-:CUSTOM_ID: rust
 
 #+begin_src elisp
-
   (use-package copilot
   :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
   :ensure t)
 ;; you can utilize :map :hook and :config to customize copilot
-
 #+end_src

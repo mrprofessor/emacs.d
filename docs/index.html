@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-08-29 Tue 23:02 -->
+<!-- 2024-06-16 Sun 01:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Emacs Operating System</title>
@@ -209,32 +209,36 @@
 </li>
 <li><a href="#packages">2. Packages</a>
 <ul>
-<li><a href="#intialize-packages">2.1. Intialize packages</a></li>
+<li><a href="#intialize-packages">2.1. Intialize packages</a>
+<ul>
+<li><a href="#org86725aa">2.1.1. Install straight.el</a></li>
+</ul>
+</li>
 <li><a href="#appearence">2.2. Appearence</a>
 <ul>
-<li><a href="#org9420645">2.2.1. Themes</a></li>
-<li><a href="#org00fa427">2.2.2. Dashboard</a></li>
-<li><a href="#org829414b">2.2.3. Modeline</a></li>
+<li><a href="#org28a33d0">2.2.1. Themes</a></li>
+<li><a href="#org90c94cb">2.2.2. Dashboard</a></li>
+<li><a href="#org6b2cf1b">2.2.3. Modeline</a></li>
 </ul>
 </li>
 <li><a href="#evil-mode">2.3. Evil Mode</a></li>
 <li><a href="#org-mode">2.4. Org Mode</a>
 <ul>
-<li><a href="#org8a9e0de">2.4.1. Org TOC</a></li>
-<li><a href="#org0aa706a">2.4.2. Org Babel</a></li>
-<li><a href="#org68b8b01">2.4.3. Org Hugo(ox-hugo)</a></li>
-<li><a href="#org1d1fd31">2.4.4. Org Roam</a></li>
-<li><a href="#org18fedf6">2.4.5. Org export settings(htmlize)</a></li>
-<li><a href="#org5a2bcfb">2.4.6. Human readable IDs</a></li>
+<li><a href="#orgf5bc148">2.4.1. Org TOC</a></li>
+<li><a href="#org35d4d5a">2.4.2. Org Babel</a></li>
+<li><a href="#orgb36a37a">2.4.3. Org Hugo(ox-hugo)</a></li>
+<li><a href="#org4b72928">2.4.4. Org Roam</a></li>
+<li><a href="#org23284ba">2.4.5. Org export settings(htmlize)</a></li>
+<li><a href="#org1054407">2.4.6. Human readable IDs</a></li>
 </ul>
 </li>
 <li><a href="#projectile">2.5. Projectile</a></li>
 <li><a href="#magit">2.6. Magit</a></li>
 <li><a href="#completions">2.7. Completions</a>
 <ul>
-<li><a href="#orgb0ff4b7">2.7.1. Ivy rich</a></li>
-<li><a href="#orgd942473">2.7.2. Hydra</a></li>
-<li><a href="#org672d6b5">2.7.3. Which-key</a></li>
+<li><a href="#org20dfd9f">2.7.1. Ivy rich</a></li>
+<li><a href="#orge7be0a0">2.7.2. Hydra</a></li>
+<li><a href="#org1ee211e">2.7.3. Which-key</a></li>
 </ul>
 </li>
 <li><a href="#treemacs">2.8. Treemacs</a></li>
@@ -257,13 +261,21 @@
 <li><a href="#code-completion">5. Code Completion</a>
 <ul>
 <li><a href="#corfu">5.1. Corfu</a></li>
+<li><a href="#treesitter">5.2. Treesitter</a></li>
 </ul>
 </li>
 <li><a href="#programming-stuff">6. Programming stuff</a>
 <ul>
 <li><a href="#eglot">6.1. Eglot</a></li>
-<li><a href="#yaml">6.2. Yaml</a></li>
-<li><a href="#go">6.3. Go</a></li>
+<li><a href="#go">6.2. Go</a></li>
+<li><a href="#rust">6.3. Rust</a></li>
+<li><a href="#typst">6.4. Typst</a></li>
+<li><a href="#yaml">6.5. Yaml</a></li>
+</ul>
+</li>
+<li><a href="#ai-stuff">7. Non-Human Intelligence</a>
+<ul>
+<li><a href="#copilot">7.1. Copilot</a></li>
 </ul>
 </li>
 </ul>
@@ -314,7 +326,7 @@
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-elisp">(set-face-attribute 'default nil <span class="org-builtin">:font</span> <span class="org-string">"Cascadia Code PL"</span> <span class="org-builtin">:height</span> 180)
+<pre class="src src-elisp">(set-face-attribute 'default nil <span class="org-builtin">:font</span> <span class="org-string">"Cascadia Code NF"</span> <span class="org-builtin">:height</span> 160)
 </pre>
 </div>
 
@@ -396,6 +408,9 @@ Backup in one place. flat, no tree structure
 <div id="outline-container-packages" class="outline-2">
 <h2 id="packages"><span class="section-number-2">2.</span> Packages</h2>
 <div class="outline-text-2" id="text-packages">
+<p>
+:CUSTOM<sub>ID</sub>: packages
+</p>
 </div>
 
 <div id="outline-container-intialize-packages" class="outline-3">
@@ -438,6 +453,50 @@ TODO
 </ul></li>
 </ul>
 </div>
+
+<div id="outline-container-org86725aa" class="outline-4">
+<h4 id="org86725aa"><span class="section-number-4">2.1.1.</span> Install straight.el</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+<code>use-package</code> does not support the additional properties  like :type, :host, :repo, etc.). Instead, We want tose the straight.el package manager to handle packages from non-standard sources like Git repositories.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+  (<span class="org-keyword">defvar</span> <span class="org-variable-name">bootstrap-version</span>)
+(<span class="org-keyword">let</span> ((bootstrap-file
+   (expand-file-name
+    <span class="org-string">"straight/repos/straight.el/bootstrap.el"</span>
+    (<span class="org-keyword">or</span> (<span class="org-keyword">bound-and-true-p</span> straight-base-dir)
+        user-emacs-directory)))
+  (bootstrap-version 7))
+  (<span class="org-keyword">unless</span> (file-exists-p bootstrap-file)
+    (<span class="org-keyword">with-current-buffer</span>
+    (url-retrieve-synchronously
+     <span class="org-string">"https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"</span>
+     'silent 'inhibit-cookies)
+  (goto-char (point-max))
+  (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-elisp">(<span class="org-keyword">setq</span> straight-use-package-by-default t)
+</pre>
+</div>
+
+<p>
+Avoid Org version mismatch with Straight.el
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(straight-use-package '(org <span class="org-builtin">:type</span> built-in))
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-appearence" class="outline-3">
@@ -445,8 +504,8 @@ TODO
 <div class="outline-text-3" id="text-appearence">
 </div>
 
-<div id="outline-container-org9420645" class="outline-4">
-<h4 id="org9420645"><span class="section-number-4">2.2.1.</span> Themes</h4>
+<div id="outline-container-org28a33d0" class="outline-4">
+<h4 id="org28a33d0"><span class="section-number-4">2.2.1.</span> Themes</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Doom Emacs has consolidated a bunch of nice looking themes, we would
@@ -461,7 +520,6 @@ like to get them all.
   (<span class="org-keyword">setq</span> doom-themes-enable-bold t    <span class="org-comment-delimiter">; </span><span class="org-comment">if nil, bold is universally disabled</span>
         doom-themes-enable-italic t) <span class="org-comment-delimiter">; </span><span class="org-comment">if nil, italics is universally disabled</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">(load-theme 'doom-old-hope t)</span>
-  (load-theme 'doom-gruvbox t)
 
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable flashing mode-line on errors</span>
   (doom-themes-visual-bell-config)
@@ -473,12 +531,8 @@ like to get them all.
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Corrects (and improves) org-mode's native fontification.</span>
 
   (doom-themes-org-config))
-
-
 </pre>
 </div>
-
-
 
 <p>
 I love how Org files look with poet theme, so it's a must.
@@ -491,8 +545,8 @@ I love how Org files look with poet theme, so it's a must.
 </div>
 </div>
 
-<div id="outline-container-org00fa427" class="outline-4">
-<h4 id="org00fa427"><span class="section-number-4">2.2.2.</span> Dashboard</h4>
+<div id="outline-container-org90c94cb" class="outline-4">
+<h4 id="org90c94cb"><span class="section-number-4">2.2.2.</span> Dashboard</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <p>
 We would need emacs-dashboard package for an easier configuration.
@@ -511,8 +565,8 @@ We would need emacs-dashboard package for an easier configuration.
 </div>
 </div>
 
-<div id="outline-container-org829414b" class="outline-4">
-<h4 id="org829414b"><span class="section-number-4">2.2.3.</span> Modeline</h4>
+<div id="outline-container-org6b2cf1b" class="outline-4">
+<h4 id="org6b2cf1b"><span class="section-number-4">2.2.3.</span> Modeline</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 A custom modeline until we figure out the issue with doom-modeline.
@@ -682,8 +736,8 @@ have turned on.
 </div>
 </div>
 
-<div id="outline-container-org8a9e0de" class="outline-4">
-<h4 id="org8a9e0de"><span class="section-number-4">2.4.1.</span> Org TOC</h4>
+<div id="outline-container-orgf5bc148" class="outline-4">
+<h4 id="orgf5bc148"><span class="section-number-4">2.4.1.</span> Org TOC</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <p>
 Create table of contents for Org files.
@@ -710,8 +764,8 @@ ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
 </div>
 </div>
 
-<div id="outline-container-org0aa706a" class="outline-4">
-<h4 id="org0aa706a"><span class="section-number-4">2.4.2.</span> Org Babel</h4>
+<div id="outline-container-org35d4d5a" class="outline-4">
+<h4 id="org35d4d5a"><span class="section-number-4">2.4.2.</span> Org Babel</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
 Active Babel languages
@@ -730,8 +784,8 @@ Active Babel languages
 </div>
 </div>
 
-<div id="outline-container-org68b8b01" class="outline-4">
-<h4 id="org68b8b01"><span class="section-number-4">2.4.3.</span> Org Hugo(ox-hugo)</h4>
+<div id="outline-container-orgb36a37a" class="outline-4">
+<h4 id="orgb36a37a"><span class="section-number-4">2.4.3.</span> Org Hugo(ox-hugo)</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
 ox-hugo helps me manage my website using org files.
@@ -754,8 +808,8 @@ install it manually.
 </div>
 </div>
 
-<div id="outline-container-org1d1fd31" class="outline-4">
-<h4 id="org1d1fd31"><span class="section-number-4">2.4.4.</span> Org Roam</h4>
+<div id="outline-container-org4b72928" class="outline-4">
+<h4 id="org4b72928"><span class="section-number-4">2.4.4.</span> Org Roam</h4>
 <div class="outline-text-4" id="text-2-4-4">
 <p>
 A sophisticated note taking mechanishm. Essentially a clone of
@@ -780,7 +834,7 @@ Set the notes directory
 </div>
 
 <ol class="org-ol">
-<li><a id="orga99aa17"></a>Full text search with Deft<br />
+<li><a id="org2bfbf2a"></a>Full text search with Deft<br />
 <div class="outline-text-5" id="text-2-4-4-1">
 <p>
 Deft is an Emacs mode for quickly browsing and filtering plain text
@@ -804,8 +858,8 @@ notes.
 </ol>
 </div>
 
-<div id="outline-container-org18fedf6" class="outline-4">
-<h4 id="org18fedf6"><span class="section-number-4">2.4.5.</span> Org export settings(htmlize)</h4>
+<div id="outline-container-org23284ba" class="outline-4">
+<h4 id="org23284ba"><span class="section-number-4">2.4.5.</span> Org export settings(htmlize)</h4>
 <div class="outline-text-4" id="text-2-4-5">
 <p>
 Org mode usually ships with this package, However in certain cases you
@@ -826,8 +880,8 @@ might need to install it manually.
 </div>
 
 
-<div id="outline-container-org5a2bcfb" class="outline-4">
-<h4 id="org5a2bcfb"><span class="section-number-4">2.4.6.</span> Human readable IDs</h4>
+<div id="outline-container-org1054407" class="outline-4">
+<h4 id="org1054407"><span class="section-number-4">2.4.6.</span> Human readable IDs</h4>
 <div class="outline-text-4" id="text-2-4-6">
 <p>
 While exporting html, <code>org-html-export-to-html</code>  function generates
@@ -1014,8 +1068,8 @@ The magical Git client for emacs.
 </div>
 
 
-<div id="outline-container-orgb0ff4b7" class="outline-4">
-<h4 id="orgb0ff4b7"><span class="section-number-4">2.7.1.</span> Ivy rich</h4>
+<div id="outline-container-org20dfd9f" class="outline-4">
+<h4 id="org20dfd9f"><span class="section-number-4">2.7.1.</span> Ivy rich</h4>
 <div class="outline-text-4" id="text-2-7-1">
 <p>
 A more friendly interface for Ivy.
@@ -1037,8 +1091,8 @@ A more friendly interface for Ivy.
 </div>
 </div>
 
-<div id="outline-container-orgd942473" class="outline-4">
-<h4 id="orgd942473"><span class="section-number-4">2.7.2.</span> Hydra</h4>
+<div id="outline-container-orge7be0a0" class="outline-4">
+<h4 id="orge7be0a0"><span class="section-number-4">2.7.2.</span> Hydra</h4>
 <div class="outline-text-4" id="text-2-7-2">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">hydra</span>
@@ -1054,8 +1108,8 @@ A more friendly interface for Ivy.
 </div>
 </div>
 
-<div id="outline-container-org672d6b5" class="outline-4">
-<h4 id="org672d6b5"><span class="section-number-4">2.7.3.</span> Which-key</h4>
+<div id="outline-container-org1ee211e" class="outline-4">
+<h4 id="org1ee211e"><span class="section-number-4">2.7.3.</span> Which-key</h4>
 <div class="outline-text-4" id="text-2-7-3">
 <p>
 It's a minor mode that shows kebindings for an incomplete command.
@@ -1334,7 +1388,56 @@ me the completion pop-ups automatically. #FIXME
 </div>
 </div>
 </div>
+
+
+
+<div id="outline-container-treesitter" class="outline-3">
+<h3 id="treesitter"><span class="section-number-3">5.2.</span> Treesitter</h3>
+<div class="outline-text-3" id="text-treesitter">
+<p>
+Tree-sitter is a parser generator tool and an incremental parsing library. It can build a concrete syntax tree for a source file and efficiently update the syntax tree as the source file is edited. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+(<span class="org-keyword">setq</span> treesit-language-source-alist
+    '(  <span class="org-comment-delimiter">; </span><span class="org-comment">use `</span><span class="org-comment"><span class="org-constant">sort-lines</span></span><span class="org-comment">' to sort</span>
+      (bash . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-bash"</span>))
+      (c . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-c"</span>))
+      (cpp . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-cpp"</span>))
+      (css <span class="org-string">"https://github.com/tree-sitter/tree-sitter-css"</span>)
+      (go <span class="org-string">"https://github.com/tree-sitter/tree-sitter-go"</span>)
+      (gomod <span class="org-string">"https://github.com/camdencheek/tree-sitter-go-mod"</span>)
+      (html <span class="org-string">"https://github.com/tree-sitter/tree-sitter-html"</span>)
+      (java <span class="org-string">"https://github.com/tree-sitter/tree-sitter-java"</span>)
+      (javascript <span class="org-string">"https://github.com/tree-sitter/tree-sitter-javascript"</span>)
+      (json <span class="org-string">"https://github.com/tree-sitter/tree-sitter-json"</span>)
+      (kotlin <span class="org-string">"https://github.com/fwcd/tree-sitter-kotlin"</span>)
+      (python . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-python"</span>))
+      (rust <span class="org-string">"https://github.com/tree-sitter/tree-sitter-rust"</span>)
+      (tsx . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-typescript"</span> nil <span class="org-string">"tsx/src"</span>))
+      (typescript . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-typescript"</span> nil <span class="org-string">"typescript/src"</span>))
+      (typst <span class="org-string">"https://github.com/uben0/tree-sitter-typst"</span>)
+      (vue <span class="org-string">"https://github.com/ikatyang/tree-sitter-vue"</span>)
+      (yaml <span class="org-string">"https://github.com/ikatyang/tree-sitter-yaml"</span>)
+      (toml <span class="org-string">"https://github.com/ikatyang/tree-sitter-toml"</span>)))
+
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">t/treesit-install-all-languages</span> ()
+<span class="org-doc">"Install all languages specified by `</span><span class="org-doc"><span class="org-constant">treesit-language-source-alist</span></span><span class="org-doc">'."</span>
+(<span class="org-keyword">interactive</span>)
+(<span class="org-keyword">let</span> ((languages (mapcar 'car treesit-language-source-alist)))
+  (<span class="org-keyword">dolist</span> (lang languages)
+      (treesit-install-language-grammar lang)
+      (message <span class="org-string">"`</span><span class="org-string"><span class="org-constant">%s</span></span><span class="org-string">' parser was installed."</span> lang)
+      (sit-for 0.75))))
+
+</pre>
 </div>
+</div>
+</div>
+</div>
+
 
 <div id="outline-container-programming-stuff" class="outline-2">
 <h2 id="programming-stuff"><span class="section-number-2">6.</span> Programming stuff</h2>
@@ -1359,29 +1462,8 @@ programming languages on Emacs.
 </div>
 </div>
 
-
-<div id="outline-container-yaml" class="outline-3">
-<h3 id="yaml"><span class="section-number-3">6.2.</span> Yaml</h3>
-<div class="outline-text-3" id="text-yaml">
-<p>
-Emacs should automatically switch on to yaml-mode while editing <code>yml</code>
-or <code>yaml</code> files.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">yaml-mode</span>
-  <span class="org-builtin">:ensure</span> t
-  <span class="org-builtin">:init</span>
-  (<span class="org-keyword">push</span> '(<span class="org-string">"\\.yaml$"</span> . yaml-mode) auto-mode-alist))
-
-</pre>
-</div>
-</div>
-</div>
-
-
 <div id="outline-container-go" class="outline-3">
-<h3 id="go"><span class="section-number-3">6.3.</span> Go</h3>
+<h3 id="go"><span class="section-number-3">6.2.</span> Go</h3>
 <div class="outline-text-3" id="text-go">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">go-mode</span>
@@ -1409,6 +1491,85 @@ Eglot hooks for Go
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Start eglot mode</span>
 (add-hook 'go-mode-hook 'eglot-ensure)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-rust" class="outline-3">
+<h3 id="rust"><span class="section-number-3">6.3.</span> Rust</h3>
+<div class="outline-text-3" id="text-rust">
+<div class="org-src-container">
+<pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">rust-mode</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">push</span> '(<span class="org-string">"\\.rs\\'"</span> . rust-mode) auto-mode-alist))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-typst" class="outline-3">
+<h3 id="typst"><span class="section-number-3">6.4.</span> Typst</h3>
+<div class="outline-text-3" id="text-typst">
+<p>
+Seems like a decent alternative to LaTex.
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Requirement for typst-ts-mode</span>
+(treesit-install-language-grammar 'typst)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">typst-ts-mode</span>
+  <span class="org-builtin">:straight</span> (<span class="org-builtin">:type</span> git <span class="org-builtin">:host</span> sourcehut <span class="org-builtin">:repo</span> <span class="org-string">"meow_king/typst-ts-mode"</span> <span class="org-builtin">:files</span> (<span class="org-builtin">:defaults</span> <span class="org-string">"*.el"</span>))
+  <span class="org-builtin">:custom</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(optional) If you want to ensure your typst tree sitter grammar version is greater than the minimum requirement</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Note this only checks and compares file modification time</span>
+  (typst-ts-mode-grammar-location (expand-file-name <span class="org-string">"tree-sitter/libtree-sitter-typst.so"</span> user-emacs-directory)))
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-yaml" class="outline-3">
+<h3 id="yaml"><span class="section-number-3">6.5.</span> Yaml</h3>
+<div class="outline-text-3" id="text-yaml">
+<p>
+Emacs should automatically switch on to yaml-mode while editing <code>yml</code>
+or <code>yaml</code> files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">yaml-mode</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">push</span> '(<span class="org-string">"\\.yaml$"</span> . yaml-mode) auto-mode-alist))
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-ai-stuff" class="outline-2">
+<h2 id="ai-stuff"><span class="section-number-2">7.</span> Non-Human Intelligence</h2>
+<div class="outline-text-2" id="text-ai-stuff">
+</div>
+
+<div id="outline-container-copilot" class="outline-3">
+<h3 id="copilot"><span class="section-number-3">7.1.</span> Copilot</h3>
+<div class="outline-text-3" id="text-copilot">
+<div class="org-src-container">
+<pre class="src src-elisp">  (<span class="org-keyword">use-package</span> <span class="org-constant">copilot</span>
+  <span class="org-builtin">:straight</span> (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"copilot-emacs/copilot.el"</span> <span class="org-builtin">:files</span> (<span class="org-string">"*.el"</span>))
+  <span class="org-builtin">:ensure</span> t)
+<span class="org-comment-delimiter">;; </span><span class="org-comment">you can utilize :map :hook and :config to customize copilot</span>
 </pre>
 </div>
 </div>
