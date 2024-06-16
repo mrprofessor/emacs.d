@@ -25,8 +25,8 @@
       - [[#org-hugoox-hugo][Org Hugo(ox-hugo)]]
       - [[#org-roam][Org Roam]]
         - [[#full-text-search-with-deft][Full text search with Deft]]
-      - [[#org-export-settingshtmlize][Org export settings(htmlize)]]
-      - [[#human-readable-ids][Human readable IDs]]
+      - [[#org-export-settingshtmlize][Org Export Settings(htmlize)]]
+      - [[#human-readable-ids][Human Readable IDs]]
     - [[#projectile][Projectile]]
     - [[#magit][Magit]]
     - [[#completions][Completions]]
@@ -44,7 +44,7 @@
     - [[#random-goodness][Random goodness]]
   - [[#code-completion][Code Completion]]
     - [[#corfu][Corfu]]
-    - [[#treesitter][Treesitter]]
+    - [[#tree-sitter][Tree-sitter]]
   - [[#programming-stuff][Programming stuff]]
     - [[#eglot][Eglot]]
     - [[#go][Go]]
@@ -186,7 +186,10 @@ Backup in one place. flat, no tree structure
     
 **** Install straight.el
 
-=use-package= does not support the additional properties  like :type, :host, :repo, etc.). Instead, We want tose the straight.el package manager to handle packages from non-standard sources like Git repositories.
+=use-package= does not support the additional properties  like :type,
+:host, :repo, etc.). Instead, We want tose the straight.el package
+manager to handle packages from non-standard sources like Git
+repositories.
 
 #+begin_src elisp
 
@@ -304,7 +307,7 @@ Show the git branch on the mode-line
   (use-package all-the-icons
     :ensure t)
 
-  ;; (use-package doom-modeline
+  ;;(use-package doom-modeline
   ;; :init (doom-modeline-mode 1)
   ;; :custom ((doom-modeline-height 30)))
 #+end_src
@@ -486,7 +489,7 @@ notes.
     (deft-directory org-roam-directory))
 #+end_src
 
-**** Org export settings(htmlize)
+**** Org Export Settings(htmlize)
 
 Org mode usually ships with this package, However in certain cases you
 might need to install it manually.
@@ -501,8 +504,7 @@ might need to install it manually.
 
 #+end_src
 
-
-**** Human readable IDs
+**** Human Readable IDs
 
 While exporting html, =org-html-export-to-html=  function generates
 =IDs= for each header, so that it can get linked to from the Table of
@@ -560,7 +562,6 @@ Run the function on save, while in org-mode.
 #+begin_src elisp
   (add-hook 'after-save-hook 't/org-generate-custom-ids)
 #+end_src
-
 
 *** Projectile
 :PROPERTIES:
@@ -941,12 +942,14 @@ me the completion pop-ups automatically. #FIXME
 
 
 
-*** Treesitter
+*** Tree-sitter
 :PROPERTIES:
 :CUSTOM_ID: treesitter
 :END:
 
-Tree-sitter is a parser generator tool and an incremental parsing library. It can build a concrete syntax tree for a source file and efficiently update the syntax tree as the source file is edited. 
+Tree-sitter is a parser generator tool and an incremental parsing
+library. It can build a concrete syntax tree for a source file and
+efficiently update the syntax tree as the source file is edited.
 
 #+begin_src elisp
 
@@ -983,6 +986,29 @@ Tree-sitter is a parser generator tool and an incremental parsing library. It ca
 	    (sit-for 0.75))))
 
 #+end_src
+
+Custom functions to check and install tree-sitter.
+
+#+begin_src elisp
+
+    ;; Checks if a specific tree-sitter grammar file exists.
+    (defun treesit-grammar-installed-p (grammar-file)
+      "Check if a specific tree-sitter GRAMMAR-FILE is installed."
+      (file-exists-p grammar-file))
+
+    ;; Ensures that a tree-sitter grammar for a given language is
+    ;; installed, checking if the grammar file is present and if tree-sitter
+    ;; is available.
+    (defun ensure-treesit-grammar-installed (language grammar-file)
+      "Ensure a tree-sitter grammar for LANGUAGE is installed.
+       GRAMMAR-FILE is the path to the grammar file."
+      (unless (treesit-grammar-installed-p grammar-file)
+        (when (and (fboundp 'treesit-available-p)
+                   (treesit-available-p))
+          (treesit-install-language-grammar language))))
+#+end_src
+
+
 
 
 ** Programming stuff
@@ -1053,20 +1079,16 @@ Eglot hooks for Go
 
 Seems like a decent alternative to LaTex.
 
-
 #+begin_src elisp
-  ;; Requirement for typst-ts-mode
-  (treesit-install-language-grammar 'typst)
-#+end_src
-
-#+begin_src elisp
+    ;; Ensure Typst tree-sit grammar is installed
+    (ensure-treesit-grammar-installed 'typst (expand-file-name "tree-sitter/libtree-sitter-typst.dylib" user-emacs-directory))
+  
   (use-package typst-ts-mode
     :straight (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :files (:defaults "*.el"))
     :custom
     ;; (optional) If you want to ensure your typst tree sitter grammar version is greater than the minimum requirement
     ;; Note this only checks and compares file modification time
-    (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.so" user-emacs-directory)))
-
+    (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.dylib" user-emacs-directory)))
 #+end_src
 
 *** Yaml
@@ -1082,7 +1104,6 @@ or =yaml= files.
     :ensure t
     :init
     (push '("\\.yaml$" . yaml-mode) auto-mode-alist))
-
 #+end_src
 
 
@@ -1097,8 +1118,8 @@ or =yaml= files.
 :END:
 
 #+begin_src elisp
-  (use-package copilot
-  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
-  :ensure t)
-;; you can utilize :map :hook and :config to customize copilot
+    (use-package copilot
+    :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+    :ensure t)
+  ;; you can utilize :map :hook and :config to customize copilot
 #+end_src
