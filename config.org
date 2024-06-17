@@ -8,6 +8,7 @@
 :PROPERTIES:
 :CUSTOM_ID: table-of-contents
 :END:
+  - [[#introduction][Introduction]]
   - [[#initialization][Initialization]]
     - [[#basics][Basics]]
     - [[#emacs-backups][Emacs Backups]]
@@ -15,9 +16,13 @@
     - [[#intialize-packages][Intialize packages]]
       - [[#install-straightel][Install straight.el]]
     - [[#appearence][Appearence]]
+      - [[#all-the-icons][All the Icons]]
       - [[#themes][Themes]]
       - [[#dashboard][Dashboard]]
       - [[#modeline][Modeline]]
+        - [[#nano-modeline][Nano Modeline]]
+        - [[#custom-modeline][Custom Modeline]]
+      - [[#minibuffer][MiniBuffer]]
     - [[#evil-mode][Evil Mode]]
     - [[#org-mode][Org Mode]]
       - [[#org-toc][Org TOC]]
@@ -53,6 +58,13 @@
     - [[#yaml][Yaml]]
   - [[#non-human-intelligence][Non-Human Intelligence]]
     - [[#copilot][Copilot]]
+
+** Introduction
+:PROPERTIES:
+:CUSTOM_ID: introduction
+:END:
+
+[[https://imgs.xkcd.com/comics/real_programmers.png]]
 
 ** Initialization
 :PROPERTIES:
@@ -226,6 +238,16 @@ Avoid Org version mismatch with Straight.el
 :CUSTOM_ID: appearence
 :END:
 
+**** All the Icons
+
+Why we need all the icons? Because they are pretty.
+
+#+begin_src elisp
+  (use-package all-the-icons
+    :ensure t)
+#+end_src
+
+
 **** Themes
 
 Doom Emacs has consolidated a bunch of nice looking themes, we would
@@ -269,48 +291,73 @@ We would need emacs-dashboard package for an easier configuration.
     (setq dashboard-show-shortcuts nil)
     :init
     (dashboard-setup-startup-hook))
-
 #+end_src
 
 **** Modeline
 
+***** Nano Modeline
+
+A minimal modeline for Emacs.
+
+#+begin_src elisp
+  ;; Hide the default mode line globally
+  ;; (setq-default mode-line-format nil)
+
+  ;; Set the nano-modeline position to bottom before loading
+  ;; nano-modeline.
+  (setq nano-modeline-position 'nano-modeline-footer)
+
+  ;; Install nano-modeline
+  (use-package nano-modeline
+    :ensure t
+    :hook
+    (prog-mode-hook . nano-modeline-prog-mode)
+    (text-mode-hook . nano-modeline-text-mode)
+    (org-mode-hook  . nano-modeline-org-mode)
+    (term-mode-hook . nano-modeline-term-mode)
+    :init (nano-modeline-prog-mode t))
+#+end_src
+
+***** Custom Modeline
 A custom modeline until we figure out the issue with doom-modeline.
-#+begin_src elisp
-  (set-face-attribute 'mode-line nil
-                      :background "#353644"
-                      :foreground "white"
-                      :box '(:line-width 8 :color "#353644")
-                      :overline nil
-                      :underline nil)
 
-  (set-face-attribute 'mode-line-inactive nil
-                      :background "#565063"
-                      :foreground "white"
-                      :box '(:line-width 8 :color "#565063")
-                      :overline nil
-                      :underline nil)
-#+end_src
-
-Show the git branch on the mode-line
+Edit: I like this over doom-modeline to be honest.
 
 #+begin_src elisp
-  ;; (defun vc-branch ()
-  ;;   (let ((backend (vc-backend buffer-file-name)))
-  ;;     (substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))))
-  ;; (vc-branch)
+  ;; (set-face-attribute 'mode-line nil
+  ;;                     :background "#353644"
+  ;;                     :foreground "white"
+  ;;                     :box '(:line-width 8 :color "#353644")
+  ;;                     :overline nil
+  ;;                     :underline nil)
+
+  ;; (set-face-attribute 'mode-line-inactive nil
+  ;;                     :background "#565063"
+  ;;                     :foreground "white"
+  ;;                     :box '(:line-width 8 :color "#565063")
+  ;;                     :overline nil
+  ;;                     :underline nil)
 #+end_src
 
+**** MiniBuffer
 
-
+A better looking minibuffer.
 
 #+begin_src elisp
-  (use-package all-the-icons
-    :ensure t)
 
-  ;;(use-package doom-modeline
-  ;; :init (doom-modeline-mode 1)
-  ;; :custom ((doom-modeline-height 30)))
+  ;; ;; Define nano-faded face
+  ;; (defface nano-faded
+  ;;   '((t :inherit shadow))
+  ;;   "Face for faded text in nano-emacs."
+  ;;   :group 'nano-faces)
+
+  ;; (use-package nano-minibuffer
+  ;;   :straight (nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer")
+  ;;   :config
+  ;;   (nano-minibuffer-mode 1))
 #+end_src
+
+
 
 *** Evil Mode
 :PROPERTIES:
@@ -394,6 +441,13 @@ RETURN will follow links in org mode.
 
 #+begin_src elisp
   (setq org-return-follows-link  t)
+#+end_src
+
+Show inline images in org mode.
+
+#+begin_src elisp
+  
+  (setq org-display-remote-inline-images 'cache) ;; enable caching
 #+end_src
 
 

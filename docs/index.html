@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-06-16 Sun 01:29 -->
+<!-- 2024-06-17 Mon 12:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Emacs Operating System</title>
@@ -201,93 +201,113 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#initialization">1. Initialization</a>
+<li><a href="#introduction">1. Introduction</a></li>
+<li><a href="#initialization">2. Initialization</a>
 <ul>
-<li><a href="#basics">1.1. Basics</a></li>
-<li><a href="#emacs-backups">1.2. Emacs Backups</a></li>
+<li><a href="#basics">2.1. Basics</a></li>
+<li><a href="#emacs-backups">2.2. Emacs Backups</a></li>
 </ul>
 </li>
-<li><a href="#packages">2. Packages</a>
+<li><a href="#packages">3. Packages</a>
 <ul>
-<li><a href="#intialize-packages">2.1. Intialize packages</a>
+<li><a href="#intialize-packages">3.1. Intialize packages</a>
 <ul>
-<li><a href="#org86725aa">2.1.1. Install straight.el</a></li>
+<li><a href="#org27ba661">3.1.1. Install straight.el</a></li>
 </ul>
 </li>
-<li><a href="#appearence">2.2. Appearence</a>
+<li><a href="#appearence">3.2. Appearence</a>
 <ul>
-<li><a href="#org28a33d0">2.2.1. Themes</a></li>
-<li><a href="#org90c94cb">2.2.2. Dashboard</a></li>
-<li><a href="#org6b2cf1b">2.2.3. Modeline</a></li>
+<li><a href="#orgbb292c1">3.2.1. All the Icons</a></li>
+<li><a href="#orgd4faeac">3.2.2. Themes</a></li>
+<li><a href="#orgf743fc4">3.2.3. Dashboard</a></li>
+<li><a href="#org9842a26">3.2.4. Modeline</a></li>
+<li><a href="#orgfcadf16">3.2.5. MiniBuffer</a></li>
 </ul>
 </li>
-<li><a href="#evil-mode">2.3. Evil Mode</a></li>
-<li><a href="#org-mode">2.4. Org Mode</a>
+<li><a href="#evil-mode">3.3. Evil Mode</a></li>
+<li><a href="#org-mode">3.4. Org Mode</a>
 <ul>
-<li><a href="#orgf5bc148">2.4.1. Org TOC</a></li>
-<li><a href="#org35d4d5a">2.4.2. Org Babel</a></li>
-<li><a href="#orgb36a37a">2.4.3. Org Hugo(ox-hugo)</a></li>
-<li><a href="#org4b72928">2.4.4. Org Roam</a></li>
-<li><a href="#org23284ba">2.4.5. Org export settings(htmlize)</a></li>
-<li><a href="#org1054407">2.4.6. Human readable IDs</a></li>
+<li><a href="#orga64ada1">3.4.1. Org TOC</a></li>
+<li><a href="#org69019b9">3.4.2. Org Babel</a></li>
+<li><a href="#org1dd838b">3.4.3. Org Hugo(ox-hugo)</a></li>
+<li><a href="#orgbaebd9d">3.4.4. Org Roam</a></li>
+<li><a href="#org741e3d6">3.4.5. Org Export Settings(htmlize)</a></li>
+<li><a href="#org79443f8">3.4.6. Human Readable IDs</a></li>
 </ul>
 </li>
-<li><a href="#projectile">2.5. Projectile</a></li>
-<li><a href="#magit">2.6. Magit</a></li>
-<li><a href="#completions">2.7. Completions</a>
+<li><a href="#projectile">3.5. Projectile</a></li>
+<li><a href="#magit">3.6. Magit</a></li>
+<li><a href="#completions">3.7. Completions</a>
 <ul>
-<li><a href="#org20dfd9f">2.7.1. Ivy rich</a></li>
-<li><a href="#orge7be0a0">2.7.2. Hydra</a></li>
-<li><a href="#org1ee211e">2.7.3. Which-key</a></li>
+<li><a href="#org65c4307">3.7.1. Ivy rich</a></li>
+<li><a href="#orgdb62cfa">3.7.2. Hydra</a></li>
+<li><a href="#org7864474">3.7.3. Which-key</a></li>
 </ul>
 </li>
-<li><a href="#treemacs">2.8. Treemacs</a></li>
-<li><a href="#restclient">2.9. RestClient</a></li>
-<li><a href="#command-log-mode">2.10. Command-log-mode</a></li>
+<li><a href="#treemacs">3.8. Treemacs</a></li>
+<li><a href="#restclient">3.9. RestClient</a></li>
+<li><a href="#command-log-mode">3.10. Command-log-mode</a></li>
 </ul>
 </li>
-<li><a href="#system-configuration">3. System configuration</a>
+<li><a href="#system-configuration">4. System configuration</a>
 <ul>
-<li><a href="#emacs-environment-variables">3.1. Emacs environment variables</a></li>
+<li><a href="#emacs-environment-variables">4.1. Emacs environment variables</a></li>
 </ul>
 </li>
-<li><a href="#keybindings">4. KeyBindings</a>
+<li><a href="#keybindings">5. KeyBindings</a>
 <ul>
-<li><a href="#global-constants">4.1. Global constants</a></li>
-<li><a href="#a-leader">4.2. A leader</a></li>
-<li><a href="#random-goodness">4.3. Random goodness</a></li>
+<li><a href="#global-constants">5.1. Global constants</a></li>
+<li><a href="#a-leader">5.2. A leader</a></li>
+<li><a href="#random-goodness">5.3. Random goodness</a></li>
 </ul>
 </li>
-<li><a href="#code-completion">5. Code Completion</a>
+<li><a href="#code-completion">6. Code Completion</a>
 <ul>
-<li><a href="#corfu">5.1. Corfu</a></li>
-<li><a href="#treesitter">5.2. Treesitter</a></li>
+<li><a href="#corfu">6.1. Corfu</a></li>
+<li><a href="#treesitter">6.2. Tree-sitter</a></li>
 </ul>
 </li>
-<li><a href="#programming-stuff">6. Programming stuff</a>
+<li><a href="#programming-stuff">7. Programming stuff</a>
 <ul>
-<li><a href="#eglot">6.1. Eglot</a></li>
-<li><a href="#go">6.2. Go</a></li>
-<li><a href="#rust">6.3. Rust</a></li>
-<li><a href="#typst">6.4. Typst</a></li>
-<li><a href="#yaml">6.5. Yaml</a></li>
+<li><a href="#eglot">7.1. Eglot</a></li>
+<li><a href="#go">7.2. Go</a></li>
+<li><a href="#rust">7.3. Rust</a></li>
+<li><a href="#typst">7.4. Typst</a></li>
+<li><a href="#yaml">7.5. Yaml</a></li>
 </ul>
 </li>
-<li><a href="#ai-stuff">7. Non-Human Intelligence</a>
+<li><a href="#ai-stuff">8. Non-Human Intelligence</a>
 <ul>
-<li><a href="#copilot">7.1. Copilot</a></li>
+<li><a href="#copilot">8.1. Copilot</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
+<div id="outline-container-introduction" class="outline-2">
+<h2 id="introduction"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-introduction">
+
+<div id="org643c63f" class="figure">
+<p><img src="https://imgs.xkcd.com/comics/real_programmers.png" alt="real_programmers.png" />
+</p>
+</div>
+
+
+<div id="orgd4b81ad" class="figure">
+<p><img src="screenshot_01.png" alt="screenshot_01.png" />
+</p>
+</div>
+</div>
+</div>
+
 <div id="outline-container-initialization" class="outline-2">
-<h2 id="initialization"><span class="section-number-2">1.</span> Initialization</h2>
+<h2 id="initialization"><span class="section-number-2">2.</span> Initialization</h2>
 <div class="outline-text-2" id="text-initialization">
 </div>
 <div id="outline-container-basics" class="outline-3">
-<h3 id="basics"><span class="section-number-3">1.1.</span> Basics</h3>
+<h3 id="basics"><span class="section-number-3">2.1.</span> Basics</h3>
 <div class="outline-text-3" id="text-basics">
 <ul class="org-ul">
 <li>Menu and toolbars</li>
@@ -392,7 +412,7 @@ Display a vertical line on 80th character
 </div>
 
 <div id="outline-container-emacs-backups" class="outline-3">
-<h3 id="emacs-backups"><span class="section-number-3">1.2.</span> Emacs Backups</h3>
+<h3 id="emacs-backups"><span class="section-number-3">2.2.</span> Emacs Backups</h3>
 <div class="outline-text-3" id="text-emacs-backups">
 <p>
 Backup in one place. flat, no tree structure
@@ -406,7 +426,7 @@ Backup in one place. flat, no tree structure
 </div>
 
 <div id="outline-container-packages" class="outline-2">
-<h2 id="packages"><span class="section-number-2">2.</span> Packages</h2>
+<h2 id="packages"><span class="section-number-2">3.</span> Packages</h2>
 <div class="outline-text-2" id="text-packages">
 <p>
 :CUSTOM<sub>ID</sub>: packages
@@ -414,7 +434,7 @@ Backup in one place. flat, no tree structure
 </div>
 
 <div id="outline-container-intialize-packages" class="outline-3">
-<h3 id="intialize-packages"><span class="section-number-3">2.1.</span> Intialize packages</h3>
+<h3 id="intialize-packages"><span class="section-number-3">3.1.</span> Intialize packages</h3>
 <div class="outline-text-3" id="text-intialize-packages">
 <ul class="org-ul">
 <li>Initialize Melpa</li>
@@ -454,11 +474,14 @@ TODO
 </ul>
 </div>
 
-<div id="outline-container-org86725aa" class="outline-4">
-<h4 id="org86725aa"><span class="section-number-4">2.1.1.</span> Install straight.el</h4>
-<div class="outline-text-4" id="text-2-1-1">
+<div id="outline-container-org27ba661" class="outline-4">
+<h4 id="org27ba661"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
+<div class="outline-text-4" id="text-3-1-1">
 <p>
-<code>use-package</code> does not support the additional properties  like :type, :host, :repo, etc.). Instead, We want tose the straight.el package manager to handle packages from non-standard sources like Git repositories.
+<code>use-package</code> does not support the additional properties  like :type,
+:host, :repo, etc.). Instead, We want tose the straight.el package
+manager to handle packages from non-standard sources like Git
+repositories.
 </p>
 
 <div class="org-src-container">
@@ -500,13 +523,29 @@ Avoid Org version mismatch with Straight.el
 </div>
 
 <div id="outline-container-appearence" class="outline-3">
-<h3 id="appearence"><span class="section-number-3">2.2.</span> Appearence</h3>
+<h3 id="appearence"><span class="section-number-3">3.2.</span> Appearence</h3>
 <div class="outline-text-3" id="text-appearence">
 </div>
 
-<div id="outline-container-org28a33d0" class="outline-4">
-<h4 id="org28a33d0"><span class="section-number-4">2.2.1.</span> Themes</h4>
-<div class="outline-text-4" id="text-2-2-1">
+<div id="outline-container-orgbb292c1" class="outline-4">
+<h4 id="orgbb292c1"><span class="section-number-4">3.2.1.</span> All the Icons</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+Why we need all the icons? Because they are pretty.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">all-the-icons</span>
+  <span class="org-builtin">:ensure</span> t)
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd4faeac" class="outline-4">
+<h4 id="orgd4faeac"><span class="section-number-4">3.2.2.</span> Themes</h4>
+<div class="outline-text-4" id="text-3-2-2">
 <p>
 Doom Emacs has consolidated a bunch of nice looking themes, we would
 like to get them all.
@@ -545,9 +584,9 @@ I love how Org files look with poet theme, so it's a must.
 </div>
 </div>
 
-<div id="outline-container-org90c94cb" class="outline-4">
-<h4 id="org90c94cb"><span class="section-number-4">2.2.2.</span> Dashboard</h4>
-<div class="outline-text-4" id="text-2-2-2">
+<div id="outline-container-orgf743fc4" class="outline-4">
+<h4 id="orgf743fc4"><span class="section-number-4">3.2.3.</span> Dashboard</h4>
+<div class="outline-text-4" id="text-3-2-3">
 <p>
 We would need emacs-dashboard package for an easier configuration.
 </p>
@@ -559,65 +598,104 @@ We would need emacs-dashboard package for an easier configuration.
   (<span class="org-keyword">setq</span> dashboard-show-shortcuts nil)
   <span class="org-builtin">:init</span>
   (dashboard-setup-startup-hook))
-
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6b2cf1b" class="outline-4">
-<h4 id="org6b2cf1b"><span class="section-number-4">2.2.3.</span> Modeline</h4>
-<div class="outline-text-4" id="text-2-2-3">
+<div id="outline-container-org9842a26" class="outline-4">
+<h4 id="org9842a26"><span class="section-number-4">3.2.4.</span> Modeline</h4>
+<div class="outline-text-4" id="text-3-2-4">
+</div>
+<ol class="org-ol">
+<li><a id="org70dce06"></a>Nano Modeline<br />
+<div class="outline-text-5" id="text-3-2-4-1">
+<p>
+A minimal modeline for Emacs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Hide the default mode line globally</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(setq-default mode-line-format nil)</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Set the nano-modeline position to bottom before loading</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">nano-modeline.</span>
+(<span class="org-keyword">setq</span> nano-modeline-position 'nano-modeline-footer)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Install nano-modeline</span>
+(<span class="org-keyword">use-package</span> <span class="org-constant">nano-modeline</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:hook</span>
+  (prog-mode-hook . nano-modeline-prog-mode)
+  (text-mode-hook . nano-modeline-text-mode)
+  (org-mode-hook  . nano-modeline-org-mode)
+  (term-mode-hook . nano-modeline-term-mode)
+  <span class="org-builtin">:init</span> (nano-modeline-prog-mode t))
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org1dfb2b3"></a>Custom Modeline<br />
+<div class="outline-text-5" id="text-3-2-4-2">
 <p>
 A custom modeline until we figure out the issue with doom-modeline.
 </p>
-<div class="org-src-container">
-<pre class="src src-elisp">(set-face-attribute 'mode-line nil
-                    <span class="org-builtin">:background</span> <span class="org-string">"#353644"</span>
-                    <span class="org-builtin">:foreground</span> <span class="org-string">"white"</span>
-                    <span class="org-builtin">:box</span> '(<span class="org-builtin">:line-width</span> 8 <span class="org-builtin">:color</span> <span class="org-string">"#353644"</span>)
-                    <span class="org-builtin">:overline</span> nil
-                    <span class="org-builtin">:underline</span> nil)
-
-(set-face-attribute 'mode-line-inactive nil
-                    <span class="org-builtin">:background</span> <span class="org-string">"#565063"</span>
-                    <span class="org-builtin">:foreground</span> <span class="org-string">"white"</span>
-                    <span class="org-builtin">:box</span> '(<span class="org-builtin">:line-width</span> 8 <span class="org-builtin">:color</span> <span class="org-string">"#565063"</span>)
-                    <span class="org-builtin">:overline</span> nil
-                    <span class="org-builtin">:underline</span> nil)
-</pre>
-</div>
 
 <p>
-Show the git branch on the mode-line
+Edit: I like this over doom-modeline to be honest.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">(defun vc-branch ()</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">(let ((backend (vc-backend buffer-file-name)))</span>
-<span class="org-comment-delimiter">;;     </span><span class="org-comment">(substring vc-mode (+ (if (eq backend 'Hg) 2 3) 2))))</span>
-<span class="org-comment-delimiter">;; </span><span class="org-comment">(vc-branch)</span>
+<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">(set-face-attribute 'mode-line nil</span>
+<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:background "#353644"</span>
+<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:foreground "white"</span>
+<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:box '(:line-width 8 :color "#353644")</span>
+<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:overline nil</span>
+<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:underline nil)</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(set-face-attribute 'mode-line-inactive nil</span>
+<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:background "#565063"</span>
+<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:foreground "white"</span>
+<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:box '(:line-width 8 :color "#565063")</span>
+<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:overline nil</span>
+<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:underline nil)</span>
 </pre>
 </div>
+</div>
+</li>
+</ol>
+</div>
 
-
-
+<div id="outline-container-orgfcadf16" class="outline-4">
+<h4 id="orgfcadf16"><span class="section-number-4">3.2.5.</span> MiniBuffer</h4>
+<div class="outline-text-4" id="text-3-2-5">
+<p>
+A better looking minibuffer.
+</p>
 
 <div class="org-src-container">
-<pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">all-the-icons</span>
-  <span class="org-builtin">:ensure</span> t)
+<pre class="src src-elisp">
+<span class="org-comment-delimiter">;; </span><span class="org-comment">;; Define nano-faded face</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(defface nano-faded</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">'((t :inherit shadow))</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">"Face for faded text in nano-emacs."</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">:group 'nano-faces)</span>
 
-<span class="org-comment-delimiter">;; </span><span class="org-comment">(use-package doom-modeline</span>
-<span class="org-comment-delimiter">;; </span><span class="org-comment">:init (doom-modeline-mode 1)</span>
-<span class="org-comment-delimiter">;; </span><span class="org-comment">:custom ((doom-modeline-height 30)))</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(use-package nano-minibuffer</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">:straight (nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer")</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">:config</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(nano-minibuffer-mode 1))</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
+
+
 <div id="outline-container-evil-mode" class="outline-3">
-<h3 id="evil-mode"><span class="section-number-3">2.3.</span> Evil Mode</h3>
+<h3 id="evil-mode"><span class="section-number-3">3.3.</span> Evil Mode</h3>
 <div class="outline-text-3" id="text-evil-mode">
 <ul class="org-ul">
 <li>Since I have been using VI for quite sometime now, I don't want to
@@ -672,7 +750,7 @@ Unbind certain keys.
 </div>
 
 <div id="outline-container-org-mode" class="outline-3">
-<h3 id="org-mode"><span class="section-number-3">2.4.</span> Org Mode</h3>
+<h3 id="org-mode"><span class="section-number-3">3.4.</span> Org Mode</h3>
 <div class="outline-text-3" id="text-org-mode">
 <p>
 Org mode is probably the best thing happened to the mankind. j/k
@@ -717,6 +795,16 @@ RETURN will follow links in org mode.
 </pre>
 </div>
 
+<p>
+Show inline images in org mode.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+(<span class="org-keyword">setq</span> org-display-remote-inline-images 'cache) <span class="org-comment-delimiter">;; </span><span class="org-comment">enable caching</span>
+</pre>
+</div>
+
 
 <p>
 There are a couple of nice blog posts on beautifying the Org mode,
@@ -736,9 +824,9 @@ have turned on.
 </div>
 </div>
 
-<div id="outline-container-orgf5bc148" class="outline-4">
-<h4 id="orgf5bc148"><span class="section-number-4">2.4.1.</span> Org TOC</h4>
-<div class="outline-text-4" id="text-2-4-1">
+<div id="outline-container-orga64ada1" class="outline-4">
+<h4 id="orga64ada1"><span class="section-number-4">3.4.1.</span> Org TOC</h4>
+<div class="outline-text-4" id="text-3-4-1">
 <p>
 Create table of contents for Org files.
 Usage:
@@ -764,9 +852,9 @@ ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
 </div>
 </div>
 
-<div id="outline-container-org35d4d5a" class="outline-4">
-<h4 id="org35d4d5a"><span class="section-number-4">2.4.2.</span> Org Babel</h4>
-<div class="outline-text-4" id="text-2-4-2">
+<div id="outline-container-org69019b9" class="outline-4">
+<h4 id="org69019b9"><span class="section-number-4">3.4.2.</span> Org Babel</h4>
+<div class="outline-text-4" id="text-3-4-2">
 <p>
 Active Babel languages
 </p>
@@ -784,9 +872,9 @@ Active Babel languages
 </div>
 </div>
 
-<div id="outline-container-orgb36a37a" class="outline-4">
-<h4 id="orgb36a37a"><span class="section-number-4">2.4.3.</span> Org Hugo(ox-hugo)</h4>
-<div class="outline-text-4" id="text-2-4-3">
+<div id="outline-container-org1dd838b" class="outline-4">
+<h4 id="org1dd838b"><span class="section-number-4">3.4.3.</span> Org Hugo(ox-hugo)</h4>
+<div class="outline-text-4" id="text-3-4-3">
 <p>
 ox-hugo helps me manage my website using org files.
 </p>
@@ -808,9 +896,9 @@ install it manually.
 </div>
 </div>
 
-<div id="outline-container-org4b72928" class="outline-4">
-<h4 id="org4b72928"><span class="section-number-4">2.4.4.</span> Org Roam</h4>
-<div class="outline-text-4" id="text-2-4-4">
+<div id="outline-container-orgbaebd9d" class="outline-4">
+<h4 id="orgbaebd9d"><span class="section-number-4">3.4.4.</span> Org Roam</h4>
+<div class="outline-text-4" id="text-3-4-4">
 <p>
 A sophisticated note taking mechanishm. Essentially a clone of
 <a href="https://roamresearch.com/">Roam-research</a> running on Emacs.
@@ -834,8 +922,8 @@ Set the notes directory
 </div>
 
 <ol class="org-ol">
-<li><a id="org2bfbf2a"></a>Full text search with Deft<br />
-<div class="outline-text-5" id="text-2-4-4-1">
+<li><a id="orge04cc00"></a>Full text search with Deft<br />
+<div class="outline-text-5" id="text-3-4-4-1">
 <p>
 Deft is an Emacs mode for quickly browsing and filtering plain text
 notes.
@@ -858,9 +946,9 @@ notes.
 </ol>
 </div>
 
-<div id="outline-container-org23284ba" class="outline-4">
-<h4 id="org23284ba"><span class="section-number-4">2.4.5.</span> Org export settings(htmlize)</h4>
-<div class="outline-text-4" id="text-2-4-5">
+<div id="outline-container-org741e3d6" class="outline-4">
+<h4 id="org741e3d6"><span class="section-number-4">3.4.5.</span> Org Export Settings(htmlize)</h4>
+<div class="outline-text-4" id="text-3-4-5">
 <p>
 Org mode usually ships with this package, However in certain cases you
 might need to install it manually.
@@ -879,10 +967,9 @@ might need to install it manually.
 </div>
 </div>
 
-
-<div id="outline-container-org1054407" class="outline-4">
-<h4 id="org1054407"><span class="section-number-4">2.4.6.</span> Human readable IDs</h4>
-<div class="outline-text-4" id="text-2-4-6">
+<div id="outline-container-org79443f8" class="outline-4">
+<h4 id="org79443f8"><span class="section-number-4">3.4.6.</span> Human Readable IDs</h4>
+<div class="outline-text-4" id="text-3-4-6">
 <p>
 While exporting html, <code>org-html-export-to-html</code>  function generates
 <code>IDs</code> for each header, so that it can get linked to from the Table of
@@ -953,9 +1040,8 @@ Run the function on save, while in org-mode.
 </div>
 </div>
 
-
 <div id="outline-container-projectile" class="outline-3">
-<h3 id="projectile"><span class="section-number-3">2.5.</span> Projectile</h3>
+<h3 id="projectile"><span class="section-number-3">3.5.</span> Projectile</h3>
 <div class="outline-text-3" id="text-projectile">
 <p>
 Projectile is instrumental in managing different projects and working
@@ -990,7 +1076,7 @@ on them.
 
 
 <div id="outline-container-magit" class="outline-3">
-<h3 id="magit"><span class="section-number-3">2.6.</span> Magit</h3>
+<h3 id="magit"><span class="section-number-3">3.6.</span> Magit</h3>
 <div class="outline-text-3" id="text-magit">
 <p>
 The magical Git client for emacs. 
@@ -1007,7 +1093,7 @@ The magical Git client for emacs.
 
 
 <div id="outline-container-completions" class="outline-3">
-<h3 id="completions"><span class="section-number-3">2.7.</span> Completions</h3>
+<h3 id="completions"><span class="section-number-3">3.7.</span> Completions</h3>
 <div class="outline-text-3" id="text-completions">
 <div class="org-src-container">
 <pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">package: ivy/counsel/swiper</span>
@@ -1068,9 +1154,9 @@ The magical Git client for emacs.
 </div>
 
 
-<div id="outline-container-org20dfd9f" class="outline-4">
-<h4 id="org20dfd9f"><span class="section-number-4">2.7.1.</span> Ivy rich</h4>
-<div class="outline-text-4" id="text-2-7-1">
+<div id="outline-container-org65c4307" class="outline-4">
+<h4 id="org65c4307"><span class="section-number-4">3.7.1.</span> Ivy rich</h4>
+<div class="outline-text-4" id="text-3-7-1">
 <p>
 A more friendly interface for Ivy.
 </p>
@@ -1091,9 +1177,9 @@ A more friendly interface for Ivy.
 </div>
 </div>
 
-<div id="outline-container-orge7be0a0" class="outline-4">
-<h4 id="orge7be0a0"><span class="section-number-4">2.7.2.</span> Hydra</h4>
-<div class="outline-text-4" id="text-2-7-2">
+<div id="outline-container-orgdb62cfa" class="outline-4">
+<h4 id="orgdb62cfa"><span class="section-number-4">3.7.2.</span> Hydra</h4>
+<div class="outline-text-4" id="text-3-7-2">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">hydra</span>
   <span class="org-builtin">:defer</span> t)
@@ -1108,9 +1194,9 @@ A more friendly interface for Ivy.
 </div>
 </div>
 
-<div id="outline-container-org1ee211e" class="outline-4">
-<h4 id="org1ee211e"><span class="section-number-4">2.7.3.</span> Which-key</h4>
-<div class="outline-text-4" id="text-2-7-3">
+<div id="outline-container-org7864474" class="outline-4">
+<h4 id="org7864474"><span class="section-number-4">3.7.3.</span> Which-key</h4>
+<div class="outline-text-4" id="text-3-7-3">
 <p>
 It's a minor mode that shows kebindings for an incomplete command.
 </p>
@@ -1126,7 +1212,7 @@ It's a minor mode that shows kebindings for an incomplete command.
 </div>
 
 <div id="outline-container-treemacs" class="outline-3">
-<h3 id="treemacs"><span class="section-number-3">2.8.</span> Treemacs</h3>
+<h3 id="treemacs"><span class="section-number-3">3.8.</span> Treemacs</h3>
 <div class="outline-text-3" id="text-treemacs">
 <p>
 Unless it's a large project, I don't use Treemacs. However, it gets
@@ -1180,7 +1266,7 @@ sometimes doesn't work as intended.
 
 
 <div id="outline-container-restclient" class="outline-3">
-<h3 id="restclient"><span class="section-number-3">2.9.</span> RestClient</h3>
+<h3 id="restclient"><span class="section-number-3">3.9.</span> RestClient</h3>
 <div class="outline-text-3" id="text-restclient">
 <p>
 Postman for Emacs, A mode to run HTTP queries.
@@ -1197,7 +1283,7 @@ Postman for Emacs, A mode to run HTTP queries.
 </div>
 
 <div id="outline-container-command-log-mode" class="outline-3">
-<h3 id="command-log-mode"><span class="section-number-3">2.10.</span> Command-log-mode</h3>
+<h3 id="command-log-mode"><span class="section-number-3">3.10.</span> Command-log-mode</h3>
 <div class="outline-text-3" id="text-command-log-mode">
 <p>
 Show event and command history, really helpful while debugging Emacs
@@ -1217,12 +1303,12 @@ configs. Default binding to toggle is <code>C-c o</code>
 </div>
 
 <div id="outline-container-system-configuration" class="outline-2">
-<h2 id="system-configuration"><span class="section-number-2">3.</span> System configuration</h2>
+<h2 id="system-configuration"><span class="section-number-2">4.</span> System configuration</h2>
 <div class="outline-text-2" id="text-system-configuration">
 </div>
 
 <div id="outline-container-emacs-environment-variables" class="outline-3">
-<h3 id="emacs-environment-variables"><span class="section-number-3">3.1.</span> Emacs environment variables</h3>
+<h3 id="emacs-environment-variables"><span class="section-number-3">4.1.</span> Emacs environment variables</h3>
 <div class="outline-text-3" id="text-emacs-environment-variables">
 <p>
 Ensure Emacs env variables match system variables.
@@ -1241,7 +1327,7 @@ Ensure Emacs env variables match system variables.
 </div>
 
 <div id="outline-container-keybindings" class="outline-2">
-<h2 id="keybindings"><span class="section-number-2">4.</span> KeyBindings</h2>
+<h2 id="keybindings"><span class="section-number-2">5.</span> KeyBindings</h2>
 <div class="outline-text-2" id="text-keybindings">
 <p>
 Custom keybindings for emacs. This section is expected to be edited
@@ -1250,7 +1336,7 @@ frequently, as my requirements evolve.
 </div>
 
 <div id="outline-container-global-constants" class="outline-3">
-<h3 id="global-constants"><span class="section-number-3">4.1.</span> Global constants</h3>
+<h3 id="global-constants"><span class="section-number-3">5.1.</span> Global constants</h3>
 <div class="outline-text-3" id="text-global-constants">
 <div class="org-src-container">
 <pre class="src src-elisp">
@@ -1271,7 +1357,7 @@ frequently, as my requirements evolve.
 </div>
 
 <div id="outline-container-a-leader" class="outline-3">
-<h3 id="a-leader"><span class="section-number-3">4.2.</span> A leader</h3>
+<h3 id="a-leader"><span class="section-number-3">5.2.</span> A leader</h3>
 <div class="outline-text-3" id="text-a-leader">
 <p>
 Both Doom and Spacemacs use a leader key as a prefix to many commands.
@@ -1315,7 +1401,7 @@ Mac <code>command</code> should act like <code>super</code>
 </div>
 
 <div id="outline-container-random-goodness" class="outline-3">
-<h3 id="random-goodness"><span class="section-number-3">4.3.</span> Random goodness</h3>
+<h3 id="random-goodness"><span class="section-number-3">5.3.</span> Random goodness</h3>
 <div class="outline-text-3" id="text-random-goodness">
 <ul class="org-ul">
 <li><p>
@@ -1332,12 +1418,12 @@ Mac <code>command</code> should act like <code>super</code>
 </div>
 
 <div id="outline-container-code-completion" class="outline-2">
-<h2 id="code-completion"><span class="section-number-2">5.</span> Code Completion</h2>
+<h2 id="code-completion"><span class="section-number-2">6.</span> Code Completion</h2>
 <div class="outline-text-2" id="text-code-completion">
 </div>
 
 <div id="outline-container-corfu" class="outline-3">
-<h3 id="corfu"><span class="section-number-3">5.1.</span> Corfu</h3>
+<h3 id="corfu"><span class="section-number-3">6.1.</span> Corfu</h3>
 <div class="outline-text-3" id="text-corfu">
 <p>
 Corfu is a simpler alternative to Company-mode; However it doesn't show
@@ -1392,10 +1478,12 @@ me the completion pop-ups automatically. #FIXME
 
 
 <div id="outline-container-treesitter" class="outline-3">
-<h3 id="treesitter"><span class="section-number-3">5.2.</span> Treesitter</h3>
+<h3 id="treesitter"><span class="section-number-3">6.2.</span> Tree-sitter</h3>
 <div class="outline-text-3" id="text-treesitter">
 <p>
-Tree-sitter is a parser generator tool and an incremental parsing library. It can build a concrete syntax tree for a source file and efficiently update the syntax tree as the source file is edited. 
+Tree-sitter is a parser generator tool and an incremental parsing
+library. It can build a concrete syntax tree for a source file and
+efficiently update the syntax tree as the source file is edited.
 </p>
 
 <div class="org-src-container">
@@ -1434,13 +1522,39 @@ Tree-sitter is a parser generator tool and an incremental parsing library. It ca
 
 </pre>
 </div>
+
+<p>
+Custom functions to check and install tree-sitter.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Checks if a specific tree-sitter grammar file exists.</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">treesit-grammar-installed-p</span> (grammar-file)
+  <span class="org-doc">"Check if a specific tree-sitter GRAMMAR-FILE is installed."</span>
+  (file-exists-p grammar-file))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Ensures that a tree-sitter grammar for a given language is</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">installed, checking if the grammar file is present and if tree-sitter</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">is available.</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">ensure-treesit-grammar-installed</span> (language grammar-file)
+  <span class="org-doc">"Ensure a tree-sitter grammar for LANGUAGE is installed.</span>
+<span class="org-doc">   GRAMMAR-FILE is the path to the grammar file."</span>
+  (<span class="org-keyword">unless</span> (treesit-grammar-installed-p grammar-file)
+    (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> (fboundp 'treesit-available-p)
+               (treesit-available-p))
+      (treesit-install-language-grammar language))))
+</pre>
 </div>
 </div>
 </div>
+</div>
+
+
 
 
 <div id="outline-container-programming-stuff" class="outline-2">
-<h2 id="programming-stuff"><span class="section-number-2">6.</span> Programming stuff</h2>
+<h2 id="programming-stuff"><span class="section-number-2">7.</span> Programming stuff</h2>
 <div class="outline-text-2" id="text-programming-stuff">
 <p>
 This section has configurations for various programming language modes.
@@ -1448,7 +1562,7 @@ This section has configurations for various programming language modes.
 </div>
 
 <div id="outline-container-eglot" class="outline-3">
-<h3 id="eglot"><span class="section-number-3">6.1.</span> Eglot</h3>
+<h3 id="eglot"><span class="section-number-3">7.1.</span> Eglot</h3>
 <div class="outline-text-3" id="text-eglot">
 <p>
 Language Server Protocol can provide IDE like support for multiple
@@ -1463,7 +1577,7 @@ programming languages on Emacs.
 </div>
 
 <div id="outline-container-go" class="outline-3">
-<h3 id="go"><span class="section-number-3">6.2.</span> Go</h3>
+<h3 id="go"><span class="section-number-3">7.2.</span> Go</h3>
 <div class="outline-text-3" id="text-go">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">go-mode</span>
@@ -1497,7 +1611,7 @@ Eglot hooks for Go
 </div>
 
 <div id="outline-container-rust" class="outline-3">
-<h3 id="rust"><span class="section-number-3">6.3.</span> Rust</h3>
+<h3 id="rust"><span class="section-number-3">7.3.</span> Rust</h3>
 <div class="outline-text-3" id="text-rust">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">rust-mode</span>
@@ -1510,34 +1624,29 @@ Eglot hooks for Go
 </div>
 
 <div id="outline-container-typst" class="outline-3">
-<h3 id="typst"><span class="section-number-3">6.4.</span> Typst</h3>
+<h3 id="typst"><span class="section-number-3">7.4.</span> Typst</h3>
 <div class="outline-text-3" id="text-typst">
 <p>
 Seems like a decent alternative to LaTex.
 </p>
 
-
 <div class="org-src-container">
-<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Requirement for typst-ts-mode</span>
-(treesit-install-language-grammar 'typst)
-</pre>
-</div>
+<pre class="src src-elisp">  <span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure Typst tree-sit grammar is installed</span>
+  (ensure-treesit-grammar-installed 'typst (expand-file-name <span class="org-string">"tree-sitter/libtree-sitter-typst.dylib"</span> user-emacs-directory))
 
-<div class="org-src-container">
-<pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">typst-ts-mode</span>
+(<span class="org-keyword">use-package</span> <span class="org-constant">typst-ts-mode</span>
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:type</span> git <span class="org-builtin">:host</span> sourcehut <span class="org-builtin">:repo</span> <span class="org-string">"meow_king/typst-ts-mode"</span> <span class="org-builtin">:files</span> (<span class="org-builtin">:defaults</span> <span class="org-string">"*.el"</span>))
   <span class="org-builtin">:custom</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">(optional) If you want to ensure your typst tree sitter grammar version is greater than the minimum requirement</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Note this only checks and compares file modification time</span>
-  (typst-ts-mode-grammar-location (expand-file-name <span class="org-string">"tree-sitter/libtree-sitter-typst.so"</span> user-emacs-directory)))
-
+  (typst-ts-mode-grammar-location (expand-file-name <span class="org-string">"tree-sitter/libtree-sitter-typst.dylib"</span> user-emacs-directory)))
 </pre>
 </div>
 </div>
 </div>
 
 <div id="outline-container-yaml" class="outline-3">
-<h3 id="yaml"><span class="section-number-3">6.5.</span> Yaml</h3>
+<h3 id="yaml"><span class="section-number-3">7.5.</span> Yaml</h3>
 <div class="outline-text-3" id="text-yaml">
 <p>
 Emacs should automatically switch on to yaml-mode while editing <code>yml</code>
@@ -1549,7 +1658,6 @@ or <code>yaml</code> files.
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:init</span>
   (<span class="org-keyword">push</span> '(<span class="org-string">"\\.yaml$"</span> . yaml-mode) auto-mode-alist))
-
 </pre>
 </div>
 </div>
@@ -1558,12 +1666,12 @@ or <code>yaml</code> files.
 
 
 <div id="outline-container-ai-stuff" class="outline-2">
-<h2 id="ai-stuff"><span class="section-number-2">7.</span> Non-Human Intelligence</h2>
+<h2 id="ai-stuff"><span class="section-number-2">8.</span> Non-Human Intelligence</h2>
 <div class="outline-text-2" id="text-ai-stuff">
 </div>
 
 <div id="outline-container-copilot" class="outline-3">
-<h3 id="copilot"><span class="section-number-3">7.1.</span> Copilot</h3>
+<h3 id="copilot"><span class="section-number-3">8.1.</span> Copilot</h3>
 <div class="outline-text-3" id="text-copilot">
 <div class="org-src-container">
 <pre class="src src-elisp">  (<span class="org-keyword">use-package</span> <span class="org-constant">copilot</span>
