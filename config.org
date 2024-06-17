@@ -22,7 +22,6 @@
       - [[#modeline][Modeline]]
         - [[#nano-modeline][Nano Modeline]]
         - [[#custom-modeline][Custom Modeline]]
-      - [[#minibuffer][MiniBuffer]]
     - [[#evil-mode][Evil Mode]]
     - [[#org-mode][Org Mode]]
       - [[#org-toc][Org TOC]]
@@ -159,9 +158,6 @@ Backup in one place. flat, no tree structure
 
 ** Packages
 :PROPERTIES:
-:CUSTOM_ID: packages
-:END:
-:PROPERTIES:
 :CUSTOM_ID: packages
 :END:
 
@@ -338,25 +334,6 @@ Edit: I like this over doom-modeline to be honest.
   ;;                     :overline nil
   ;;                     :underline nil)
 #+end_src
-
-**** MiniBuffer
-
-A better looking minibuffer.
-
-#+begin_src elisp
-
-  ;; ;; Define nano-faded face
-  ;; (defface nano-faded
-  ;;   '((t :inherit shadow))
-  ;;   "Face for faded text in nano-emacs."
-  ;;   :group 'nano-faces)
-
-  ;; (use-package nano-minibuffer
-  ;;   :straight (nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer")
-  ;;   :config
-  ;;   (nano-minibuffer-mode 1))
-#+end_src
-
 
 
 *** Evil Mode

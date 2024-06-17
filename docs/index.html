@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-06-17 Mon 12:33 -->
+<!-- 2024-06-17 Mon 12:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Emacs Operating System</title>
@@ -212,36 +212,35 @@
 <ul>
 <li><a href="#intialize-packages">3.1. Intialize packages</a>
 <ul>
-<li><a href="#org27ba661">3.1.1. Install straight.el</a></li>
+<li><a href="#org9e97809">3.1.1. Install straight.el</a></li>
 </ul>
 </li>
 <li><a href="#appearence">3.2. Appearence</a>
 <ul>
-<li><a href="#orgbb292c1">3.2.1. All the Icons</a></li>
-<li><a href="#orgd4faeac">3.2.2. Themes</a></li>
-<li><a href="#orgf743fc4">3.2.3. Dashboard</a></li>
-<li><a href="#org9842a26">3.2.4. Modeline</a></li>
-<li><a href="#orgfcadf16">3.2.5. MiniBuffer</a></li>
+<li><a href="#orga6c72c4">3.2.1. All the Icons</a></li>
+<li><a href="#orgb7e8314">3.2.2. Themes</a></li>
+<li><a href="#org197ee1d">3.2.3. Dashboard</a></li>
+<li><a href="#org007bd3b">3.2.4. Modeline</a></li>
 </ul>
 </li>
 <li><a href="#evil-mode">3.3. Evil Mode</a></li>
 <li><a href="#org-mode">3.4. Org Mode</a>
 <ul>
-<li><a href="#orga64ada1">3.4.1. Org TOC</a></li>
-<li><a href="#org69019b9">3.4.2. Org Babel</a></li>
-<li><a href="#org1dd838b">3.4.3. Org Hugo(ox-hugo)</a></li>
-<li><a href="#orgbaebd9d">3.4.4. Org Roam</a></li>
-<li><a href="#org741e3d6">3.4.5. Org Export Settings(htmlize)</a></li>
-<li><a href="#org79443f8">3.4.6. Human Readable IDs</a></li>
+<li><a href="#orgc3a8f1a">3.4.1. Org TOC</a></li>
+<li><a href="#org20a6613">3.4.2. Org Babel</a></li>
+<li><a href="#org4210e79">3.4.3. Org Hugo(ox-hugo)</a></li>
+<li><a href="#org2c974b7">3.4.4. Org Roam</a></li>
+<li><a href="#orgff4e858">3.4.5. Org Export Settings(htmlize)</a></li>
+<li><a href="#org8998aaf">3.4.6. Human Readable IDs</a></li>
 </ul>
 </li>
 <li><a href="#projectile">3.5. Projectile</a></li>
 <li><a href="#magit">3.6. Magit</a></li>
 <li><a href="#completions">3.7. Completions</a>
 <ul>
-<li><a href="#org65c4307">3.7.1. Ivy rich</a></li>
-<li><a href="#orgdb62cfa">3.7.2. Hydra</a></li>
-<li><a href="#org7864474">3.7.3. Which-key</a></li>
+<li><a href="#org4da01b7">3.7.1. Ivy rich</a></li>
+<li><a href="#org3aa1126">3.7.2. Hydra</a></li>
+<li><a href="#org5f0b12c">3.7.3. Which-key</a></li>
 </ul>
 </li>
 <li><a href="#treemacs">3.8. Treemacs</a></li>
@@ -289,14 +288,8 @@
 <h2 id="introduction"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-introduction">
 
-<div id="org643c63f" class="figure">
+<div id="org08a622c" class="figure">
 <p><img src="https://imgs.xkcd.com/comics/real_programmers.png" alt="real_programmers.png" />
-</p>
-</div>
-
-
-<div id="orgd4b81ad" class="figure">
-<p><img src="screenshot_01.png" alt="screenshot_01.png" />
 </p>
 </div>
 </div>
@@ -428,9 +421,6 @@ Backup in one place. flat, no tree structure
 <div id="outline-container-packages" class="outline-2">
 <h2 id="packages"><span class="section-number-2">3.</span> Packages</h2>
 <div class="outline-text-2" id="text-packages">
-<p>
-:CUSTOM<sub>ID</sub>: packages
-</p>
 </div>
 
 <div id="outline-container-intialize-packages" class="outline-3">
@@ -474,8 +464,8 @@ TODO
 </ul>
 </div>
 
-<div id="outline-container-org27ba661" class="outline-4">
-<h4 id="org27ba661"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
+<div id="outline-container-org9e97809" class="outline-4">
+<h4 id="org9e97809"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 <code>use-package</code> does not support the additional properties  like :type,
@@ -527,8 +517,8 @@ Avoid Org version mismatch with Straight.el
 <div class="outline-text-3" id="text-appearence">
 </div>
 
-<div id="outline-container-orgbb292c1" class="outline-4">
-<h4 id="orgbb292c1"><span class="section-number-4">3.2.1.</span> All the Icons</h4>
+<div id="outline-container-orga6c72c4" class="outline-4">
+<h4 id="orga6c72c4"><span class="section-number-4">3.2.1.</span> All the Icons</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
 Why we need all the icons? Because they are pretty.
@@ -543,8 +533,8 @@ Why we need all the icons? Because they are pretty.
 </div>
 
 
-<div id="outline-container-orgd4faeac" class="outline-4">
-<h4 id="orgd4faeac"><span class="section-number-4">3.2.2.</span> Themes</h4>
+<div id="outline-container-orgb7e8314" class="outline-4">
+<h4 id="orgb7e8314"><span class="section-number-4">3.2.2.</span> Themes</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 Doom Emacs has consolidated a bunch of nice looking themes, we would
@@ -584,8 +574,8 @@ I love how Org files look with poet theme, so it's a must.
 </div>
 </div>
 
-<div id="outline-container-orgf743fc4" class="outline-4">
-<h4 id="orgf743fc4"><span class="section-number-4">3.2.3.</span> Dashboard</h4>
+<div id="outline-container-org197ee1d" class="outline-4">
+<h4 id="org197ee1d"><span class="section-number-4">3.2.3.</span> Dashboard</h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 We would need emacs-dashboard package for an easier configuration.
@@ -603,12 +593,12 @@ We would need emacs-dashboard package for an easier configuration.
 </div>
 </div>
 
-<div id="outline-container-org9842a26" class="outline-4">
-<h4 id="org9842a26"><span class="section-number-4">3.2.4.</span> Modeline</h4>
+<div id="outline-container-org007bd3b" class="outline-4">
+<h4 id="org007bd3b"><span class="section-number-4">3.2.4.</span> Modeline</h4>
 <div class="outline-text-4" id="text-3-2-4">
 </div>
 <ol class="org-ol">
-<li><a id="org70dce06"></a>Nano Modeline<br />
+<li><a id="org4d941a4"></a>Nano Modeline<br />
 <div class="outline-text-5" id="text-3-2-4-1">
 <p>
 A minimal modeline for Emacs.
@@ -636,7 +626,7 @@ A minimal modeline for Emacs.
 </div>
 </li>
 
-<li><a id="org1dfb2b3"></a>Custom Modeline<br />
+<li><a id="orga0b3dd2"></a>Custom Modeline<br />
 <div class="outline-text-5" id="text-3-2-4-2">
 <p>
 A custom modeline until we figure out the issue with doom-modeline.
@@ -666,32 +656,7 @@ Edit: I like this over doom-modeline to be honest.
 </li>
 </ol>
 </div>
-
-<div id="outline-container-orgfcadf16" class="outline-4">
-<h4 id="orgfcadf16"><span class="section-number-4">3.2.5.</span> MiniBuffer</h4>
-<div class="outline-text-4" id="text-3-2-5">
-<p>
-A better looking minibuffer.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-elisp">
-<span class="org-comment-delimiter">;; </span><span class="org-comment">;; Define nano-faded face</span>
-<span class="org-comment-delimiter">;; </span><span class="org-comment">(defface nano-faded</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">'((t :inherit shadow))</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">"Face for faded text in nano-emacs."</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">:group 'nano-faces)</span>
-
-<span class="org-comment-delimiter">;; </span><span class="org-comment">(use-package nano-minibuffer</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">:straight (nano-minibuffer :type git :host github :repo "rougier/nano-minibuffer")</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">:config</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">(nano-minibuffer-mode 1))</span>
-</pre>
 </div>
-</div>
-</div>
-</div>
-
 
 
 <div id="outline-container-evil-mode" class="outline-3">
@@ -824,8 +789,8 @@ have turned on.
 </div>
 </div>
 
-<div id="outline-container-orga64ada1" class="outline-4">
-<h4 id="orga64ada1"><span class="section-number-4">3.4.1.</span> Org TOC</h4>
+<div id="outline-container-orgc3a8f1a" class="outline-4">
+<h4 id="orgc3a8f1a"><span class="section-number-4">3.4.1.</span> Org TOC</h4>
 <div class="outline-text-4" id="text-3-4-1">
 <p>
 Create table of contents for Org files.
@@ -852,8 +817,8 @@ ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
 </div>
 </div>
 
-<div id="outline-container-org69019b9" class="outline-4">
-<h4 id="org69019b9"><span class="section-number-4">3.4.2.</span> Org Babel</h4>
+<div id="outline-container-org20a6613" class="outline-4">
+<h4 id="org20a6613"><span class="section-number-4">3.4.2.</span> Org Babel</h4>
 <div class="outline-text-4" id="text-3-4-2">
 <p>
 Active Babel languages
@@ -872,8 +837,8 @@ Active Babel languages
 </div>
 </div>
 
-<div id="outline-container-org1dd838b" class="outline-4">
-<h4 id="org1dd838b"><span class="section-number-4">3.4.3.</span> Org Hugo(ox-hugo)</h4>
+<div id="outline-container-org4210e79" class="outline-4">
+<h4 id="org4210e79"><span class="section-number-4">3.4.3.</span> Org Hugo(ox-hugo)</h4>
 <div class="outline-text-4" id="text-3-4-3">
 <p>
 ox-hugo helps me manage my website using org files.
@@ -896,8 +861,8 @@ install it manually.
 </div>
 </div>
 
-<div id="outline-container-orgbaebd9d" class="outline-4">
-<h4 id="orgbaebd9d"><span class="section-number-4">3.4.4.</span> Org Roam</h4>
+<div id="outline-container-org2c974b7" class="outline-4">
+<h4 id="org2c974b7"><span class="section-number-4">3.4.4.</span> Org Roam</h4>
 <div class="outline-text-4" id="text-3-4-4">
 <p>
 A sophisticated note taking mechanishm. Essentially a clone of
@@ -922,7 +887,7 @@ Set the notes directory
 </div>
 
 <ol class="org-ol">
-<li><a id="orge04cc00"></a>Full text search with Deft<br />
+<li><a id="org065856d"></a>Full text search with Deft<br />
 <div class="outline-text-5" id="text-3-4-4-1">
 <p>
 Deft is an Emacs mode for quickly browsing and filtering plain text
@@ -946,8 +911,8 @@ notes.
 </ol>
 </div>
 
-<div id="outline-container-org741e3d6" class="outline-4">
-<h4 id="org741e3d6"><span class="section-number-4">3.4.5.</span> Org Export Settings(htmlize)</h4>
+<div id="outline-container-orgff4e858" class="outline-4">
+<h4 id="orgff4e858"><span class="section-number-4">3.4.5.</span> Org Export Settings(htmlize)</h4>
 <div class="outline-text-4" id="text-3-4-5">
 <p>
 Org mode usually ships with this package, However in certain cases you
@@ -967,8 +932,8 @@ might need to install it manually.
 </div>
 </div>
 
-<div id="outline-container-org79443f8" class="outline-4">
-<h4 id="org79443f8"><span class="section-number-4">3.4.6.</span> Human Readable IDs</h4>
+<div id="outline-container-org8998aaf" class="outline-4">
+<h4 id="org8998aaf"><span class="section-number-4">3.4.6.</span> Human Readable IDs</h4>
 <div class="outline-text-4" id="text-3-4-6">
 <p>
 While exporting html, <code>org-html-export-to-html</code>  function generates
@@ -1154,8 +1119,8 @@ The magical Git client for emacs.
 </div>
 
 
-<div id="outline-container-org65c4307" class="outline-4">
-<h4 id="org65c4307"><span class="section-number-4">3.7.1.</span> Ivy rich</h4>
+<div id="outline-container-org4da01b7" class="outline-4">
+<h4 id="org4da01b7"><span class="section-number-4">3.7.1.</span> Ivy rich</h4>
 <div class="outline-text-4" id="text-3-7-1">
 <p>
 A more friendly interface for Ivy.
@@ -1177,8 +1142,8 @@ A more friendly interface for Ivy.
 </div>
 </div>
 
-<div id="outline-container-orgdb62cfa" class="outline-4">
-<h4 id="orgdb62cfa"><span class="section-number-4">3.7.2.</span> Hydra</h4>
+<div id="outline-container-org3aa1126" class="outline-4">
+<h4 id="org3aa1126"><span class="section-number-4">3.7.2.</span> Hydra</h4>
 <div class="outline-text-4" id="text-3-7-2">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">hydra</span>
@@ -1194,8 +1159,8 @@ A more friendly interface for Ivy.
 </div>
 </div>
 
-<div id="outline-container-org7864474" class="outline-4">
-<h4 id="org7864474"><span class="section-number-4">3.7.3.</span> Which-key</h4>
+<div id="outline-container-org5f0b12c" class="outline-4">
+<h4 id="org5f0b12c"><span class="section-number-4">3.7.3.</span> Which-key</h4>
 <div class="outline-text-4" id="text-3-7-3">
 <p>
 It's a minor mode that shows kebindings for an incomplete command.
