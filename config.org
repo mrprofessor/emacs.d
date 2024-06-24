@@ -63,6 +63,18 @@
 :CUSTOM_ID: introduction
 :END:
 
+It's been a while since I have started using Emacs, and after using DOOM
+Emacs for a while, I have decided to scratch my own itch and create my
+very own Emacs configuration. It's not as refined as DOOM or Spacemacs,
+neither it has all the bells and whistles, but it's mine.
+
+Why I like Emacs you ask? Well, for me it's like riding a sports bike,
+it's not for everyone, has its quirks, and might not be the most
+efficient tool for the job. But it's exhilarating! As a "professional"
+programmer, I should be using the most efficient tool for the job, but
+"professional" is boring and I don't like boring.
+
+
 [[https://imgs.xkcd.com/comics/real_programmers.png]]
 
 ** Initialization
@@ -554,7 +566,7 @@ seemed like the simplest.
   (use-package s
     :ensure t)
 
-  (defun t/org-generate-custom-ids ()
+  (defun eos/org-generate-custom-ids ()
     "Generate CUSTOM_ID for any headings that are missing one"
     (let ((existing-ids (org-map-entries 
                          (lambda () (org-entry-get nil "CUSTOM_ID")))))
@@ -565,7 +577,7 @@ seemed like the simplest.
                 (level (nth 0 heading))
                 (todo (nth 2 heading))
                 (headline (nth 4 heading))
-                (slug (t/title-to-filename headline))
+                (slug (eos/title-to-filename headline))
                 (duplicate-id (member slug existing-ids)))
            (when (and (not custom-id)
                       (< level 4)
@@ -574,7 +586,7 @@ seemed like the simplest.
              (message "Adding entry %s to %s" slug headline)
              (org-entry-put nil "CUSTOM_ID" slug)))))))
 
-  (defun t/title-to-filename (title)
+  (defun eos/title-to-filename (title)
     "Convert TITLE to a reasonable filename."
     ;; Based on the slug logic in org-roam, but org-roam also uses a
     ;; timestamp, and I use only the slug. BTW "slug" comes from
@@ -591,7 +603,7 @@ seemed like the simplest.
 Run the function on save, while in org-mode.
 
 #+begin_src elisp
-  (add-hook 'after-save-hook 't/org-generate-custom-ids)
+  (add-hook 'after-save-hook 'eos/org-generate-custom-ids)
 #+end_src
 
 *** Projectile
@@ -1007,7 +1019,7 @@ efficiently update the syntax tree as the source file is edited.
         (toml "https://github.com/ikatyang/tree-sitter-toml")))
 
 
-  (defun t/treesit-install-all-languages ()
+  (defun eos/treesit-install-all-languages ()
   "Install all languages specified by `treesit-language-source-alist'."
   (interactive)
   (let ((languages (mapcar 'car treesit-language-source-alist)))
@@ -1149,8 +1161,13 @@ or =yaml= files.
 :END:
 
 #+begin_src elisp
-    (use-package copilot
+  (use-package copilot
     :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
-    :ensure t)
-  ;; you can utilize :map :hook and :config to customize copilot
+    :ensure t
+    :hook (prog-mode . copilot-mode)
+    :bind (:map copilot-completion-map
+                ("<tab>" . 'copilot-accept-completion-by-word)
+                ("TAB" . 'copilot-accept-completion-by-word)
+                ("C-TAB" . 'copilot-accept-completion)
+                ("C-<tab>" . 'copilot-accept-completion)))
 #+end_src
