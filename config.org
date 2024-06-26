@@ -347,7 +347,6 @@ Edit: I like this over doom-modeline to be honest.
   ;;                     :underline nil)
 #+end_src
 
-
 *** Evil Mode
 :PROPERTIES:
 :CUSTOM_ID: evil-mode
@@ -504,15 +503,22 @@ A sophisticated note taking mechanishm. Essentially a clone of
 [[https://roamresearch.com/][Roam-research]] running on Emacs.
 
 #+begin_src elisp
-  (use-package org-roam
-    :ensure t
-    :pin melpa-stable)
+    (use-package org-roam
+      :ensure t
+      :bind (("C-c n l" . org-roam-buffer-toggle)
+             ("C-c n f" . org-roam-node-find)
+             ("C-c n g" . org-roam-graph)
+             ("C-c n c" . org-roam-capture)
+             ("C-c n i" . org-roam-node-insert)
+             ("C-c n t" . org-roam-tag-add)
+             ("C-c n j" . org-roam-dailies-capture-today))
+      :pin melpa-stable
+      :config
+      (org-roam-setup))
 #+end_src
 
-Set the notes directory
-
 #+begin_src elisp
-  (setq org-roam-directory "~/dev/notes/org-roam")
+  (setq org-roam-directory "~/dev/hivemind/notes")
 #+end_src
 
 ***** Full text search with Deft
@@ -637,7 +643,6 @@ on them.
 
 #+end_src
 
-
 *** Magit
 :PROPERTIES:
 :CUSTOM_ID: magit
@@ -651,7 +656,6 @@ The magical Git client for emacs.
     :ensure t
     :pin melpa-stable)
 #+end_src
-
 
 *** Completions
 :PROPERTIES:
