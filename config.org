@@ -18,6 +18,7 @@
     - [[#appearence][Appearence]]
       - [[#all-the-icons][All the Icons]]
       - [[#themes][Themes]]
+      - [[#transparency][Transparency]]
       - [[#dashboard][Dashboard]]
       - [[#modeline][Modeline]]
         - [[#nano-modeline][Nano Modeline]]
@@ -29,10 +30,13 @@
       - [[#org-hugoox-hugo][Org Hugo(ox-hugo)]]
       - [[#org-roam][Org Roam]]
         - [[#full-text-search-with-deft][Full text search with Deft]]
+      - [[#org-roam-ui][Org Roam UI]]
       - [[#org-export-settingshtmlize][Org Export Settings(htmlize)]]
       - [[#human-readable-ids][Human Readable IDs]]
     - [[#projectile][Projectile]]
-    - [[#magit][Magit]]
+    - [[#version-control][Version Control]]
+      - [[#magit][Magit]]
+      - [[#diff-hl][Diff-hl]]
     - [[#completions][Completions]]
       - [[#ivy-rich][Ivy rich]]
       - [[#hydra][Hydra]]
@@ -53,8 +57,12 @@
     - [[#eglot][Eglot]]
     - [[#go][Go]]
     - [[#rust][Rust]]
+    - [[#haskell][Haskell]]
     - [[#typst][Typst]]
+    - [[#latex][LaTex]]
     - [[#yaml][Yaml]]
+    - [[#markdown][Markdown]]
+    - [[#lua][Lua]]
   - [[#non-human-intelligence][Non-Human Intelligence]]
     - [[#copilot][Copilot]]
 
@@ -149,13 +157,24 @@ programmer, I should be using the most efficient tool for the job, but
   #+end_src
 
 - Start emacs in a fullscreen mode
+  EDIT: 19/08/2024: It doesn't seem to work well with Mac tiling manager
+  [[https://github.com/nikitabobko/AeroSpace][Aerospace]].
   
 #+begin_src elisp
-  ;; start the initial frame maximized
-  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+    ;; start the initial frame maximized
+    ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
-  ;; start every frame maximized
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+    ;; start every frame maximized
+    ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+    ;; (add-to-list 'default-frame-alist '(undecorated . t))
+    ;; (setq-default frame-title-format nil)
+    (add-to-list 'default-frame-alist '(undecorated . t))
+    (add-to-list 'default-frame-alist '(drag-internal-border . 1))
+    ;; Makes the window draggable even without the title bar
+
+
+
 #+end_src
 
 *** Emacs Backups
@@ -263,22 +282,23 @@ like to get them all.
 
 #+BEGIN_SRC elisp
   (use-package doom-themes
+    :straight (:host github :repo "doomemacs/themes")
     :ensure t
     :config
     ;; Global settings (defaults)
-    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-          doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    ;; (load-theme 'doom-old-hope t)
+    (setq doom-themes-enable-bold t    ; If nil, bold is universally disabled
+          doom-themes-enable-italic t) ; If nil, italics is universally disabled
+
+    (load-theme 'doom-oksolar-light t)   ; Load a theme
 
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
     ;; Enable custom neotree theme (all-the-icons must be installed!)
     (doom-themes-neotree-config)
     ;; or for treemacs users
-    (setq doom-themes-treemacs-theme "doom-gruvbox") ; use "doom-colors" for less minimal icon theme
+    (setq doom-themes-treemacs-theme "doom-gruvbox")
     (doom-themes-treemacs-config)
     ;; Corrects (and improves) org-mode's native fontification.
-
     (doom-themes-org-config))
 #+END_SRC
 
@@ -287,6 +307,41 @@ I love how Org files look with poet theme, so it's a must.
 #+begin_src elisp
   (use-package poet-theme)
 #+end_src
+
+**** Transparency
+
+Toggle transparency for fun and no profit. Emacs on MacOS doesn't
+support transparency, However it's still fun to have it when using
+a tiling window manager on a large monitor.
+
+#+begin_src elisp
+  (defvar transparency-level-active 90
+    "Opacity level when Emacs is active.")
+
+  (defvar transparency-level-inactive 90
+    "Opacity level when Emacs is inactive.")
+
+  (defvar transparency-enabled t
+    "Toggle for the transparency feature.")
+
+  (defun toggle-transparency ()
+    "Toggle between transparent and opaque Emacs frames."
+    (interactive)
+    (if transparency-enabled
+        (progn
+          (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+          (setq transparency-enabled nil)
+          (message "Transparency disabled"))
+      (progn
+        (set-frame-parameter (selected-frame) 'alpha
+                             `(,transparency-level-active . ,transparency-level-inactive))
+        (setq transparency-enabled t)
+        (message "Transparency enabled"))))
+
+  (global-set-key (kbd "C-c t") 'toggle-transparency)
+
+#+end_src
+
 
 **** Dashboard
 
@@ -444,14 +499,18 @@ but I plan to go with the "org-modern" package. It looks nice enough for
 now. However, Certain features don't work wit org-indent-mode, which I
 have turned on.
 
-#+BEGIN_SRC elisp
-  (use-package org-modern
-    :config
-    (global-org-modern-mode))
+*EDIT: Seems like I like the default styling of org mode more*
 
-  ;; For shorthand completions, lile <s-TAB for source code blocks.
-  (require'org-tempo)
+#+BEGIN_SRC elisp
+  ;; (use-package org-modern
+  ;;   :config
+  ;;   (global-org-modern-mode))
 #+END_SRC
+
+For shorthand completions, lile <s-TAB for source code blocks.
+#+begin_src elisp
+  (require 'org-tempo)
+#+end_src
 
 **** Org TOC
 
@@ -476,9 +535,9 @@ Active Babel languages
 ;; TODO
 
 #+begin_src elisp
-  ;; (org-babel-do-load-languages
-  ;;  'org-babel-load-languages
-  ;;  '((C . t) (elisp . t) (python . t) ))
+   (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((C . t) (python . t) (haskell . t) ))
 #+end_src
 
 **** Org Hugo(ox-hugo)
@@ -536,6 +595,27 @@ notes.
     (deft-use-filter-string-for-filename t)
     (deft-default-extension "org")
     (deft-directory org-roam-directory))
+#+end_src
+
+**** Org Roam UI
+
+A visual interface for Org Roam. 
+
+#+begin_src elisp
+  (use-package org-roam-ui
+    :straight
+      (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
+      :after org-roam
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  ;;  :hook (after-init . org-roam-ui-mode)
+      :config
+      (setq org-roam-ui-sync-theme t
+            org-roam-ui-follow t
+            org-roam-ui-update-on-save t
+            org-roam-ui-open-on-start t))
+
 #+end_src
 
 **** Org Export Settings(htmlize)
@@ -643,11 +723,12 @@ on them.
 
 #+end_src
 
-*** Magit
+*** Version Control
 :PROPERTIES:
-:CUSTOM_ID: magit
+:CUSTOM_ID: version-control
 :END:
 
+**** Magit
 
 The magical Git client for emacs. 
 
@@ -655,6 +736,35 @@ The magical Git client for emacs.
   (use-package magit
     :ensure t
     :pin melpa-stable)
+#+end_src
+
+**** Diff-hl
+
+Emacs port of the Sublime Git Gutter
+
+#+begin_src elisp
+  (use-package diff-hl
+    :straight (diff-hl :type git :host github :repo "dgutov/diff-hl")
+    :hook (prog-mode . diff-hl-mode)
+    :config
+    ;; Limit diff-hl to specific modes
+    (setq diff-hl-global-modes '(not image-mode pdf-view-mode))
+
+    ;; Use histogram diff algorithm
+    (setq vc-git-diff-switches '("--histogram"))
+
+    ;; Slightly more conservative delay before updating the diff
+    (setq diff-hl-flydiff-delay 0.5)  ; default: 0.3
+
+    ;; Perform async updates to avoid blocking Emacs
+    (setq diff-hl-update-async t)
+
+    ;; Do not show staged changes in real-time
+    (setq diff-hl-show-staged-changes nil)
+
+    ;; Enable on-the-fly diff highlighting and margin mode
+    (diff-hl-flydiff-mode)
+    (diff-hl-margin-mode))
 #+end_src
 
 *** Completions
@@ -1057,7 +1167,6 @@ Custom functions to check and install tree-sitter.
 
 
 
-
 ** Programming stuff
 :PROPERTIES:
 :CUSTOM_ID: programming-stuff
@@ -1119,6 +1228,19 @@ Eglot hooks for Go
     (push '("\\.rs\\'" . rust-mode) auto-mode-alist))
 #+end_src
 
+*** Haskell
+:PROPERTIES:
+:CUSTOM_ID: haskell
+:END:
+
+Am I a 21st century Hippie now?
+
+#+begin_src elisp
+  (use-package haskell-mode
+    :straight (:host github :repo "haskell/haskell-mode")
+    :mode "\\.hs\\'")
+#+end_src
+
 *** Typst
 :PROPERTIES:
 :CUSTOM_ID: typst
@@ -1138,6 +1260,123 @@ Seems like a decent alternative to LaTex.
     (typst-ts-mode-grammar-location (expand-file-name "tree-sitter/libtree-sitter-typst.dylib" user-emacs-directory)))
 #+end_src
 
+
+Modify typst-ts-compile to use absolute path.
+
+#+begin_src elisp
+  (defun typst-ts-compile ()
+    "Compile current Typst file."
+    (interactive)
+    (run-hooks typst-ts-compile-before-compilation-hook)
+    (let ((full-file-path (expand-file-name buffer-file-name)))
+      (add-hook 'compilation-finish-functions
+                (typst-ts-compile--compilation-finish-function (current-buffer)))
+      (compile
+       (format "%s compile %s %s"
+               typst-ts-compile-executable-location
+               full-file-path
+               typst-ts-compile-options)
+       'typst-ts-compilation-mode)))
+#+end_src
+
+Custom function to ask for root directory.
+
+#+begin_src elisp
+  (defcustom typst-ts-root-folder nil
+    "Root folder for Typst projects."
+    :type 'directory
+    :group 'typst-ts-compile)
+
+  (defun typst-ts-set-root-folder (folder)
+    "Set the root folder for Typst projects."
+    (interactive "DSelect Typst root folder: ")
+    (setq typst-ts-root-folder folder)
+    (setenv "TYPST_ROOT" folder)
+    (message "Typst root folder set to: %s" folder))
+
+  (defun typst-ts-compile-with-root ()
+    "Compile current Typst file with the root folder set."
+    (interactive)
+    (unless typst-ts-root-folder
+      (call-interactively 'typst-ts-set-root-folder))
+    (let ((default-directory typst-ts-root-folder))
+      (typst-ts-compile)))
+  
+#+end_src
+
+*** LaTex
+:PROPERTIES:
+:CUSTOM_ID: latex
+:END:
+
+Not sure if LaTex belongs here.
+
+#+begin_src elisp
+  ;; Install Auctex using straigt.el
+
+  (use-package auctex
+      :straight t
+      :straight (:type git :host github :repo "emacs-straight/auctex")
+      :config
+      (setq TeX-auto-save t)
+      (setq TeX-parse-self t)
+      (setq-default TeX-master nil)
+      (setq TeX-PDF-mode t)
+      (setq TeX-source-correlate-mode t)
+      (setq TeX-source-correlate-start-server t)
+      (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+              TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
+              TeX-source-correlate-start-server t)
+      (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+      (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
+      (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+      (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-start-server)
+      (add-hook 'LaTeX-mode-hook 'TeX-view-mode)
+      (add-hook 'LaTeX-mode-hook 'TeX-fold-mode)
+      (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+      (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+      (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+      (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+      (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+      (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+      (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+      (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+      (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+      (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+      (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+      (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+      (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+      (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+      (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+      (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+      (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+      (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
+      (add-hook 'LaTeX-mode-hook 'fly))
+
+#+end_src
+
+
+  Install pdf tools using straight.el with minimal configuration
+
+#+begin_src elisp
+
+  (use-package pdf-tools
+    :straight t
+    :config
+    ;; Initialize the PDF Tools package
+    (pdf-tools-install)
+
+    ;; Set PDF view mode to continuous mode
+    (setq-default pdf-view-display-size 'fit-width)
+
+    ;; Enable midnight mode for PDFs
+    (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode))
+
+
+  ;; Set keybinding to install PDF Tools
+  (global-set-key (kbd "C-c p") 'pdf-tools-install)
+#+end_src
+
 *** Yaml
 :PROPERTIES:
 :CUSTOM_ID: yaml
@@ -1153,6 +1392,32 @@ or =yaml= files.
     (push '("\\.yaml$" . yaml-mode) auto-mode-alist))
 #+end_src
 
+*** Markdown
+:PROPERTIES:
+:CUSTOM_ID: markdown
+:END:
+
+
+Well, most readme files are markdown anyways.
+
+#+begin_src elisp
+  (use-package markdown-mode
+    :straight (:host github :repo "jrblevin/markdown-mode")
+    :mode "\\.md\\'")
+#+end_src
+
+*** Lua
+:PROPERTIES:
+:CUSTOM_ID: lua
+:END:
+
+Because every damn thing needs lua for configuration.
+
+#+begin_src elisp
+  (use-package lua-mode
+    :straight (:host github :repo "immerrr/lua-mode")
+    :mode "\\.lua\\'")
+#+end_src
 
 ** Non-Human Intelligence
 :PROPERTIES:
@@ -1175,3 +1440,4 @@ or =yaml= files.
                 ("C-TAB" . 'copilot-accept-completion)
                 ("C-<tab>" . 'copilot-accept-completion)))
 #+end_src
+
