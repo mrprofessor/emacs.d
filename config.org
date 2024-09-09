@@ -4,25 +4,26 @@
 #+OPTIONS: toc:3 author:nil date:nil html-postamble:nil results:none
 #+PROPERTY: header-args    :results none
 
-** Table of contents                                      :TOC_5_gh:noexport:
+** Table of contents                                   :TOC_5_gh:noexport:
 :PROPERTIES:
 :CUSTOM_ID: table-of-contents
 :END:
-  - [[#introduction][Introduction]]
+
+  - [[#overview][Overview]]
   - [[#initialization][Initialization]]
     - [[#basics][Basics]]
-    - [[#emacs-backups][Emacs Backups]]
-  - [[#packages][Packages]]
+  - [[#package-management][Package Management]]
     - [[#intialize-packages][Intialize packages]]
       - [[#install-straightel][Install straight.el]]
-    - [[#appearence][Appearence]]
-      - [[#all-the-icons][All the Icons]]
-      - [[#themes][Themes]]
-      - [[#transparency][Transparency]]
-      - [[#dashboard][Dashboard]]
-      - [[#modeline][Modeline]]
+  - [[#appearence][Appearence]]
+    - [[#all-the-icons][All the Icons]]
+    - [[#themes][Themes]]
+    - [[#transparency][Transparency]]
+    - [[#dashboard][Dashboard]]
+    - [[#modeline][Modeline]]
         - [[#nano-modeline][Nano Modeline]]
         - [[#custom-modeline][Custom Modeline]]
+  - [[#functionality][Functionality]]
     - [[#evil-mode][Evil Mode]]
     - [[#org-mode][Org Mode]]
       - [[#org-toc][Org TOC]]
@@ -40,6 +41,7 @@
     - [[#completions][Completions]]
       - [[#ivy-rich][Ivy rich]]
       - [[#hydra][Hydra]]
+      - [[#ivy-posframe][Ivy-posframe]]
       - [[#which-key][Which-key]]
     - [[#treemacs][Treemacs]]
     - [[#restclient][RestClient]]
@@ -66,22 +68,23 @@
   - [[#non-human-intelligence][Non-Human Intelligence]]
     - [[#copilot][Copilot]]
 
-** Introduction
+** Overview
 :PROPERTIES:
-:CUSTOM_ID: introduction
+:CUSTOM_ID: overview
 :END:
 
-It's been a while since I have started using Emacs, and after using DOOM
-Emacs for a while, I have decided to scratch my own itch and create my
-very own Emacs configuration. It's not as refined as DOOM or Spacemacs,
-neither it has all the bells and whistles, but it's mine.
+It's been a while since I started using Emacs, and after using DOOM
+Emacs for some time, I decided to scratch my own itch and create my
+very own Emacs configuration. It's not as refined as DOOM or
+Spacemacs, and it doesn't have all the bells and whistles, but it's
+mine.
 
-Why I like Emacs you ask? Well, for me it's like riding a sports bike,
-it's not for everyone, has its quirks, and might not be the most
-efficient tool for the job. But it's exhilarating! As a "professional"
-programmer, I should be using the most efficient tool for the job, but
-"professional" is boring and I don't like boring.
-
+Why do I like Emacs, you ask? For me, it's like riding a sports bike;
+it's not for everyone, but it's exhilarating! It has its quirks and
+might not be the most efficient tool for the job, but it’s a joy to
+use. As a "professional" programmer, I should probably use the most
+efficient tool for the job, but "professional" is boring, and I don't
+like boring.
 
 [[https://imgs.xkcd.com/comics/real_programmers.png]]
 
@@ -89,108 +92,117 @@ programmer, I should be using the most efficient tool for the job, but
 :PROPERTIES:
 :CUSTOM_ID: initialization
 :END:
+
+Basic setup for Emacs appearance and behavior.
+
 *** Basics
 :PROPERTIES:
 :CUSTOM_ID: basics
 :END:
-- Menu and toolbars
-
-#+BEGIN_SRC elisp
-  (scroll-bar-mode -1)                  ; Disable visible scrollbar
-  (tool-bar-mode -1)                    ; Disable tool bar
-  (tooltip-mode -1)                     ; Disable tooltip
-  (set-fringe-mode 30)                  ; Give some breathing room?
-  (menu-bar-mode -1)                    ; Go full spartan
-#+END_SRC
-
-- Scroll Emacs
-
-#+BEGIN_SRC elisp
-  (setq scroll-step    1
-        scroll-conservatively 10000)
-#+END_SRC
-
-- Set up the visible bell
-
-#+BEGIN_SRC elisp
-  (setq visible-bell t)
-#+END_SRC
-
-- Set Fonts
-
-#+BEGIN_SRC elisp
-  (set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
-#+END_SRC
-
-
-- Display line numbers
-
-#+BEGIN_SRC elisp
-  (global-display-line-numbers-mode t)
-
-  ;; We don't want line numbers everywhere, e.g shell
-  (dolist (mode '(org-hook-mode
-                  term-mode-hook
-                  eshell-mode-hook
-                  shell-mode-hook))
-    (add-hook mode(lambda() (display-line-numbers-mode 0))))
-#+END_SRC
-
-- Truncate long lines in certain modes
+- Disable toolbars, scrollbars, and tooltips.
   
-#+BEGIN_SRC elisp
-  (add-hook 'org-mode-hook (lambda() (setq truncate-lines nil)))
-#+END_SRC
-
-- Set tab-width
-#+begin_src elisp
-  (setq-default indent-tabs-mode nil)
-  (setq-default tab-width 4)
-  (setq indent-line-function 'insert-tab)
-#+end_src
-
-- Display a vertical line on 80th character
-
   #+begin_src elisp
-    (setq-default display-fill-column-indicator-column 79)
-    (global-display-fill-column-indicator-mode 1)
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    (tooltip-mode -1)
+    (set-fringe-mode 0)
+    (menu-bar-mode -1)
   #+end_src
 
-- Start emacs in a fullscreen mode
-  EDIT: 19/08/2024: It doesn't seem to work well with Mac tiling manager
-  [[https://github.com/nikitabobko/AeroSpace][Aerospace]].
+- Set scroll length
   
-#+begin_src elisp
-    ;; start the initial frame maximized
-    ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+  #+begin_src elisp
+    (setq scroll-step 1 scroll-conservatively 10000)
+  #+end_src
 
-    ;; start every frame maximized
+- Set visible bell
+  
+  #+begin_src elisp
+    (setq visible-bell t)
+  #+end_src
+  
+- Set fonts. TODO: Check if the font exists
+  
+  #+begin_src elisp
+    (set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
+  #+end_src
+
+- Configure line numbers
+  
+  #+begin_src elisp
+        (global-display-line-numbers-mode t)
+
+    ;; We don't want line numbers in certain modes, e.g., shell and pdf-view
+    (dolist (mode '(org-mode-hook
+                    term-mode-hook
+                    eshell-mode-hook
+                    shell-mode-hook
+                    pdf-view-mode-hook))
+      (add-hook mode (lambda () (display-line-numbers-mode 0))))
+  #+end_src
+
+- Configure tabs behavior
+  
+  #+begin_src elisp
+    ;; (tab-bar-mode 1)
+    (setq-default indent-tabs-mode nil)
+    (setq-default tab-width 4)
+    (setq indent-line-function 'insert-tab)
+  #+end_src
+
+- Display vertical line at 79 characters
+  
+  #+begin_src elisp
+    (setq-default display-fill-column-indicator-column 79)
+    (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+  #+end_src
+  
+- Customize window behavior.
+  #+begin_src elisp
+    ;; Start emacs in fullscreen mode (Mac tiling manager conflict)
+    ;; (add-to-list 'initial-frame-alist '(fullscreen . maximized))
     ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+    ;; Remove title bar with maximize and minimize options
     ;; (add-to-list 'default-frame-alist '(undecorated . t))
-    ;; (setq-default frame-title-format nil)
-    (add-to-list 'default-frame-alist '(undecorated . t))
-    (add-to-list 'default-frame-alist '(drag-internal-border . 1))
-    ;; Makes the window draggable even without the title bar
+    ;; (add-to-list 'default-frame-alist '(drag-internal-border . 1))
+
+    ;; Add an empty header if title bars are removed
+    ;; (setq-default header-line-format " ")
 
 
+    ;; This displays "Emacs - buffer_name"
+    ;; (setq frame-title-format
+    ;;       '("Emacs - %b"))  
+    ;; (add-to-list 'default-frame-alist
+    ;;              '(title . "Emacs"))
 
-#+end_src
+    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+    (add-to-list 'default-frame-alist '(ns-appearance . dark))
+    (setq ns-use-proxy-icon nil)
+    (setq frame-title-format nil)
 
-*** Emacs Backups
+  #+end_src
+
+- Backup in one place. flat, no tree structure
+  #+begin_src elisp
+    (setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup")))
+  #+end_src
+
+- Miscellaneous
+  
+  #+begin_src elisp
+    ;; Truncate long lines in certain modes
+    (add-hook 'org-mode-hook (lambda() (setq truncate-lines nil)))
+
+  #+end_src
+
+** Package Management
 :PROPERTIES:
-:CUSTOM_ID: emacs-backups
+:CUSTOM_ID: package-management
 :END:
 
-Backup in one place. flat, no tree structure
-#+begin_src elisp
-  (setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup")))
-#+end_src
-
-** Packages
-:PROPERTIES:
-:CUSTOM_ID: packages
-:END:
+Setting up package managers and installing essential packages.
 
 *** Intialize packages
 :PROPERTIES:
@@ -218,10 +230,6 @@ Backup in one place. flat, no tree structure
 
 #+END_SRC
 
-- Install local packages manually
-
-  TODO
-  - Certain packages are needed to be installed maually, e.g tomelr
     
 **** Install straight.el
 
@@ -260,12 +268,15 @@ Avoid Org version mismatch with Straight.el
   (straight-use-package '(org :type built-in))
 #+end_src
 
-*** Appearence
+** Appearence
 :PROPERTIES:
 :CUSTOM_ID: appearence
 :END:
 
-**** All the Icons
+*** All the Icons
+:PROPERTIES:
+:CUSTOM_ID: all-the-icons
+:END:
 
 Why we need all the icons? Because they are pretty.
 
@@ -274,8 +285,10 @@ Why we need all the icons? Because they are pretty.
     :ensure t)
 #+end_src
 
-
-**** Themes
+*** Themes
+:PROPERTIES:
+:CUSTOM_ID: themes
+:END:
 
 Doom Emacs has consolidated a bunch of nice looking themes, we would
 like to get them all.
@@ -289,7 +302,8 @@ like to get them all.
     (setq doom-themes-enable-bold t    ; If nil, bold is universally disabled
           doom-themes-enable-italic t) ; If nil, italics is universally disabled
 
-    (load-theme 'doom-oksolar-light t)   ; Load a theme
+    ;; (load-theme 'doom-Iosvkem t)   ; Load a theme
+    ;; (load-theme 'doom-oksolar-light t)   ; Load a theme
 
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
@@ -308,17 +322,20 @@ I love how Org files look with poet theme, so it's a must.
   (use-package poet-theme)
 #+end_src
 
-**** Transparency
+*** Transparency
+:PROPERTIES:
+:CUSTOM_ID: transparency
+:END:
 
 Toggle transparency for fun and no profit. Emacs on MacOS doesn't
 support transparency, However it's still fun to have it when using
 a tiling window manager on a large monitor.
 
 #+begin_src elisp
-  (defvar transparency-level-active 90
+  (defvar transparency-level-active 85
     "Opacity level when Emacs is active.")
 
-  (defvar transparency-level-inactive 90
+  (defvar transparency-level-inactive 85
     "Opacity level when Emacs is inactive.")
 
   (defvar transparency-enabled t
@@ -342,8 +359,10 @@ a tiling window manager on a large monitor.
 
 #+end_src
 
-
-**** Dashboard
+*** Dashboard
+:PROPERTIES:
+:CUSTOM_ID: dashboard
+:END:
 
 We would need emacs-dashboard package for an easier configuration.
 
@@ -356,8 +375,10 @@ We would need emacs-dashboard package for an easier configuration.
     (dashboard-setup-startup-hook))
 #+end_src
 
-**** Modeline
-
+*** Modeline
+:PROPERTIES:
+:CUSTOM_ID: modeline
+:END:
 ***** Nano Modeline
 
 A minimal modeline for Emacs.
@@ -402,6 +423,10 @@ Edit: I like this over doom-modeline to be honest.
   ;;                     :underline nil)
 #+end_src
 
+** Functionality
+:PROPERTIES:
+:CUSTOM_ID: functionality
+:END:
 *** Evil Mode
 :PROPERTIES:
 :CUSTOM_ID: evil-mode
@@ -410,107 +435,90 @@ Edit: I like this over doom-modeline to be honest.
 - Since I have been using VI for quite sometime now, I don't want to
   train myself to learn Emacs
 
-#+BEGIN_SRC elisp
-  ;; package: evil
-  ;; First thing first. Be EVIL!
-  (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-want-C-u-scroll t)
-    (setq evil-want-C-i-jump nil)
-    :config
-    (evil-mode 1)
-    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+  #+begin_src elisp
+    (use-package evil
+      :init
+      (setq evil-want-integration t)
+      (setq evil-want-keybinding nil)
+      (setq evil-want-C-u-scroll t)
+      (setq evil-want-C-i-jump nil)
+      :config
+      (evil-mode 1)
+      (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+      (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join))
+
+    ;; Unbind certain keys
+    (with-eval-after-load 'evil-maps
+      (define-key evil-motion-state-map (kbd "SPC") nil)
+      (define-key evil-motion-state-map (kbd "RET") nil)
+      (define-key evil-motion-state-map (kbd "TAB") nil))
 
     ;; Use visual line motions even outside of visual-line-mode buffers
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
+    
     (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal))
+    (evil-set-initial-state 'dashboard-mode 'normal)
+  #+end_src
 
-
-  ;; package: evil-collection
-  ;; Now be EVIL on every mode
-  ;; TODO: Doesn't work
-  (use-package evil-collection
-    :after evil
-    :ensure t
-    :config
-    (evil-collection-init))
-#+END_SRC
-
-Unbind certain keys.
-
-#+begin_src elisp
-  (with-eval-after-load 'evil-maps
-    (define-key evil-motion-state-map (kbd "SPC") nil)
-    (define-key evil-motion-state-map (kbd "RET") nil)
-    (define-key evil-motion-state-map (kbd "TAB") nil))
-#+end_src
-
+- Evil on every mode
+  #+begin_src elisp
+    ;; package: evil-collection
+    ;; Now be EVIL on every mode
+    ;; TODO: Doesn't work
+    (use-package evil-collection
+      :after evil
+      :ensure t
+      :config
+      (evil-collection-init))
+  #+end_src
+            
 *** Org Mode
 :PROPERTIES:
 :CUSTOM_ID: org-mode
 :END:
 
-
 Org mode is probably the best thing happened to the mankind. j/k
 By default Org mode doesn't look very nice, at least not as a word
 processor. Our goal is to make it look like one.
 
-Enable indentation(org-indent-mode). To control individual files, use
-=#+STARTUP: indent= or =#+STARTUP: noindent=.
+- Enable indentation(org-indent-mode). To control individual files,
+  use ~#+STARTUP: indent~ or ~#+STARTUP: noindent~ .
+    
+  #+begin_src elisp
+    (setq org-startup-indented t)
+  #+end_src
 
-#+begin_src elisp
-  (setq org-startup-indented t)
-#+end_src
+- Set a conservative indentation, By default the value is set to 2
+    
+  #+begin_src elisp
+    (setq org-indent-indentation-per-level 2)
+  #+end_src   
 
-Set a conservative indentation, By default the value is set to 2
+- Emacs shouldn't add whitespace to indent text.
 
-#+begin_src elisp
-  (setq org-indent-indentation-per-level 2)
-#+end_src
+  #+begin_src elisp
+    (setq org-adapt-indentation nil)
+  #+end_src
 
-Emacs shouldn't add whitespace to indent text.
+- RETURN will follow links in org mode.
 
-#+begin_src elisp
-  (setq org-adapt-indentation nil)
-#+end_src
+  #+begin_src elisp
+    (setq org-return-follows-link  t)
+  #+end_src
 
-RETURN will follow links in org mode.
+- Show inline images in org mode.
 
-#+begin_src elisp
-  (setq org-return-follows-link  t)
-#+end_src
+  #+begin_src elisp
+    (setq org-display-remote-inline-images 'cache) ;; enable caching
+  #+end_src
 
-Show inline images in org mode.
-
-#+begin_src elisp
-  
-  (setq org-display-remote-inline-images 'cache) ;; enable caching
-#+end_src
-
-
-There are a couple of nice blog posts on beautifying the Org mode,
-but I plan to go with the "org-modern" package. It looks nice enough for
-now. However, Certain features don't work wit org-indent-mode, which I
-have turned on.
-
-*EDIT: Seems like I like the default styling of org mode more*
-
-#+BEGIN_SRC elisp
-  ;; (use-package org-modern
-  ;;   :config
-  ;;   (global-org-modern-mode))
-#+END_SRC
-
-For shorthand completions, lile <s-TAB for source code blocks.
-#+begin_src elisp
-  (require 'org-tempo)
-#+end_src
+- For shorthand completions, lile <s-TAB for source code blocks.
+    
+  #+begin_src elisp
+    (require 'org-tempo)
+  #+end_src
+    
 
 **** Org TOC
 
@@ -532,8 +540,6 @@ ref: [[https://github.com/snosov1/toc-org][toc-org]]
 
 Active Babel languages
 
-;; TODO
-
 #+begin_src elisp
    (org-babel-do-load-languages
     'org-babel-load-languages
@@ -545,10 +551,16 @@ Active Babel languages
 ox-hugo helps me manage my website using org files.
 
 I couldn't install =tomelr= package, using =use-package=, so had to
-install it manually.
+install it manually. Edit: 08/09/2024 - Installed it using straight.el
 
 #+begin_src elisp
+(use-package tomelr
+  :straight (:host github :repo "kaushalmodi/tomelr" :files ("*.el"))
+  :ensure t)
+#+end_src
 
+
+#+begin_src elisp
   (use-package ox-hugo
     :ensure t   ;Auto-install the package from Melpa
     :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
@@ -577,7 +589,7 @@ A sophisticated note taking mechanishm. Essentially a clone of
 #+end_src
 
 #+begin_src elisp
-  (setq org-roam-directory "~/dev/hivemind/notes")
+  (setq org-roam-directory "~/Documents/org/hivemind/notes")
 #+end_src
 
 ***** Full text search with Deft
@@ -772,76 +784,72 @@ Emacs port of the Sublime Git Gutter
 :CUSTOM_ID: completions
 :END:
 
-#+begin_src elisp
-  ;; package: ivy/counsel/swiper
-  ;; Set up Ivy for better completions
-  ;; Installing counsel will install ivy and swiper.
-  (use-package counsel
-    :diminish
-    :bind (("C-s" . swiper)
-           ;; Counsel stuff
-           ("M-x" . counsel-M-x)
-           ("M-x" . counsel-M-x)
-           ("s-x" . counsel-M-x) ;; Super-X should do M-X
-           ("C-x b" . counsel-ibuffer)
-           ("C-x C-f" . counsel-find-file)
-           :map minibuffer-local-map
-           ("C-x C-r" . 'counsel-minibuffer-history)
-           :map ivy-minibuffer-map
-           ;; ("TAB" . ivy-alt-done)
-           ;; ("TAB" . ivy-partial-or-done)
-           ("C-f" . ivy-alt-done)
-           ("C-l" . ivy-alt-done)
-           ("C-j" . ivy-next-line)
-           ("C-k" . ivy-previous-line)
-           :map ivy-switch-buffer-map
-           ("C-k" . ivy-previous-line)
-           ("C-l" . ivy-done)
-           ("C-d" . ivy-switch-buffer-kill)
-           :map ivy-reverse-i-search-map
-           ("C-k" . ivy-previous-line)
-           ("C-d" . ivy-reverse-i-search-kill))
-    :init
-    (ivy-mode 1))
+Set up Ivy, Counsel, and Swiper for better completions.
 
+#+begin_src elisp
   (use-package counsel
-    :bind (("C-M-j" . 'counsel-switch-buffer)
+    :straight t
+    :diminish
+    :bind (("C-s" . swiper)                         ;; Search using Swiper
+           ("M-x" . counsel-M-x)                    ;; Enhanced M-x
+           ("s-x" . counsel-M-x)                    ;; Super-X for M-x
+           ("C-x C-f" . counsel-find-file)          ;; Enhanced find file
+           ("C-x b" . counsel-switch-buffer)        ;; Enhanced buffer switch
            :map minibuffer-local-map
-           ("C-r" . 'counsel-minibuffer-history))
+           ("C-x C-r" . counsel-minibuffer-history) ;; Access minibuffer history
+           ("C-r" . counsel-minibuffer-history)     ;; Redundant, can be removed
+           :map ivy-minibuffer-map
+           ("C-j" . ivy-next-line)                  ;; Move down the list
+           ("C-k" . ivy-previous-line)              ;; Move up the list
+           ("C-f" . ivy-alt-done)                   ;; Complete selection
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)              ;; Move up in buffer list
+           ("C-d" . ivy-switch-buffer-kill)         ;; Kill selected buffer
+           ("C-f" . ivy-done)                       ;; Complete buffer selection
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)              ;; Move up in reverse search
+           ("C-d" . ivy-reverse-i-search-kill))     ;; Kill in reverse search
     :custom
     (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
+    :init
+    (ivy-mode 1)                                    ;; Enable Ivy
     :config
-    (counsel-mode 1))
+    (counsel-mode 1))                               ;; Enable Counsel
+#+end_src
 
+Prescient settings for sorting and filtering.
+
+#+begin_src elisp
+  ;; Package: ivy-prescient
   (use-package ivy-prescient
+    :straight t
     :after counsel
     :custom
-    (ivy-prescient-enable-filtering nil)
+    (ivy-prescient-enable-filtering nil)           ;; Disable filtering
     :config
-    ;; Uncomment the following line to have sorting remembered across sessions!
-                                          ;(prescient-persist-mode 1)
-
-
+    ;; Uncomment the following line to persist sorting across sessions
+    ;; (prescient-persist-mode 1)
     (ivy-prescient-mode 1))
 
-  ;; Remove the "^" character from counsel-M-X 
-  (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "") 
+  ;; Remove the "^" character from counsel-M-x
+  (setcdr (assoc 'counsel-M-x ivy-initial-inputs-alist) "")
 #+end_src
 
 
 **** Ivy rich
 
-A more friendly interface for Ivy.
+Ivy-rich for better Ivy interface
 
 #+begin_src elisp
   ;; package: ivy-rich
-  ;; More friendly interface (display transformer) for ivy.
   (use-package ivy-rich
+    :straight t
     :init
     (ivy-rich-mode 1))
 
   ;; All the icons + Ivy
   (use-package all-the-icons-ivy-rich
+    :straight t
     :ensure t
     :init (all-the-icons-ivy-rich-mode 1))
 #+end_src
@@ -857,6 +865,15 @@ A more friendly interface for Ivy.
     ("j" text-scale-increase "in")
     ("k" text-scale-decrease "out")
     ("f" nil "finished" :exit t))
+#+end_src
+
+**** Ivy-posframe
+
+Show Ivy completions in a posframe.
+
+#+begin_src elisp
+  ;; (use-package ivy-posframe :straight t)
+  ;; (ivy-posframe-mode 1)
 #+end_src
 
 **** Which-key
@@ -918,7 +935,6 @@ sometimes doesn't work as intended.
       :pin melpa) 
 
 #+end_src
-
 
 *** RestClient
 :PROPERTIES:
@@ -1166,7 +1182,6 @@ Custom functions to check and install tree-sitter.
 #+end_src
 
 
-
 ** Programming stuff
 :PROPERTIES:
 :CUSTOM_ID: programming-stuff
@@ -1279,7 +1294,7 @@ Modify typst-ts-compile to use absolute path.
        'typst-ts-compilation-mode)))
 #+end_src
 
-Custom function to ask for root directory.
+Custom functions to ask for root directory.
 
 #+begin_src elisp
   (defcustom typst-ts-root-folder nil
@@ -1301,7 +1316,11 @@ Custom function to ask for root directory.
       (call-interactively 'typst-ts-set-root-folder))
     (let ((default-directory typst-ts-root-folder))
       (typst-ts-compile)))
-  
+
+  (with-eval-after-load 'typst-ts-mode
+    (define-key typst-ts-mode-map (kbd "C-c C-c s") #'typst-ts-set-root-folder)
+    (define-key typst-ts-mode-map (kbd "C-c C-c r") #'typst-ts-compile-with-root))
+
 #+end_src
 
 *** LaTex
@@ -1359,7 +1378,6 @@ Not sure if LaTex belongs here.
   Install pdf tools using straight.el with minimal configuration
 
 #+begin_src elisp
-
   (use-package pdf-tools
     :straight t
     :config
@@ -1367,15 +1385,21 @@ Not sure if LaTex belongs here.
     (pdf-tools-install)
 
     ;; Set PDF view mode to continuous mode
-    (setq-default pdf-view-display-size 'fit-width)
+    (setq-default pdf-view-display-size 'fit-width))
 
     ;; Enable midnight mode for PDFs
-    (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode))
+    ;; (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode))
 
 
   ;; Set keybinding to install PDF Tools
   (global-set-key (kbd "C-c p") 'pdf-tools-install)
 #+end_src
+
+- Latex Preview Pane
+
+  #+begin_src elisp
+    (use-package latex-preview-pane :straight t)
+  #+end_src
 
 *** Yaml
 :PROPERTIES:
@@ -1439,5 +1463,7 @@ Because every damn thing needs lua for configuration.
                 ("TAB" . 'copilot-accept-completion-by-word)
                 ("C-TAB" . 'copilot-accept-completion)
                 ("C-<tab>" . 'copilot-accept-completion)))
-#+end_src
 
+  ;; Suppress warnings from copilot
+  (setq warning-suppress-types '((copilot)))
+#+end_src
