@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-09-09 Mon 16:25 -->
+<!-- 2024-09-22 Sun 22:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Emacs Operating System</title>
@@ -204,14 +204,19 @@
 <li><a href="#overview">1. Overview</a></li>
 <li><a href="#initialization">2. Initialization</a>
 <ul>
-<li><a href="#basics">2.1. Basics</a></li>
+<li><a href="#custom-variables">2.1. Custom Variables</a>
+<ul>
+<li><a href="#org344fce7">2.1.1. Directories</a></li>
+</ul>
+</li>
+<li><a href="#basics">2.2. Basics</a></li>
 </ul>
 </li>
 <li><a href="#package-management">3. Package Management</a>
 <ul>
 <li><a href="#intialize-packages">3.1. Intialize packages</a>
 <ul>
-<li><a href="#orgcc36150">3.1.1. Install straight.el</a></li>
+<li><a href="#orgada4b15">3.1.1. Install straight.el</a></li>
 </ul>
 </li>
 </ul>
@@ -223,6 +228,7 @@
 <li><a href="#transparency">4.3. Transparency</a></li>
 <li><a href="#dashboard">4.4. Dashboard</a></li>
 <li><a href="#modeline">4.5. Modeline</a></li>
+<li><a href="#fancy-mini-buffer">4.6. Fancy Mini-Buffer</a></li>
 </ul>
 </li>
 <li><a href="#functionality">5. Functionality</a>
@@ -230,28 +236,29 @@
 <li><a href="#evil-mode">5.1. Evil Mode</a></li>
 <li><a href="#org-mode">5.2. Org Mode</a>
 <ul>
-<li><a href="#org5038d27">5.2.1. Org TOC</a></li>
-<li><a href="#org27069b2">5.2.2. Org Babel</a></li>
-<li><a href="#org63f2bbb">5.2.3. Org Hugo(ox-hugo)</a></li>
-<li><a href="#orgf1c5284">5.2.4. Org Roam</a></li>
-<li><a href="#orgb108ea6">5.2.5. Org Roam UI</a></li>
-<li><a href="#org7773fb9">5.2.6. Org Export Settings(htmlize)</a></li>
-<li><a href="#orge469c32">5.2.7. Human Readable IDs</a></li>
+<li><a href="#org1632faf">5.2.1. Org TOC</a></li>
+<li><a href="#org17ee105">5.2.2. Org Babel</a></li>
+<li><a href="#orga23450d">5.2.3. Org Hugo(ox-hugo)</a></li>
+<li><a href="#orgc615130">5.2.4. Org Download</a></li>
+<li><a href="#org520e861">5.2.5. Org Roam</a></li>
+<li><a href="#org4994480">5.2.6. Org Roam UI</a></li>
+<li><a href="#orgf131fc6">5.2.7. Org Export Settings(htmlize)</a></li>
+<li><a href="#org23673d4">5.2.8. Human Readable IDs</a></li>
 </ul>
 </li>
 <li><a href="#projectile">5.3. Projectile</a></li>
 <li><a href="#version-control">5.4. Version Control</a>
 <ul>
-<li><a href="#org9ccf251">5.4.1. Magit</a></li>
-<li><a href="#org2f5b886">5.4.2. Diff-hl</a></li>
+<li><a href="#org8975e06">5.4.1. Magit</a></li>
+<li><a href="#org86002e6">5.4.2. Diff-hl</a></li>
 </ul>
 </li>
 <li><a href="#completions">5.5. Completions</a>
 <ul>
-<li><a href="#org83c572a">5.5.1. Ivy rich</a></li>
-<li><a href="#org9633542">5.5.2. Hydra</a></li>
-<li><a href="#orgef5bc8b">5.5.3. Ivy-posframe</a></li>
-<li><a href="#org48638d4">5.5.4. Which-key</a></li>
+<li><a href="#org79372bb">5.5.1. Ivy rich</a></li>
+<li><a href="#org7b67c87">5.5.2. Hydra</a></li>
+<li><a href="#org41dfa0e">5.5.3. Ivy-posframe</a></li>
+<li><a href="#org1b6f4f0">5.5.4. Which-key</a></li>
 </ul>
 </li>
 <li><a href="#treemacs">5.6. Treemacs</a></li>
@@ -295,6 +302,12 @@
 <li><a href="#copilot">10.1. Copilot</a></li>
 </ul>
 </li>
+<li><a href="#music-player">11. Music Player</a></li>
+<li><a href="#miscellaneous">12. Miscellaneous</a>
+<ul>
+<li><a href="#custom-functions">12.1. Custom Functions</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -320,7 +333,7 @@ like boring.
 </p>
 
 
-<div id="org64ea050" class="figure">
+<div id="org19519a0" class="figure">
 <p><img src="https://imgs.xkcd.com/comics/real_programmers.png" alt="real_programmers.png" />
 </p>
 </div>
@@ -330,14 +343,74 @@ like boring.
 <div id="outline-container-initialization" class="outline-2">
 <h2 id="initialization"><span class="section-number-2">2.</span> Initialization</h2>
 <div class="outline-text-2" id="text-initialization">
+</div>
+
+
+<div id="outline-container-custom-variables" class="outline-3">
+<h3 id="custom-variables"><span class="section-number-3">2.1.</span> Custom Variables</h3>
+<div class="outline-text-3" id="text-custom-variables">
+</div>
+
+<div id="outline-container-org344fce7" class="outline-4">
+<h4 id="org344fce7"><span class="section-number-4">2.1.1.</span> Directories</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Consolidate all the directories here.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Define custom variables for directories</span>
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">eos/org-images-dir</span> <span class="org-string">"~/Documents/org/images"</span>
+  <span class="org-doc">"Directory to store images downloaded with org-download."</span>)
+
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">eos/org-roam-dir</span> <span class="org-string">"~/Documents/org/hivemind/notes"</span>
+  <span class="org-doc">"Directory to store org-roam notes."</span>)
+
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">eos/emacs-backup-dir</span> <span class="org-string">"~/.emacs.d/emacs-backup"</span>
+  <span class="org-doc">"Directory where Emacs backup files are stored."</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Don't create these directories if not present</span>
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">eos/dev-dir</span> <span class="org-string">"~/dev"</span>
+  <span class="org-doc">"Directory for personal development projects."</span>)
+
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">eos/work-dir</span> <span class="org-string">"~/work"</span>
+  <span class="org-doc">"Directory for work projects."</span>)
+
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">eos/school-dir</span> <span class="org-string">"~/school"</span>
+  <span class="org-doc">"Directory for school projects."</span>)
+
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">eos/project-dirs</span>
+  (list eos/dev-dir eos/work-dir eos/school-dir)
+  <span class="org-doc">"List of all directories for personal, work, and school projects."</span>)
+
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">eos/music-dir</span> <span class="org-string">"~/Documents/Music"</span>
+  <span class="org-doc">"Directory for local music files."</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Function to ensure a directory exists</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">eos/ensure-directory-exists</span> (dir)
+  <span class="org-doc">"Ensure that the directory DIR exists. Create it if necessary."</span>
+  (<span class="org-keyword">unless</span> (file-exists-p dir)
+    (make-directory dir t)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure required directories exist</span>
+(mapc #'eos/ensure-directory-exists
+      (list eos/org-images-dir
+            eos/org-roam-dir
+            eos/emacs-backup-dir))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-basics" class="outline-3">
+<h3 id="basics"><span class="section-number-3">2.2.</span> Basics</h3>
+<div class="outline-text-3" id="text-basics">
 <p>
 Basic setup for Emacs appearance and behavior.
 </p>
-</div>
 
-<div id="outline-container-basics" class="outline-3">
-<h3 id="basics"><span class="section-number-3">2.1.</span> Basics</h3>
-<div class="outline-text-3" id="text-basics">
 <ul class="org-ul">
 <li><p>
 Disable toolbars, scrollbars, and tooltips.
@@ -375,7 +448,8 @@ Set fonts. TODO: Check if the font exists
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp">(set-face-attribute 'default nil <span class="org-builtin">:font</span> <span class="org-string">"Cascadia Code NF"</span> <span class="org-builtin">:height</span> 160)
+<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">(set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)</span>
+(set-face-attribute 'default nil <span class="org-builtin">:font</span> <span class="org-string">"Iosevka"</span> <span class="org-builtin">:height</span> 160)
 </pre>
 </div></li>
 
@@ -449,10 +523,10 @@ Customize window behavior.
 </div></li>
 
 <li><p>
-Backup in one place. flat, no tree structure
+Backup in one place, flat, no tree structure
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp">(<span class="org-keyword">setq</span> backup-directory-alist '((<span class="org-string">""</span> . <span class="org-string">"~/.emacs.d/emacs-backup"</span>)))
+<pre class="src src-elisp">(<span class="org-keyword">setq</span> backup-directory-alist `((<span class="org-string">".*"</span> . ,eos/emacs-backup-dir)))
 </pre>
 </div></li>
 
@@ -508,8 +582,8 @@ Setting up package managers and installing essential packages.
 </div>
 
 
-<div id="outline-container-orgcc36150" class="outline-4">
-<h4 id="orgcc36150"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
+<div id="outline-container-orgada4b15" class="outline-4">
+<h4 id="orgada4b15"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 <code>use-package</code> does not support the additional properties  like :type,
@@ -594,8 +668,7 @@ like to get them all.
   (<span class="org-keyword">setq</span> doom-themes-enable-bold t    <span class="org-comment-delimiter">; </span><span class="org-comment">If nil, bold is universally disabled</span>
         doom-themes-enable-italic t) <span class="org-comment-delimiter">; </span><span class="org-comment">If nil, italics is universally disabled</span>
 
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">(load-theme 'doom-Iosvkem t)   ; Load a theme</span>
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">(load-theme 'doom-oksolar-light t)   ; Load a theme</span>
+  (load-theme 'doom-gruvbox t)   <span class="org-comment-delimiter">; </span><span class="org-comment">Load a theme</span>
 
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable flashing mode-line on errors</span>
   (doom-themes-visual-bell-config)
@@ -684,7 +757,7 @@ We would need emacs-dashboard package for an easier configuration.
 <div class="outline-text-3" id="text-modeline">
 </div>
 <ol class="org-ol">
-<li><a id="org8b1ba23"></a>Nano Modeline<br />
+<li><a id="org05b6f43"></a>Nano Modeline<br />
 <div class="outline-text-5" id="text-4-5-0-1">
 <p>
 A minimal modeline for Emacs.
@@ -711,36 +784,32 @@ A minimal modeline for Emacs.
 </div>
 </div>
 </li>
+</ol>
+</div>
 
-<li><a id="org6e6e74b"></a>Custom Modeline<br />
-<div class="outline-text-5" id="text-4-5-0-2">
+<div id="outline-container-fancy-mini-buffer" class="outline-3">
+<h3 id="fancy-mini-buffer"><span class="section-number-3">4.6.</span> Fancy Mini-Buffer</h3>
+<div class="outline-text-3" id="text-fancy-mini-buffer">
 <p>
-A custom modeline until we figure out the issue with doom-modeline.
-</p>
-
-<p>
-Edit: I like this over doom-modeline to be honest.
+I like a floating minibuffer, but ivy-posframe] looks
+better. Mini-frame mode is disabled by default.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">(set-face-attribute 'mode-line nil</span>
-<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:background "#353644"</span>
-<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:foreground "white"</span>
-<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:box '(:line-width 8 :color "#353644")</span>
-<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:overline nil</span>
-<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:underline nil)</span>
+<pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">mini-frame</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:config</span>
+  (mini-frame-mode 0))
 
-<span class="org-comment-delimiter">;; </span><span class="org-comment">(set-face-attribute 'mode-line-inactive nil</span>
-<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:background "#565063"</span>
-<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:foreground "white"</span>
-<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:box '(:line-width 8 :color "#565063")</span>
-<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:overline nil</span>
-<span class="org-comment-delimiter">;;                     </span><span class="org-comment">:underline nil)</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">make sure they are in the middle of the screen</span>
+(custom-set-variables
+ '(mini-frame-show-parameters
+   '((top . 20)
+     (width . 0.7)
+     (left . 0.5))))
 </pre>
 </div>
 </div>
-</li>
-</ol>
 </div>
 </div>
 
@@ -870,8 +939,8 @@ For shorthand completions, lile &lt;s-TAB for source code blocks.
 </div>
 
 
-<div id="outline-container-org5038d27" class="outline-4">
-<h4 id="org5038d27"><span class="section-number-4">5.2.1.</span> Org TOC</h4>
+<div id="outline-container-org1632faf" class="outline-4">
+<h4 id="org1632faf"><span class="section-number-4">5.2.1.</span> Org TOC</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 Create table of contents for Org files.
@@ -898,8 +967,8 @@ ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
 </div>
 </div>
 
-<div id="outline-container-org27069b2" class="outline-4">
-<h4 id="org27069b2"><span class="section-number-4">5.2.2.</span> Org Babel</h4>
+<div id="outline-container-org17ee105" class="outline-4">
+<h4 id="org17ee105"><span class="section-number-4">5.2.2.</span> Org Babel</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Active Babel languages
@@ -914,8 +983,8 @@ Active Babel languages
 </div>
 </div>
 
-<div id="outline-container-org63f2bbb" class="outline-4">
-<h4 id="org63f2bbb"><span class="section-number-4">5.2.3.</span> Org Hugo(ox-hugo)</h4>
+<div id="outline-container-orga23450d" class="outline-4">
+<h4 id="orga23450d"><span class="section-number-4">5.2.3.</span> Org Hugo(ox-hugo)</h4>
 <div class="outline-text-4" id="text-5-2-3">
 <p>
 ox-hugo helps me manage my website using org files.
@@ -945,9 +1014,41 @@ install it manually. Edit: 08/09/2024 - Installed it using straight.el
 </div>
 </div>
 
-<div id="outline-container-orgf1c5284" class="outline-4">
-<h4 id="orgf1c5284"><span class="section-number-4">5.2.4.</span> Org Roam</h4>
+<div id="outline-container-orgc615130" class="outline-4">
+<h4 id="orgc615130"><span class="section-number-4">5.2.4.</span> Org Download</h4>
 <div class="outline-text-4" id="text-5-2-4">
+<p>
+This nice package helps add images to an Org file in a better way.
+</p>
+
+<p>
+Note: In order to copy from clipboard using <code>org-download-clipboard</code>,
+we need to install <code>pngpaste</code> using Homebrew.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org-download</span>
+  <span class="org-builtin">:straight</span> t
+  <span class="org-builtin">:bind</span>
+  (<span class="org-string">"C-c d"</span> . org-download-clipboard)
+  <span class="org-builtin">:config</span>
+  (org-download-enable))
+
+(add-hook 'dired-mode-hook 'org-download-enable)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Set the image download directory</span>
+(<span class="org-keyword">setq</span> org-download-image-dir eos/org-images-dir)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Set the image download to not depend on any headline</span>
+(<span class="org-keyword">setq</span> org-download-heading-lvl nil)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org520e861" class="outline-4">
+<h4 id="org520e861"><span class="section-number-4">5.2.5.</span> Org Roam</h4>
+<div class="outline-text-4" id="text-5-2-5">
 <p>
 A sophisticated note taking mechanishm. Essentially a clone of
 <a href="https://roamresearch.com/">Roam-research</a> running on Emacs.
@@ -962,6 +1063,7 @@ A sophisticated note taking mechanishm. Essentially a clone of
          (<span class="org-string">"C-c n c"</span> . org-roam-capture)
          (<span class="org-string">"C-c n i"</span> . org-roam-node-insert)
          (<span class="org-string">"C-c n t"</span> . org-roam-tag-add)
+         (<span class="org-string">"C-c n b"</span> . org-roam-buffer-toggle)
          (<span class="org-string">"C-c n j"</span> . org-roam-dailies-capture-today))
   <span class="org-builtin">:pin</span> melpa-stable
   <span class="org-builtin">:config</span>
@@ -970,14 +1072,14 @@ A sophisticated note taking mechanishm. Essentially a clone of
 </div>
 
 <div class="org-src-container">
-<pre class="src src-elisp">(<span class="org-keyword">setq</span> org-roam-directory <span class="org-string">"~/Documents/org/hivemind/notes"</span>)
+<pre class="src src-elisp">(<span class="org-keyword">setq</span> org-roam-directory eos/org-roam-dir)
 </pre>
 </div>
 </div>
 
 <ol class="org-ol">
-<li><a id="org3b91873"></a>Full text search with Deft<br />
-<div class="outline-text-5" id="text-5-2-4-1">
+<li><a id="orgeeccbe3"></a>Full text search with Deft<br />
+<div class="outline-text-5" id="text-5-2-5-1">
 <p>
 Deft is an Emacs mode for quickly browsing and filtering plain text
 notes.
@@ -997,12 +1099,32 @@ notes.
 </div>
 </div>
 </li>
+
+<li><a id="orga585049"></a>Backlink buffer<br />
+<div class="outline-text-5" id="text-5-2-5-2">
+<p>
+Org-roam backlink buffer, <a href="https:github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2#backlink-buffer">source</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">for org-roam-buffer-toggle</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Recommendation in the official manual</span>
+(add-to-list 'display-buffer-alist
+               '(<span class="org-string">"\\*org-roam\\*"</span>
+                  (display-buffer-in-direction)
+                  (direction . right)
+                  (window-width . 0.33)
+                  (window-height . fit-window-to-buffer)))
+</pre>
+</div>
+</div>
+</li>
 </ol>
 </div>
 
-<div id="outline-container-orgb108ea6" class="outline-4">
-<h4 id="orgb108ea6"><span class="section-number-4">5.2.5.</span> Org Roam UI</h4>
-<div class="outline-text-4" id="text-5-2-5">
+<div id="outline-container-org4994480" class="outline-4">
+<h4 id="org4994480"><span class="section-number-4">5.2.6.</span> Org Roam UI</h4>
+<div class="outline-text-4" id="text-5-2-6">
 <p>
 A visual interface for Org Roam. 
 </p>
@@ -1027,9 +1149,10 @@ A visual interface for Org Roam.
 </div>
 </div>
 
-<div id="outline-container-org7773fb9" class="outline-4">
-<h4 id="org7773fb9"><span class="section-number-4">5.2.6.</span> Org Export Settings(htmlize)</h4>
-<div class="outline-text-4" id="text-5-2-6">
+
+<div id="outline-container-orgf131fc6" class="outline-4">
+<h4 id="orgf131fc6"><span class="section-number-4">5.2.7.</span> Org Export Settings(htmlize)</h4>
+<div class="outline-text-4" id="text-5-2-7">
 <p>
 Org mode usually ships with this package, However in certain cases you
 might need to install it manually.
@@ -1048,9 +1171,9 @@ might need to install it manually.
 </div>
 </div>
 
-<div id="outline-container-orge469c32" class="outline-4">
-<h4 id="orge469c32"><span class="section-number-4">5.2.7.</span> Human Readable IDs</h4>
-<div class="outline-text-4" id="text-5-2-7">
+<div id="outline-container-org23673d4" class="outline-4">
+<h4 id="org23673d4"><span class="section-number-4">5.2.8.</span> Human Readable IDs</h4>
+<div class="outline-text-4" id="text-5-2-8">
 <p>
 While exporting html, <code>org-html-export-to-html</code>  function generates
 <code>IDs</code> for each header, so that it can get linked to from the Table of
@@ -1075,24 +1198,32 @@ seemed like the simplest.
   <span class="org-builtin">:ensure</span> t)
 
 (<span class="org-keyword">defun</span> <span class="org-function-name">eos/org-generate-custom-ids</span> ()
-  <span class="org-doc">"Generate CUSTOM_ID for any headings that are missing one"</span>
-  (<span class="org-keyword">let</span> ((existing-ids (org-map-entries 
-                       (<span class="org-keyword">lambda</span> () (org-entry-get nil <span class="org-string">"CUSTOM_ID"</span>)))))
-    (org-map-entries
-     (<span class="org-keyword">lambda</span> ()
-       (<span class="org-keyword">let*</span> ((custom-id (org-entry-get nil <span class="org-string">"CUSTOM_ID"</span>))
-              (heading (org-heading-components))
-              (level (nth 0 heading))
-              (todo (nth 2 heading))
-              (headline (nth 4 heading))
-              (slug (eos/title-to-filename headline))
-              (duplicate-id (member slug existing-ids)))
-         (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> (not custom-id)
-                    (&lt; level 4)
-                    (not todo)
-                    (not duplicate-id))
-           (message <span class="org-string">"Adding entry %s to %s"</span> slug headline)
-           (org-entry-put nil <span class="org-string">"CUSTOM_ID"</span> slug)))))))
+  <span class="org-doc">"Generate CUSTOM_ID for any headings that are missing one, but only in Org mode."</span>
+  (<span class="org-keyword">when</span> (derived-mode-p 'org-mode)
+    (<span class="org-keyword">let</span> ((existing-ids (org-map-entries 
+                         (<span class="org-keyword">lambda</span> () (org-entry-get nil <span class="org-string">"CUSTOM_ID"</span>)))))
+
+      (org-map-entries
+       (<span class="org-keyword">lambda</span> ()
+         (<span class="org-keyword">when</span> (org-at-heading-p)  <span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure we're at a heading</span>
+           (<span class="org-keyword">let*</span> ((custom-id (org-entry-get nil <span class="org-string">"CUSTOM_ID"</span>))
+                  (heading (org-heading-components))
+                  (level (nth 0 heading))
+                  (todo (nth 2 heading))
+                  (headline (nth 4 heading))
+                  (slug (eos/title-to-filename headline))
+                  (duplicate-id (member slug existing-ids)))
+             (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> (not custom-id)
+                        (&lt; level 4)
+                        (not todo)
+                        (not duplicate-id))
+               (message <span class="org-string">"Adding entry %s to %s"</span> slug headline)
+               (org-entry-put nil <span class="org-string">"CUSTOM_ID"</span> slug)))))))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Function to the after-save-hook only in Org mode</span>
+(add-hook 'org-mode-hook
+          (<span class="org-keyword">lambda</span> () 
+            (add-hook 'after-save-hook 'eos/org-generate-custom-ids nil 'local)))
 
 (<span class="org-keyword">defun</span> <span class="org-function-name">eos/title-to-filename</span> (title)
   <span class="org-doc">"Convert TITLE to a reasonable filename."</span>
@@ -1145,9 +1276,7 @@ on them.
               (<span class="org-string">"C-c p"</span> . projectile-command-map))
   <span class="org-builtin">:init</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">NOTE: Set this to the folder where you keep your Git repos!</span>
-  (<span class="org-keyword">when</span> (file-directory-p <span class="org-string">"~/dev"</span>)
-    (<span class="org-keyword">setq</span> projectile-project-search-path '(<span class="org-string">"~/dev"</span>))
-    (<span class="org-keyword">setq</span> projectile-project-search-path '(<span class="org-string">"~/rocket"</span>)))
+  (<span class="org-keyword">setq</span> projectile-project-search-path eos/project-dirs)
   (<span class="org-keyword">setq</span> projectile-switch-project-action #'projectile-dired))
 
 </pre>
@@ -1160,8 +1289,8 @@ on them.
 <div class="outline-text-3" id="text-version-control">
 </div>
 
-<div id="outline-container-org9ccf251" class="outline-4">
-<h4 id="org9ccf251"><span class="section-number-4">5.4.1.</span> Magit</h4>
+<div id="outline-container-org8975e06" class="outline-4">
+<h4 id="org8975e06"><span class="section-number-4">5.4.1.</span> Magit</h4>
 <div class="outline-text-4" id="text-5-4-1">
 <p>
 The magical Git client for emacs. 
@@ -1176,8 +1305,8 @@ The magical Git client for emacs.
 </div>
 </div>
 
-<div id="outline-container-org2f5b886" class="outline-4">
-<h4 id="org2f5b886"><span class="section-number-4">5.4.2.</span> Diff-hl</h4>
+<div id="outline-container-org86002e6" class="outline-4">
+<h4 id="org86002e6"><span class="section-number-4">5.4.2.</span> Diff-hl</h4>
 <div class="outline-text-4" id="text-5-4-2">
 <p>
 Emacs port of the Sublime Git Gutter
@@ -1274,8 +1403,8 @@ Prescient settings for sorting and filtering.
 </div>
 
 
-<div id="outline-container-org83c572a" class="outline-4">
-<h4 id="org83c572a"><span class="section-number-4">5.5.1.</span> Ivy rich</h4>
+<div id="outline-container-org79372bb" class="outline-4">
+<h4 id="org79372bb"><span class="section-number-4">5.5.1.</span> Ivy rich</h4>
 <div class="outline-text-4" id="text-5-5-1">
 <p>
 Ivy-rich for better Ivy interface
@@ -1298,8 +1427,8 @@ Ivy-rich for better Ivy interface
 </div>
 </div>
 
-<div id="outline-container-org9633542" class="outline-4">
-<h4 id="org9633542"><span class="section-number-4">5.5.2.</span> Hydra</h4>
+<div id="outline-container-org7b67c87" class="outline-4">
+<h4 id="org7b67c87"><span class="section-number-4">5.5.2.</span> Hydra</h4>
 <div class="outline-text-4" id="text-5-5-2">
 <div class="org-src-container">
 <pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">hydra</span>
@@ -1315,23 +1444,23 @@ Ivy-rich for better Ivy interface
 </div>
 </div>
 
-<div id="outline-container-orgef5bc8b" class="outline-4">
-<h4 id="orgef5bc8b"><span class="section-number-4">5.5.3.</span> Ivy-posframe</h4>
+<div id="outline-container-org41dfa0e" class="outline-4">
+<h4 id="org41dfa0e"><span class="section-number-4">5.5.3.</span> Ivy-posframe</h4>
 <div class="outline-text-4" id="text-5-5-3">
 <p>
 Show Ivy completions in a posframe.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">(use-package ivy-posframe :straight t)</span>
-<span class="org-comment-delimiter">;; </span><span class="org-comment">(ivy-posframe-mode 1)</span>
+<pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">ivy-posframe</span> <span class="org-builtin">:straight</span> t)
+(ivy-posframe-mode 1)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org48638d4" class="outline-4">
-<h4 id="org48638d4"><span class="section-number-4">5.5.4.</span> Which-key</h4>
+<div id="outline-container-org1b6f4f0" class="outline-4">
+<h4 id="org1b6f4f0"><span class="section-number-4">5.5.4.</span> Which-key</h4>
 <div class="outline-text-4" id="text-5-5-4">
 <p>
 It's a minor mode that shows kebindings for an incomplete command.
@@ -1422,12 +1551,14 @@ Postman for Emacs, A mode to run HTTP queries.
 <div class="outline-text-3" id="text-command-log-mode">
 <p>
 Show event and command history, really helpful while debugging Emacs
-configs. Default binding to toggle is <code>C-c o</code>
+configs. Default binding to toggle is <code>C-c M-c</code>
 </p>
 
 <div class="org-src-container">
 <pre class="src src-elisp">(<span class="org-keyword">use-package</span> <span class="org-constant">command-log-mode</span>
   <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:bind</span>
+  (<span class="org-string">"C-c M-c"</span> . clm/toggle-command-log-buffer)
   <span class="org-builtin">:config</span>
   (global-command-log-mode t)
   <span class="org-builtin">:pin</span> melpa)
@@ -2011,6 +2142,61 @@ Because every damn thing needs lua for configuration.
 (<span class="org-keyword">setq</span> warning-suppress-types '((copilot)))
 </pre>
 </div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-music-player" class="outline-2">
+<h2 id="music-player"><span class="section-number-2">11.</span> Music Player</h2>
+<div class="outline-text-2" id="text-music-player">
+<p>
+Emacs as a music player? Why not?
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">
+(<span class="org-keyword">use-package</span> <span class="org-constant">ready-player</span>
+  <span class="org-builtin">:straight</span> (ready-player <span class="org-builtin">:type</span> git <span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"xenodium/ready-player"</span>)
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:config</span>
+  (ready-player-mode +1))
+
+(<span class="org-keyword">setq</span> ready-player-my-media-collection-location eos/music-dir)
+(<span class="org-keyword">setq</span> ready-player-set-global-bindings nil)
+
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-miscellaneous" class="outline-2">
+<h2 id="miscellaneous"><span class="section-number-2">12.</span> Miscellaneous</h2>
+<div class="outline-text-2" id="text-miscellaneous">
+</div>
+
+<div id="outline-container-custom-functions" class="outline-3">
+<h3 id="custom-functions"><span class="section-number-3">12.1.</span> Custom Functions</h3>
+<div class="outline-text-3" id="text-custom-functions">
+<ul class="org-ul">
+<li><p>
+<code>eos/toggle-debug-mode</code> - Toggle debug mode on and off.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eos/toggle-debug-mode</span> ()
+  <span class="org-doc">"Toggle debug-on-error mode."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">setq</span> debug-on-error (not debug-on-error))
+  (<span class="org-keyword">if</span> debug-on-error
+      (message <span class="org-string">"Debug mode enabled"</span>)
+    (message <span class="org-string">"Debug mode disabled"</span>)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Default enable debug-on-error mode</span>
+(<span class="org-keyword">setq</span> debug-on-error t)
+</pre>
+</div></li>
+</ul>
 </div>
 </div>
 </div>

@@ -11,6 +11,8 @@
 
   - [[#overview][Overview]]
   - [[#initialization][Initialization]]
+    - [[#custom-variables][Custom Variables]]
+      - [[#directories][Directories]]
     - [[#basics][Basics]]
   - [[#package-management][Package Management]]
     - [[#intialize-packages][Intialize packages]]
@@ -22,15 +24,17 @@
     - [[#dashboard][Dashboard]]
     - [[#modeline][Modeline]]
         - [[#nano-modeline][Nano Modeline]]
-        - [[#custom-modeline][Custom Modeline]]
+    - [[#fancy-mini-buffer][Fancy Mini-Buffer]]
   - [[#functionality][Functionality]]
     - [[#evil-mode][Evil Mode]]
     - [[#org-mode][Org Mode]]
       - [[#org-toc][Org TOC]]
       - [[#org-babel][Org Babel]]
       - [[#org-hugoox-hugo][Org Hugo(ox-hugo)]]
+      - [[#org-download][Org Download]]
       - [[#org-roam][Org Roam]]
         - [[#full-text-search-with-deft][Full text search with Deft]]
+        - [[#backlink-buffer][Backlink buffer]]
       - [[#org-roam-ui][Org Roam UI]]
       - [[#org-export-settingshtmlize][Org Export Settings(htmlize)]]
       - [[#human-readable-ids][Human Readable IDs]]
@@ -67,6 +71,9 @@
     - [[#lua][Lua]]
   - [[#non-human-intelligence][Non-Human Intelligence]]
     - [[#copilot][Copilot]]
+  - [[#music-player][Music Player]]
+  - [[#miscellaneous][Miscellaneous]]
+    - [[#custom-functions][Custom Functions]]
 
 ** Overview
 :PROPERTIES:
@@ -93,12 +100,65 @@ like boring.
 :CUSTOM_ID: initialization
 :END:
 
-Basic setup for Emacs appearance and behavior.
+
+*** Custom Variables
+:PROPERTIES:
+:CUSTOM_ID: custom-variables
+:END:
+
+**** Directories
+
+Consolidate all the directories here.
+
+#+begin_src elisp
+  ;; Define custom variables for directories
+  (defvar eos/org-images-dir "~/Documents/org/images"
+    "Directory to store images downloaded with org-download.")
+
+  (defvar eos/org-roam-dir "~/Documents/org/hivemind/notes"
+    "Directory to store org-roam notes.")
+
+  (defvar eos/emacs-backup-dir "~/.emacs.d/emacs-backup"
+    "Directory where Emacs backup files are stored.")
+
+  ;; Don't create these directories if not present
+  (defvar eos/dev-dir "~/dev"
+    "Directory for personal development projects.")
+
+  (defvar eos/work-dir "~/work"
+    "Directory for work projects.")
+
+  (defvar eos/school-dir "~/school"
+    "Directory for school projects.")
+
+  (defvar eos/project-dirs
+    (list eos/dev-dir eos/work-dir eos/school-dir)
+    "List of all directories for personal, work, and school projects.")
+
+  (defvar eos/music-dir "~/Documents/Music"
+    "Directory for local music files.")
+
+  ;; Function to ensure a directory exists
+  (defun eos/ensure-directory-exists (dir)
+    "Ensure that the directory DIR exists. Create it if necessary."
+    (unless (file-exists-p dir)
+      (make-directory dir t)))
+
+  ;; Ensure required directories exist
+  (mapc #'eos/ensure-directory-exists
+        (list eos/org-images-dir
+              eos/org-roam-dir
+              eos/emacs-backup-dir))
+#+end_src
+
 
 *** Basics
 :PROPERTIES:
 :CUSTOM_ID: basics
 :END:
+
+Basic setup for Emacs appearance and behavior.
+
 - Disable toolbars, scrollbars, and tooltips.
   
   #+begin_src elisp
@@ -124,7 +184,8 @@ Basic setup for Emacs appearance and behavior.
 - Set fonts. TODO: Check if the font exists
   
   #+begin_src elisp
-    (set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
+    ;; (set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
+    (set-face-attribute 'default nil :font "Iosevka" :height 160)
   #+end_src
 
 - Configure line numbers
@@ -184,9 +245,9 @@ Basic setup for Emacs appearance and behavior.
 
   #+end_src
 
-- Backup in one place. flat, no tree structure
+- Backup in one place, flat, no tree structure
   #+begin_src elisp
-    (setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup")))
+    (setq backup-directory-alist `((".*" . ,eos/emacs-backup-dir)))
   #+end_src
 
 - Miscellaneous
@@ -302,8 +363,7 @@ like to get them all.
     (setq doom-themes-enable-bold t    ; If nil, bold is universally disabled
           doom-themes-enable-italic t) ; If nil, italics is universally disabled
 
-    ;; (load-theme 'doom-Iosvkem t)   ; Load a theme
-    ;; (load-theme 'doom-oksolar-light t)   ; Load a theme
+    (load-theme 'doom-gruvbox t)   ; Load a theme
 
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
@@ -402,25 +462,26 @@ A minimal modeline for Emacs.
     :init (nano-modeline-prog-mode t))
 #+end_src
 
-***** Custom Modeline
-A custom modeline until we figure out the issue with doom-modeline.
+*** Fancy Mini-Buffer
+:PROPERTIES:
+:CUSTOM_ID: fancy-mini-buffer
+:END:
 
-Edit: I like this over doom-modeline to be honest.
+I like a floating minibuffer, but ivy-posframe] looks
+better. Mini-frame mode is disabled by default.
 
 #+begin_src elisp
-  ;; (set-face-attribute 'mode-line nil
-  ;;                     :background "#353644"
-  ;;                     :foreground "white"
-  ;;                     :box '(:line-width 8 :color "#353644")
-  ;;                     :overline nil
-  ;;                     :underline nil)
+  (use-package mini-frame
+    :ensure t
+    :config
+    (mini-frame-mode 0))
 
-  ;; (set-face-attribute 'mode-line-inactive nil
-  ;;                     :background "#565063"
-  ;;                     :foreground "white"
-  ;;                     :box '(:line-width 8 :color "#565063")
-  ;;                     :overline nil
-  ;;                     :underline nil)
+  ;; make sure they are in the middle of the screen
+  (custom-set-variables
+   '(mini-frame-show-parameters
+     '((top . 20)
+       (width . 0.7)
+       (left . 0.5))))
 #+end_src
 
 ** Functionality
@@ -568,6 +629,30 @@ install it manually. Edit: 08/09/2024 - Installed it using straight.el
 
 #+end_src
 
+**** Org Download
+
+This nice package helps add images to an Org file in a better way.
+
+Note: In order to copy from clipboard using ~org-download-clipboard~,
+we need to install ~pngpaste~ using Homebrew.
+
+#+begin_src elisp
+  (use-package org-download
+    :straight t
+    :bind
+    ("C-c d" . org-download-clipboard)
+    :config
+    (org-download-enable))
+
+  (add-hook 'dired-mode-hook 'org-download-enable)
+
+  ;; Set the image download directory
+  (setq org-download-image-dir eos/org-images-dir)
+
+  ;; Set the image download to not depend on any headline
+  (setq org-download-heading-lvl nil)
+#+end_src
+
 **** Org Roam
 
 A sophisticated note taking mechanishm. Essentially a clone of
@@ -582,6 +667,7 @@ A sophisticated note taking mechanishm. Essentially a clone of
              ("C-c n c" . org-roam-capture)
              ("C-c n i" . org-roam-node-insert)
              ("C-c n t" . org-roam-tag-add)
+             ("C-c n b" . org-roam-buffer-toggle)
              ("C-c n j" . org-roam-dailies-capture-today))
       :pin melpa-stable
       :config
@@ -589,7 +675,7 @@ A sophisticated note taking mechanishm. Essentially a clone of
 #+end_src
 
 #+begin_src elisp
-  (setq org-roam-directory "~/Documents/org/hivemind/notes")
+  (setq org-roam-directory eos/org-roam-dir)
 #+end_src
 
 ***** Full text search with Deft
@@ -607,6 +693,21 @@ notes.
     (deft-use-filter-string-for-filename t)
     (deft-default-extension "org")
     (deft-directory org-roam-directory))
+#+end_src
+
+***** Backlink buffer
+
+Org-roam backlink buffer, [[https:github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2#backlink-buffer][source]]
+
+#+begin_src elisp
+  ;; for org-roam-buffer-toggle
+  ;; Recommendation in the official manual
+  (add-to-list 'display-buffer-alist
+                 '("\\*org-roam\\*"
+                    (display-buffer-in-direction)
+                    (direction . right)
+                    (window-width . 0.33)
+                    (window-height . fit-window-to-buffer)))
 #+end_src
 
 **** Org Roam UI
@@ -629,6 +730,7 @@ A visual interface for Org Roam.
             org-roam-ui-open-on-start t))
 
 #+end_src
+
 
 **** Org Export Settings(htmlize)
 
@@ -665,24 +767,32 @@ seemed like the simplest.
     :ensure t)
 
   (defun eos/org-generate-custom-ids ()
-    "Generate CUSTOM_ID for any headings that are missing one"
-    (let ((existing-ids (org-map-entries 
-                         (lambda () (org-entry-get nil "CUSTOM_ID")))))
-      (org-map-entries
-       (lambda ()
-         (let* ((custom-id (org-entry-get nil "CUSTOM_ID"))
-                (heading (org-heading-components))
-                (level (nth 0 heading))
-                (todo (nth 2 heading))
-                (headline (nth 4 heading))
-                (slug (eos/title-to-filename headline))
-                (duplicate-id (member slug existing-ids)))
-           (when (and (not custom-id)
-                      (< level 4)
-                      (not todo)
-                      (not duplicate-id))
-             (message "Adding entry %s to %s" slug headline)
-             (org-entry-put nil "CUSTOM_ID" slug)))))))
+    "Generate CUSTOM_ID for any headings that are missing one, but only in Org mode."
+    (when (derived-mode-p 'org-mode)
+      (let ((existing-ids (org-map-entries 
+                           (lambda () (org-entry-get nil "CUSTOM_ID")))))
+
+        (org-map-entries
+         (lambda ()
+           (when (org-at-heading-p)  ;; Ensure we're at a heading
+             (let* ((custom-id (org-entry-get nil "CUSTOM_ID"))
+                    (heading (org-heading-components))
+                    (level (nth 0 heading))
+                    (todo (nth 2 heading))
+                    (headline (nth 4 heading))
+                    (slug (eos/title-to-filename headline))
+                    (duplicate-id (member slug existing-ids)))
+               (when (and (not custom-id)
+                          (< level 4)
+                          (not todo)
+                          (not duplicate-id))
+                 (message "Adding entry %s to %s" slug headline)
+                 (org-entry-put nil "CUSTOM_ID" slug)))))))))
+
+  ;; Function to the after-save-hook only in Org mode
+  (add-hook 'org-mode-hook
+            (lambda () 
+              (add-hook 'after-save-hook 'eos/org-generate-custom-ids nil 'local)))
 
   (defun eos/title-to-filename (title)
     "Convert TITLE to a reasonable filename."
@@ -728,9 +838,7 @@ on them.
                 ("C-c p" . projectile-command-map))
     :init
     ;; NOTE: Set this to the folder where you keep your Git repos!
-    (when (file-directory-p "~/dev")
-      (setq projectile-project-search-path '("~/dev"))
-      (setq projectile-project-search-path '("~/rocket")))
+    (setq projectile-project-search-path eos/project-dirs)
     (setq projectile-switch-project-action #'projectile-dired))
 
 #+end_src
@@ -872,8 +980,8 @@ Ivy-rich for better Ivy interface
 Show Ivy completions in a posframe.
 
 #+begin_src elisp
-  ;; (use-package ivy-posframe :straight t)
-  ;; (ivy-posframe-mode 1)
+  (use-package ivy-posframe :straight t)
+  (ivy-posframe-mode 1)
 #+end_src
 
 **** Which-key
@@ -956,11 +1064,13 @@ Postman for Emacs, A mode to run HTTP queries.
 :END:
 
 Show event and command history, really helpful while debugging Emacs
-configs. Default binding to toggle is =C-c o=
+configs. Default binding to toggle is =C-c M-c=
 
 #+begin_src elisp
   (use-package command-log-mode
     :ensure t
+    :bind
+    ("C-c M-c" . clm/toggle-command-log-buffer)
     :config
     (global-command-log-mode t)
     :pin melpa)
@@ -1467,3 +1577,51 @@ Because every damn thing needs lua for configuration.
   ;; Suppress warnings from copilot
   (setq warning-suppress-types '((copilot)))
 #+end_src
+
+** Music Player
+:PROPERTIES:
+:CUSTOM_ID: music-player
+:END:
+
+Emacs as a music player? Why not?
+
+#+begin_src elisp
+
+  (use-package ready-player
+    :straight (ready-player :type git :host github :repo "xenodium/ready-player")
+    :ensure t
+    :config
+    (ready-player-mode +1))
+  
+  (setq ready-player-my-media-collection-location eos/music-dir)
+  (setq ready-player-set-global-bindings nil)
+
+#+end_src
+
+
+** Miscellaneous
+:PROPERTIES:
+:CUSTOM_ID: miscellaneous
+:END:
+
+*** Custom Functions
+:PROPERTIES:
+:CUSTOM_ID: custom-functions
+:END:
+
+- =eos/toggle-debug-mode= - Toggle debug mode on and off.
+
+  #+begin_src elisp
+    (defun eos/toggle-debug-mode ()
+      "Toggle debug-on-error mode."
+      (interactive)
+      (setq debug-on-error (not debug-on-error))
+      (if debug-on-error
+          (message "Debug mode enabled")
+        (message "Debug mode disabled")))
+
+    ;; Default enable debug-on-error mode
+    (setq debug-on-error t)
+  #+end_src
+
+  
