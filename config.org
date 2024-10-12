@@ -9,10 +9,6 @@
 :CUSTOM_ID: table-of-contents
 :END:
 
-:PROPERTIES:
-:CUSTOM_ID: table-of-contents
-:END:
-
   - [[#overview][Overview]]
   - [[#initialization][Initialization]]
     - [[#faster-startup][Faster Startup]]
@@ -25,13 +21,14 @@
   - [[#appearence][Appearence]]
     - [[#all-the-icons][All the Icons]]
     - [[#themes][Themes]]
-    - [[#solaire-mode][Solaire Mode]]
+    - [[#better-focus][Better Focus]]
     - [[#transparency][Transparency]]
     - [[#dashboard][Dashboard]]
     - [[#modeline][Modeline]]
         - [[#nano-modeline][Nano Modeline]]
         - [[#doom-modeline][Doom Modeline]]
     - [[#fancy-mini-buffer][Fancy Mini-Buffer]]
+    - [[#indentation][Indentation]]
   - [[#functionality][Functionality]]
     - [[#evil-mode][Evil Mode]]
     - [[#org-mode][Org Mode]]
@@ -56,10 +53,10 @@
     - [[#treemacs][Treemacs]]
     - [[#restclient][RestClient]]
     - [[#command-log-mode][Command-log-mode]]
+    - [[#vterm][Vterm]]
   - [[#system-configuration][System configuration]]
     - [[#emacs-environment-variables][Emacs environment variables]]
   - [[#code-completion][Code Completion]]
-    - [[#corfu][Corfu]]
     - [[#tree-sitter][Tree-sitter]]
   - [[#programming-stuff][Programming stuff]]
     - [[#eglot][Eglot]]
@@ -383,8 +380,6 @@ like to get them all.
     (setq doom-themes-enable-bold t    ; If nil, bold is universally disabled
           doom-themes-enable-italic t) ; If nil, italics is universally disabled
 
-    (load-theme 'doom-gruvbox t)   ; Load a theme
-
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
     ;; Enable custom neotree theme (all-the-icons must be installed!)
@@ -394,17 +389,37 @@ like to get them all.
     (doom-themes-treemacs-config)
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config))
+
+  
+    (load-theme 'leuven-dark t)
 #+END_SRC
 
 I love how Org files look with poet theme, so it's a must.
 
 #+begin_src emacs-lisp
-  (use-package poet-theme)
+  (use-package poet-theme
+    :ensure t)
 #+end_src
 
-*** Solaire Mode
+Always highlight the commented code. Right now, configured for Leuven theme.
+
+#+begin_src emacs-lisp
+  (defun my-leuven-comment-face-customization ()
+    "Set custom comment face only when the Leuven theme is active."
+    (if (string-equal (car custom-enabled-themes) "leuven-dark")
+        (custom-set-faces
+         '(font-lock-comment-face ((t (:foreground "#4A90E2" :background "#E6F7FF" :slant italic)))))
+      ;; Reset to the default comment face when leaving Leuven theme
+      (custom-set-faces
+       '(font-lock-comment-face ((t (:foreground "dim gray" :slant italic)))))))
+
+  ;; Add the function to the after-load-theme-hook to dynamically handle theme changes
+  (add-hook 'after-load-theme-hook 'my-leuven-comment-face-customization)
+#+end_src
+
+*** Better Focus
 :PROPERTIES:
-:CUSTOM_ID: solaire-mode
+:CUSTOM_ID: better-focus
 :END:
 
 An asthetic plugin designed to visually distinguish "real" buffers
@@ -416,6 +431,19 @@ giving the later a slightly different background.
     :straight t
     :config
     (solaire-global-mode +1))
+#+end_src
+
+Dimmer mode indicates which buffer is currently active by dimming the
+faces in the other buffers.
+
+#+begin_src emacs-lisp
+  (use-package dimmer
+      :straight t
+      :config
+      (dimmer-configure-which-key)
+      (dimmer-mode t))
+
+  (setq dimmer-fraction .5)
 #+end_src
 
 
@@ -451,8 +479,6 @@ a tiling window manager on a large monitor.
                              `(,transparency-level-active . ,transparency-level-inactive))
         (setq transparency-enabled t)
         (message "Transparency enabled"))))
-
-  (global-set-key (kbd "C-c t") 'toggle-transparency)
 
 #+end_src
 
@@ -532,6 +558,28 @@ better. Mini-frame mode is enabled by default.
       '((top . 200)
         (width . 0.7)
         (left . 0.5))))
+#+end_src
+
+*** Indentation
+:PROPERTIES:
+:CUSTOM_ID: indentation
+:END:
+
+#+begin_src emacs-lisp
+  (use-package indent-bars
+    :config
+    :custom
+    (indent-bars-treesit-support t)
+    (indent-bars-treesit-ignore-blank-lines-types '("module"))
+    ;; Add other languages as needed
+    (indent-bars-treesit-scope '((python function_definition class_definition for_statement
+  	  if_statement with_statement while_statement)))
+    ;; Note: wrap may not be needed if no-descend-list is enough
+    ;;(indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
+    ;;				      list list_comprehension
+    ;;				      dictionary dictionary_comprehension
+    ;;				      parenthesized_expression subscript)))
+    :hook ((python-base-mode yaml-mode) . indent-bars-mode))
 #+end_src
 
 ** Functionality
@@ -900,13 +948,25 @@ on them.
 
 **** Magit
 
-The magical Git client for emacs. 
+The magical Git client for emacs.
+
+Since I am using emacs-plus, In order for spotlight to find the emacs
+executable, I cpoied the executable to /Applications. However, After I
+did that, Magit showed an error message saying that it could not find
+the emacsclient executable. I had to set the variable
+with-editor-emacsclient-executable to "emacsclient" in order to fix
+the issue.
+
+#+begin_src emacs-lisp
+  (setq-default with-editor-emacsclient-executable "emacsclient")
+#+end_src
 
 #+begin_src emacs-lisp
   (use-package magit
     :ensure t
     :pin melpa-stable)
 #+end_src
+
 
 **** Diff-hl
 
@@ -915,7 +975,9 @@ Emacs port of the Sublime Git Gutter
 #+begin_src emacs-lisp
   (use-package diff-hl
     :straight (diff-hl :type git :host github :repo "dgutov/diff-hl")
-    :hook (prog-mode . diff-hl-mode)
+    :hook ((prog-mode . diff-hl-mode)
+           (org-mode . diff-hl-mode)
+           (text-mode . diff-hl-mode))
     :config
     ;; Limit diff-hl to specific modes
     (setq diff-hl-global-modes '(not image-mode pdf-view-mode))
@@ -953,7 +1015,6 @@ Set up Ivy, Counsel, and Swiper for better completions.
            ("s-x" . counsel-M-x)                    ;; Super-X for M-x
            ("C-x C-f" . counsel-find-file)          ;; Enhanced find file
            ("C-x b" . counsel-switch-buffer)        ;; Enhanced buffer switch
-           ("C-x t" . counsel-load-theme)           ;; Load theme with counsel
            :map minibuffer-local-map
            ("C-x C-r" . counsel-minibuffer-history) ;; Access minibuffer history
            ("C-r" . counsel-minibuffer-history)     ;; Redundant, can be removed
@@ -1061,16 +1122,7 @@ sometimes doesn't work as intended.
       (treemacs-resize-icons 18)
       (treemacs-follow-mode t)
       (treemacs-project-follow-mode t)
-      (treemacs-filewatch-mode t))
-     :bind
-     (:map global-map
-           ("M-0"       . treemacs-select-window)
-           ("C-x t 1"   . treemacs-delete-other-windows)
-           ("C-x t t"   . treemacs-add-and-display-current-project-exclusively)
-           ("C-x t d"   . treemacs-select-directory)
-           ("C-x t B"   . treemacs-bookmark)
-           ("C-x t C-t" . treemacs-find-file)
-           ("C-x t M-t" . treemacs-find-tag)))
+      (treemacs-filewatch-mode t)))
 
     ;; (add-hook 'projectile-after-switch-project-hook 'treemacs-add-and-display-current-project-exclusively)
 
@@ -1118,6 +1170,19 @@ configs. Default binding to toggle is =C-c M-c=
     :pin melpa)
 #+end_src
 
+*** Vterm
+:PROPERTIES:
+:CUSTOM_ID: vterm
+:END:
+
+Probably the only usable terminal emulator for Emacs
+
+#+begin_src emacs-lisp
+  (use-package vterm
+    :ensure t
+    :straight t)
+#+end_src
+
 ** System configuration
 :PROPERTIES:
 :CUSTOM_ID: system-configuration
@@ -1142,54 +1207,6 @@ Ensure Emacs env variables match system variables.
 :PROPERTIES:
 :CUSTOM_ID: code-completion
 :END:
-
-*** Corfu
-:PROPERTIES:
-:CUSTOM_ID: corfu
-:END:
-
-Corfu is a simpler alternative to Company-mode; However it doesn't show
-me the completion pop-ups automatically. #FIXME
-
-#+begin_src emacs-lisp
-  (use-package corfu
-    ;; Optional customizations
-    :custom
-    (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-    (corfu-preselect 'prompt)      ;; Always preselect the prompt
-    (corfu-auto t)                 ;; Enable auto-completion
-    (corfu-auto-delay 0)
-    (corfu-auto-prefix 0)
-    (completion-styles '(basic))
-    :init
-    (global-corfu-mode))
-
-  ;; A few more useful configurations...
-  (use-package emacs
-    :init
-    ;; TAB cycle if there are only few candidates
-    (setq completion-cycle-threshold 3)
-
-    (setq read-extended-command-predicate
-          #'command-completion-default-include-p)
-
-    ;; Enable indentation+completion using the TAB key.
-    ;; `completion-at-point' is often bound to M-TAB.
-    (setq tab-always-indent 'complete))
-#+end_src
-
-- Swap default Dabbrev completions.
-
-#+begin_src emacs-lisp
-  (use-package dabbrev
-    ;; Swap M-/ and C-M-/
-    :bind (("M-/" . dabbrev-completion)
-           ("C-M-/" . dabbrev-expand))
-    ;; Other useful Dabbrev configurations.
-    :custom
-    (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))
-#+end_src
-
 
 
 *** Tree-sitter
@@ -1240,22 +1257,22 @@ efficiently update the syntax tree as the source file is edited.
 Custom functions to check and install tree-sitter.
 
 #+begin_src emacs-lisp
+  
+  ;; Checks if a specific tree-sitter grammar file exists.
+  (defun treesit-grammar-installed-p (grammar-file)
+    "Check if a specific tree-sitter GRAMMAR-FILE is installed."
+    (file-exists-p grammar-file))
 
-    ;; Checks if a specific tree-sitter grammar file exists.
-    (defun treesit-grammar-installed-p (grammar-file)
-      "Check if a specific tree-sitter GRAMMAR-FILE is installed."
-      (file-exists-p grammar-file))
-
-    ;; Ensures that a tree-sitter grammar for a given language is
-    ;; installed, checking if the grammar file is present and if tree-sitter
-    ;; is available.
-    (defun ensure-treesit-grammar-installed (language grammar-file)
-      "Ensure a tree-sitter grammar for LANGUAGE is installed.
-       GRAMMAR-FILE is the path to the grammar file."
-      (unless (treesit-grammar-installed-p grammar-file)
-        (when (and (fboundp 'treesit-available-p)
-                   (treesit-available-p))
-          (treesit-install-language-grammar language))))
+  ;; Ensures that a tree-sitter grammar for a given language is
+  ;; installed, checking if the grammar file is present and if tree-sitter
+  ;; is available.
+  (defun ensure-treesit-grammar-installed (language grammar-file)
+    "Ensure a tree-sitter grammar for LANGUAGE is installed.
+     GRAMMAR-FILE is the path to the grammar file."
+    (unless (treesit-grammar-installed-p grammar-file)
+      (when (and (fboundp 'treesit-available-p)
+                 (treesit-available-p))
+        (treesit-install-language-grammar language))))
 #+end_src
 
 
@@ -1289,7 +1306,6 @@ programming languages on Emacs.
     :init
     (push '("\\.go\\'" . go-mode) auto-mode-alist))
 #+end_src
-
 
 
 Eglot hooks for Go
@@ -1446,8 +1462,7 @@ Not sure if LaTex belongs here.
     (setq-default pdf-view-display-size 'fit-width))
 
     ;; Enable midnight mode for PDFs
-    ;; (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode))
-
+    (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
 
   ;; Set keybinding to install PDF Tools
   (global-set-key (kbd "C-c p") 'pdf-tools-install)
@@ -1540,11 +1555,21 @@ Emacs as a music player? Why not?
     :ensure t
     :config
     (ready-player-mode +1)
-    :bind (:map ready-player-major-mode-map
-                ("C-c m f" . 'ready-player-search)))
+    :bind (("C-c m h" . 'ready-player-toggle-shuffle)
+           ("C-c m s" . 'ready-player-search)
+           ("C-c m q" . 'ready-player-quit)
+           ("C-c m f" . 'ready-player-seek-forward)
+           ("C-c m b" . 'ready-player-seek-backward)))
+                
 
   (setq ready-player-my-media-collection-location eos/music-dir)
   (setq ready-player-set-global-bindings nil)
+
+  ;; Reload the music collection
+  (defun ready-player-reload-music-collection ()
+    "Reload the music collection."
+    (interactive)
+    (setq ready-player-reload-media-collection eos/music-dir))
 
 #+end_src
 
@@ -1605,3 +1630,20 @@ frequently, as my requirements evolve.
   #+end_src
 
 
+- =C-c e t= to switch themes.
+
+  #+begin_src emacs-lisp
+    (global-set-key (kbd "C-c e t") 'counsel-load-theme)
+  #+end_src
+
+- =C-c e d= to toggle debug mode
+
+  #+begin_src emacs-lisp
+    (global-set-key (kbd "C-c e d") 'eos/toggle-debug-mode)
+  #+end_src
+
+- =C-c e s= to toggle transparency
+
+  #+begin_src emacs-lisp
+    (global-set-key (kbd "C-c e s") 'toggle-transparency)
+  #+end_src

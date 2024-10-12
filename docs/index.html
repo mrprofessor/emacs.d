@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-09-25 Wed 18:04 -->
+<!-- 2024-10-13 Sun 06:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Emacs Operating System</title>
 <meta name="generator" content="Org Mode" />
-<style>
+<style type="text/css">
   #content { max-width: 60em; margin: auto; }
   .title  { text-align: center;
              margin-bottom: .2em; }
@@ -207,7 +207,7 @@
 <li><a href="#faster-startup">2.1. Faster Startup</a></li>
 <li><a href="#custom-variables">2.2. Custom Variables</a>
 <ul>
-<li><a href="#orgcf03916">2.2.1. Directories</a></li>
+<li><a href="#org9fad17f">2.2.1. Directories</a></li>
 </ul>
 </li>
 <li><a href="#basics">2.3. Basics</a></li>
@@ -217,7 +217,7 @@
 <ul>
 <li><a href="#intialize-packages">3.1. Intialize packages</a>
 <ul>
-<li><a href="#org855c8c5">3.1.1. Install straight.el</a></li>
+<li><a href="#org9f82e68">3.1.1. Install straight.el</a></li>
 </ul>
 </li>
 </ul>
@@ -226,11 +226,12 @@
 <ul>
 <li><a href="#all-the-icons">4.1. All the Icons</a></li>
 <li><a href="#themes">4.2. Themes</a></li>
-<li><a href="#solaire-mode">4.3. Solaire Mode</a></li>
+<li><a href="#better-focus">4.3. Better Focus</a></li>
 <li><a href="#transparency">4.4. Transparency</a></li>
 <li><a href="#dashboard">4.5. Dashboard</a></li>
 <li><a href="#modeline">4.6. Modeline</a></li>
 <li><a href="#fancy-mini-buffer">4.7. Fancy Mini-Buffer</a></li>
+<li><a href="#indentation">4.8. Indentation</a></li>
 </ul>
 </li>
 <li><a href="#functionality">5. Functionality</a>
@@ -238,33 +239,34 @@
 <li><a href="#evil-mode">5.1. Evil Mode</a></li>
 <li><a href="#org-mode">5.2. Org Mode</a>
 <ul>
-<li><a href="#orgb15fa22">5.2.1. Org TOC</a></li>
-<li><a href="#org7a5750f">5.2.2. Org Babel</a></li>
-<li><a href="#orgbbbd286">5.2.3. Org Hugo(ox-hugo)</a></li>
-<li><a href="#orgbe37302">5.2.4. Org Download</a></li>
-<li><a href="#orgeb6f96c">5.2.5. Org Roam</a></li>
-<li><a href="#orgca0bbab">5.2.6. Org Roam UI</a></li>
-<li><a href="#org14b77ed">5.2.7. Org Export Settings(htmlize)</a></li>
-<li><a href="#org4021d11">5.2.8. Human Readable IDs</a></li>
+<li><a href="#orgf2b5971">5.2.1. Org TOC</a></li>
+<li><a href="#org94d7eb7">5.2.2. Org Babel</a></li>
+<li><a href="#org885e83a">5.2.3. Org Hugo(ox-hugo)</a></li>
+<li><a href="#org4c558e7">5.2.4. Org Download</a></li>
+<li><a href="#org1b5ffc5">5.2.5. Org Roam</a></li>
+<li><a href="#org573c360">5.2.6. Org Roam UI</a></li>
+<li><a href="#org315bbe2">5.2.7. Org Export Settings(htmlize)</a></li>
+<li><a href="#org5229f03">5.2.8. Human Readable IDs</a></li>
 </ul>
 </li>
 <li><a href="#projectile">5.3. Projectile</a></li>
 <li><a href="#version-control">5.4. Version Control</a>
 <ul>
-<li><a href="#org2cd7f34">5.4.1. Magit</a></li>
-<li><a href="#orgbc4ae68">5.4.2. Diff-hl</a></li>
+<li><a href="#orgf7172a7">5.4.1. Magit</a></li>
+<li><a href="#orge015ee9">5.4.2. Diff-hl</a></li>
 </ul>
 </li>
 <li><a href="#completions">5.5. Completions</a>
 <ul>
-<li><a href="#org57a1530">5.5.1. Ivy rich</a></li>
-<li><a href="#org4b7b606">5.5.2. Hydra</a></li>
-<li><a href="#org657d399">5.5.3. Which-key</a></li>
+<li><a href="#orga482010">5.5.1. Ivy rich</a></li>
+<li><a href="#org75a0d65">5.5.2. Hydra</a></li>
+<li><a href="#orgaf3a1bc">5.5.3. Which-key</a></li>
 </ul>
 </li>
 <li><a href="#treemacs">5.6. Treemacs</a></li>
 <li><a href="#restclient">5.7. RestClient</a></li>
 <li><a href="#command-log-mode">5.8. Command-log-mode</a></li>
+<li><a href="#vterm">5.9. Vterm</a></li>
 </ul>
 </li>
 <li><a href="#system-configuration">6. System configuration</a>
@@ -274,8 +276,7 @@
 </li>
 <li><a href="#code-completion">7. Code Completion</a>
 <ul>
-<li><a href="#corfu">7.1. Corfu</a></li>
-<li><a href="#treesitter">7.2. Tree-sitter</a></li>
+<li><a href="#treesitter">7.1. Tree-sitter</a></li>
 </ul>
 </li>
 <li><a href="#programming-stuff">8. Programming stuff</a>
@@ -306,7 +307,6 @@
 </ul>
 </div>
 </div>
-
 <div id="outline-container-overview" class="outline-2">
 <h2 id="overview"><span class="section-number-2">1.</span> Overview</h2>
 <div class="outline-text-2" id="text-overview">
@@ -328,18 +328,16 @@ like boring.
 </p>
 
 
-<div id="org931c38a" class="figure">
+<div id="orge1a1a4b" class="figure">
 <p><img src="https://imgs.xkcd.com/comics/real_programmers.png" alt="real_programmers.png" />
 </p>
 </div>
 </div>
 </div>
-
 <div id="outline-container-initialization" class="outline-2">
 <h2 id="initialization"><span class="section-number-2">2.</span> Initialization</h2>
 <div class="outline-text-2" id="text-initialization">
 </div>
-
 <div id="outline-container-faster-startup" class="outline-3">
 <h3 id="faster-startup"><span class="section-number-3">2.1.</span> Faster Startup</h3>
 <div class="outline-text-3" id="text-faster-startup">
@@ -358,15 +356,12 @@ time spent in GC, speeding things up:
 </div>
 </div>
 </div>
-
-
 <div id="outline-container-custom-variables" class="outline-3">
 <h3 id="custom-variables"><span class="section-number-3">2.2.</span> Custom Variables</h3>
 <div class="outline-text-3" id="text-custom-variables">
 </div>
-
-<div id="outline-container-orgcf03916" class="outline-4">
-<h4 id="orgcf03916"><span class="section-number-4">2.2.1.</span> Directories</h4>
+<div id="outline-container-org9fad17f" class="outline-4">
+<h4 id="org9fad17f"><span class="section-number-4">2.2.1.</span> Directories</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Consolidate all the directories here.
@@ -416,8 +411,6 @@ Consolidate all the directories here.
 </div>
 </div>
 </div>
-
-
 <div id="outline-container-basics" class="outline-3">
 <h3 id="basics"><span class="section-number-3">2.3.</span> Basics</h3>
 <div class="outline-text-3" id="text-basics">
@@ -560,7 +553,6 @@ Miscellaneous
 </div>
 </div>
 </div>
-
 <div id="outline-container-package-management" class="outline-2">
 <h2 id="package-management"><span class="section-number-2">3.</span> Package Management</h2>
 <div class="outline-text-2" id="text-package-management">
@@ -568,7 +560,6 @@ Miscellaneous
 Setting up package managers and installing essential packages.
 </p>
 </div>
-
 <div id="outline-container-intialize-packages" class="outline-3">
 <h3 id="intialize-packages"><span class="section-number-3">3.1.</span> Intialize packages</h3>
 <div class="outline-text-3" id="text-intialize-packages">
@@ -595,10 +586,8 @@ Setting up package managers and installing essential packages.
 </pre>
 </div>
 </div>
-
-
-<div id="outline-container-org855c8c5" class="outline-4">
-<h4 id="org855c8c5"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
+<div id="outline-container-org9f82e68" class="outline-4">
+<h4 id="org9f82e68"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 <code>use-package</code> does not support the additional properties  like :type,
@@ -645,12 +634,10 @@ Avoid Org version mismatch with Straight.el
 </div>
 </div>
 </div>
-
 <div id="outline-container-appearence" class="outline-2">
 <h2 id="appearence"><span class="section-number-2">4.</span> Appearence</h2>
 <div class="outline-text-2" id="text-appearence">
 </div>
-
 <div id="outline-container-all-the-icons" class="outline-3">
 <h3 id="all-the-icons"><span class="section-number-3">4.1.</span> All the Icons</h3>
 <div class="outline-text-3" id="text-all-the-icons">
@@ -659,13 +646,12 @@ Why we need all the icons? Because they are pretty.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">all-the-icons</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> all-the-icons
   <span class="org-builtin">:ensure</span> t)
 </pre>
 </div>
 </div>
 </div>
-
 <div id="outline-container-themes" class="outline-3">
 <h3 id="themes"><span class="section-number-3">4.2.</span> Themes</h3>
 <div class="outline-text-3" id="text-themes">
@@ -675,15 +661,13 @@ like to get them all.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">doom-themes</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> doom-themes
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"doomemacs/themes"</span>)
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:config</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Global settings (defaults)</span>
   (<span class="org-keyword">setq</span> doom-themes-enable-bold t    <span class="org-comment-delimiter">; </span><span class="org-comment">If nil, bold is universally disabled</span>
         doom-themes-enable-italic t) <span class="org-comment-delimiter">; </span><span class="org-comment">If nil, italics is universally disabled</span>
-
-  (load-theme 'doom-gruvbox t)   <span class="org-comment-delimiter">; </span><span class="org-comment">Load a theme</span>
 
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable flashing mode-line on errors</span>
   (doom-themes-visual-bell-config)
@@ -694,6 +678,9 @@ like to get them all.
   (doom-themes-treemacs-config)
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Corrects (and improves) org-mode's native fontification.</span>
   (doom-themes-org-config))
+
+
+  (load-theme 'leuven-dark t)
 </pre>
 </div>
 
@@ -702,15 +689,34 @@ I love how Org files look with poet theme, so it's a must.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">poet-theme</span>)
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> poet-theme
+  <span class="org-builtin">:ensure</span> t)
+</pre>
+</div>
+
+<p>
+Always highlight the commented code. Right now, configured for Leuven theme.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my-leuven-comment-face-customization</span> ()
+  <span class="org-doc">"Set custom comment face only when the Leuven theme is active."</span>
+  (<span class="org-keyword">if</span> (string-equal (car custom-enabled-themes) <span class="org-string">"leuven-dark"</span>)
+      (custom-set-faces
+       '(font-lock-comment-face ((t (<span class="org-builtin">:foreground</span> <span class="org-string">"#4A90E2"</span> <span class="org-builtin">:background</span> <span class="org-string">"#E6F7FF"</span> <span class="org-builtin">:slant</span> italic)))))
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Reset to the default comment face when leaving Leuven theme</span>
+    (custom-set-faces
+     '(font-lock-comment-face ((t (<span class="org-builtin">:foreground</span> <span class="org-string">"dim gray"</span> <span class="org-builtin">:slant</span> italic)))))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Add the function to the after-load-theme-hook to dynamically handle theme changes</span>
+(add-hook 'after-load-theme-hook 'my-leuven-comment-face-customization)
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-solaire-mode" class="outline-3">
-<h3 id="solaire-mode"><span class="section-number-3">4.3.</span> Solaire Mode</h3>
-<div class="outline-text-3" id="text-solaire-mode">
+<div id="outline-container-better-focus" class="outline-3">
+<h3 id="better-focus"><span class="section-number-3">4.3.</span> Better Focus</h3>
+<div class="outline-text-3" id="text-better-focus">
 <p>
 An asthetic plugin designed to visually distinguish "real" buffers
 from "unreal" buffers (like popups, sidebars, log-buffers, etc) by
@@ -718,16 +724,30 @@ giving the later a slightly different background.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">solaire-mode</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> solaire-mode
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:config</span>
   (solaire-global-mode +1))
 </pre>
 </div>
+
+<p>
+Dimmer mode indicates which buffer is currently active by dimming the
+faces in the other buffers.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> dimmer
+    <span class="org-builtin">:straight</span> t
+    <span class="org-builtin">:config</span>
+    (dimmer-configure-which-key)
+    (dimmer-mode t))
+
+(<span class="org-keyword">setq</span> dimmer-fraction .5)
+</pre>
 </div>
 </div>
-
-
+</div>
 <div id="outline-container-transparency" class="outline-3">
 <h3 id="transparency"><span class="section-number-3">4.4.</span> Transparency</h3>
 <div class="outline-text-3" id="text-transparency">
@@ -761,13 +781,10 @@ a tiling window manager on a large monitor.
       (<span class="org-keyword">setq</span> transparency-enabled t)
       (message <span class="org-string">"Transparency enabled"</span>))))
 
-(global-set-key (kbd <span class="org-string">"C-c t"</span>) 'toggle-transparency)
-
 </pre>
 </div>
 </div>
 </div>
-
 <div id="outline-container-dashboard" class="outline-3">
 <h3 id="dashboard"><span class="section-number-3">4.5.</span> Dashboard</h3>
 <div class="outline-text-3" id="text-dashboard">
@@ -776,7 +793,7 @@ We would need emacs-dashboard package for an easier configuration.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">dashboard</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> dashboard
   <span class="org-builtin">:config</span>
   (<span class="org-keyword">setq</span> dashboard-center-content t)
   (<span class="org-keyword">setq</span> dashboard-show-shortcuts nil)
@@ -786,13 +803,12 @@ We would need emacs-dashboard package for an easier configuration.
 </div>
 </div>
 </div>
-
 <div id="outline-container-modeline" class="outline-3">
 <h3 id="modeline"><span class="section-number-3">4.6.</span> Modeline</h3>
 <div class="outline-text-3" id="text-modeline">
 </div>
 <ol class="org-ol">
-<li><a id="orgab2d270"></a>Nano Modeline<br />
+<li><a id="org2caac64"></a>Nano Modeline<br />
 <div class="outline-text-5" id="text-4-6-0-1">
 <p>
 A minimal modeline for Emacs.
@@ -819,8 +835,7 @@ A minimal modeline for Emacs.
 </div>
 </div>
 </li>
-
-<li><a id="orgd3a2a6b"></a>Doom Modeline<br />
+<li><a id="org6415e70"></a>Doom Modeline<br />
 <div class="outline-text-5" id="text-4-6-0-2">
 <p>
 I keep getting bored with "nicer" looking modelines and keep coming
@@ -830,7 +845,7 @@ good.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">
-(<span class="org-keyword">use-package</span> <span class="org-constant">doom-modeline</span>
+(<span class="org-keyword">use-package</span> doom-modeline
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:init</span> (doom-modeline-mode 1))
 </pre>
@@ -839,7 +854,6 @@ good.
 </li>
 </ol>
 </div>
-
 <div id="outline-container-fancy-mini-buffer" class="outline-3">
 <h3 id="fancy-mini-buffer"><span class="section-number-3">4.7.</span> Fancy Mini-Buffer</h3>
 <div class="outline-text-3" id="text-fancy-mini-buffer">
@@ -849,7 +863,7 @@ better. Mini-frame mode is enabled by default.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">mini-frame</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> mini-frame
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:config</span>
     (mini-frame-mode 1))
@@ -864,8 +878,29 @@ better. Mini-frame mode is enabled by default.
 </div>
 </div>
 </div>
+<div id="outline-container-indentation" class="outline-3">
+<h3 id="indentation"><span class="section-number-3">4.8.</span> Indentation</h3>
+<div class="outline-text-3" id="text-indentation">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> indent-bars
+  <span class="org-builtin">:config</span>
+  <span class="org-builtin">:custom</span>
+  (indent-bars-treesit-support t)
+  (indent-bars-treesit-ignore-blank-lines-types '(<span class="org-string">"module"</span>))
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Add other languages as needed</span>
+  (indent-bars-treesit-scope '((python function_definition class_definition for_statement
+      if_statement with_statement while_statement)))
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Note: wrap may not be needed if no-descend-list is enough</span>
+  <span class="org-comment-delimiter">;;</span><span class="org-comment">(indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example</span>
+  <span class="org-comment-delimiter">;;</span><span class="org-comment">                      list list_comprehension</span>
+  <span class="org-comment-delimiter">;;</span><span class="org-comment">                      dictionary dictionary_comprehension</span>
+  <span class="org-comment-delimiter">;;</span><span class="org-comment">                      parenthesized_expression subscript)))</span>
+  <span class="org-builtin">:hook</span> ((python-base-mode yaml-mode) . indent-bars-mode))
+</pre>
 </div>
-
+</div>
+</div>
+</div>
 <div id="outline-container-functionality" class="outline-2">
 <h2 id="functionality"><span class="section-number-2">5.</span> Functionality</h2>
 <div class="outline-text-2" id="text-functionality">
@@ -880,7 +915,7 @@ train myself to learn Emacs
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">evil</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> evil
   <span class="org-builtin">:init</span>
   (<span class="org-keyword">setq</span> evil-want-integration t)
   (<span class="org-keyword">setq</span> evil-want-keybinding nil)
@@ -913,7 +948,7 @@ Evil on every mode
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">package: evil-collection</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Now be EVIL on every mode</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">TODO: Doesn't work</span>
-(<span class="org-keyword">use-package</span> <span class="org-constant">evil-collection</span>
+(<span class="org-keyword">use-package</span> evil-collection
   <span class="org-builtin">:after</span> evil
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:config</span>
@@ -923,7 +958,6 @@ Evil on every mode
 </ul>
 </div>
 </div>
-
 <div id="outline-container-org-mode" class="outline-3">
 <h3 id="org-mode"><span class="section-number-3">5.2.</span> Org Mode</h3>
 <div class="outline-text-3" id="text-org-mode">
@@ -990,10 +1024,8 @@ For shorthand completions, lile &lt;s-TAB for source code blocks.
 </div></li>
 </ul>
 </div>
-
-
-<div id="outline-container-orgb15fa22" class="outline-4">
-<h4 id="orgb15fa22"><span class="section-number-4">5.2.1.</span> Org TOC</h4>
+<div id="outline-container-orgf2b5971" class="outline-4">
+<h4 id="orgf2b5971"><span class="section-number-4">5.2.1.</span> Org TOC</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 Create table of contents for Org files.
@@ -1011,7 +1043,7 @@ jump to the corresponding heading.
 ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
 </p>
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">toc-org</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> toc-org
   <span class="org-builtin">:hook</span> (org-mode . toc-org-enable)
   <span class="org-builtin">:config</span>
   (<span class="org-keyword">setq</span> toc-org-hrefify-default <span class="org-string">"gh"</span>))
@@ -1019,9 +1051,8 @@ ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
 </div>
 </div>
 </div>
-
-<div id="outline-container-org7a5750f" class="outline-4">
-<h4 id="org7a5750f"><span class="section-number-4">5.2.2.</span> Org Babel</h4>
+<div id="outline-container-org94d7eb7" class="outline-4">
+<h4 id="org94d7eb7"><span class="section-number-4">5.2.2.</span> Org Babel</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Active Babel languages
@@ -1035,9 +1066,8 @@ Active Babel languages
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgbbbd286" class="outline-4">
-<h4 id="orgbbbd286"><span class="section-number-4">5.2.3.</span> Org Hugo(ox-hugo)</h4>
+<div id="outline-container-org885e83a" class="outline-4">
+<h4 id="org885e83a"><span class="section-number-4">5.2.3.</span> Org Hugo(ox-hugo)</h4>
 <div class="outline-text-4" id="text-5-2-3">
 <p>
 ox-hugo helps me manage my website using org files.
@@ -1049,7 +1079,7 @@ install it manually. Edit: 08/09/2024 - Installed it using straight.el
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">tomelr</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> tomelr
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"kaushalmodi/tomelr"</span> <span class="org-builtin">:files</span> (<span class="org-string">"*.el"</span>))
   <span class="org-builtin">:ensure</span> t)
 </pre>
@@ -1057,7 +1087,7 @@ install it manually. Edit: 08/09/2024 - Installed it using straight.el
 
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">ox-hugo</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> ox-hugo
   <span class="org-builtin">:ensure</span> t   <span class="org-comment-delimiter">;</span><span class="org-comment">Auto-install the package from Melpa</span>
   <span class="org-builtin">:pin</span> melpa  <span class="org-comment-delimiter">;</span><span class="org-comment">`</span><span class="org-comment"><span class="org-constant">package-archives</span></span><span class="org-comment">' should already have ("melpa" . "https://melpa.org/packages/")</span>
   <span class="org-builtin">:after</span> ox)    
@@ -1066,9 +1096,8 @@ install it manually. Edit: 08/09/2024 - Installed it using straight.el
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgbe37302" class="outline-4">
-<h4 id="orgbe37302"><span class="section-number-4">5.2.4.</span> Org Download</h4>
+<div id="outline-container-org4c558e7" class="outline-4">
+<h4 id="org4c558e7"><span class="section-number-4">5.2.4.</span> Org Download</h4>
 <div class="outline-text-4" id="text-5-2-4">
 <p>
 This nice package helps add images to an Org file in a better way.
@@ -1080,7 +1109,7 @@ we need to install <code>pngpaste</code> using Homebrew.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org-download</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> org-download
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:bind</span>
   (<span class="org-string">"C-c d"</span> . org-download-clipboard)
@@ -1098,9 +1127,8 @@ we need to install <code>pngpaste</code> using Homebrew.
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgeb6f96c" class="outline-4">
-<h4 id="orgeb6f96c"><span class="section-number-4">5.2.5.</span> Org Roam</h4>
+<div id="outline-container-org1b5ffc5" class="outline-4">
+<h4 id="org1b5ffc5"><span class="section-number-4">5.2.5.</span> Org Roam</h4>
 <div class="outline-text-4" id="text-5-2-5">
 <p>
 A sophisticated note taking mechanishm. Essentially a clone of
@@ -1108,7 +1136,7 @@ A sophisticated note taking mechanishm. Essentially a clone of
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org-roam</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> org-roam
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:bind</span> ((<span class="org-string">"C-c n l"</span> . org-roam-buffer-toggle)
          (<span class="org-string">"C-c n f"</span> . org-roam-node-find)
@@ -1129,9 +1157,8 @@ A sophisticated note taking mechanishm. Essentially a clone of
 </pre>
 </div>
 </div>
-
 <ol class="org-ol">
-<li><a id="orgf091269"></a>Full text search with Deft<br />
+<li><a id="org05827ba"></a>Full text search with Deft<br />
 <div class="outline-text-5" id="text-5-2-5-1">
 <p>
 Deft is an Emacs mode for quickly browsing and filtering plain text
@@ -1139,7 +1166,7 @@ notes.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">deft</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> deft
   <span class="org-builtin">:after</span> org
   <span class="org-builtin">:bind</span>
   (<span class="org-string">"C-c n d"</span> . deft)
@@ -1152,8 +1179,7 @@ notes.
 </div>
 </div>
 </li>
-
-<li><a id="org384ddd1"></a>Backlink buffer<br />
+<li><a id="org8d38b29"></a>Backlink buffer<br />
 <div class="outline-text-5" id="text-5-2-5-2">
 <p>
 Org-roam backlink buffer, <a href="https:github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2#backlink-buffer">source</a>
@@ -1174,16 +1200,15 @@ Org-roam backlink buffer, <a href="https:github.com/org-roam/org-roam/wiki/Hitch
 </li>
 </ol>
 </div>
-
-<div id="outline-container-orgca0bbab" class="outline-4">
-<h4 id="orgca0bbab"><span class="section-number-4">5.2.6.</span> Org Roam UI</h4>
+<div id="outline-container-org573c360" class="outline-4">
+<h4 id="org573c360"><span class="section-number-4">5.2.6.</span> Org Roam UI</h4>
 <div class="outline-text-4" id="text-5-2-6">
 <p>
 A visual interface for Org Roam. 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org-roam-ui</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> org-roam-ui
   <span class="org-builtin">:straight</span>
     (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"org-roam/org-roam-ui"</span> <span class="org-builtin">:branch</span> <span class="org-string">"main"</span> <span class="org-builtin">:files</span> (<span class="org-string">"*.el"</span> <span class="org-string">"out"</span>))
     <span class="org-builtin">:after</span> org-roam
@@ -1201,10 +1226,8 @@ A visual interface for Org Roam.
 </div>
 </div>
 </div>
-
-
-<div id="outline-container-org14b77ed" class="outline-4">
-<h4 id="org14b77ed"><span class="section-number-4">5.2.7.</span> Org Export Settings(htmlize)</h4>
+<div id="outline-container-org315bbe2" class="outline-4">
+<h4 id="org315bbe2"><span class="section-number-4">5.2.7.</span> Org Export Settings(htmlize)</h4>
 <div class="outline-text-4" id="text-5-2-7">
 <p>
 Org mode usually ships with this package, However in certain cases you
@@ -1213,7 +1236,7 @@ might need to install it manually.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">
-(<span class="org-keyword">use-package</span> <span class="org-constant">htmlize</span>
+(<span class="org-keyword">use-package</span> htmlize
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:init</span>
   (<span class="org-keyword">setq</span> org-html-htmlize-output-type 'css)
@@ -1223,9 +1246,8 @@ might need to install it manually.
 </div>
 </div>
 </div>
-
-<div id="outline-container-org4021d11" class="outline-4">
-<h4 id="org4021d11"><span class="section-number-4">5.2.8.</span> Human Readable IDs</h4>
+<div id="outline-container-org5229f03" class="outline-4">
+<h4 id="org5229f03"><span class="section-number-4">5.2.8.</span> Human Readable IDs</h4>
 <div class="outline-text-4" id="text-5-2-8">
 <p>
 While exporting html, <code>org-html-export-to-html</code>  function generates
@@ -1247,7 +1269,7 @@ seemed like the simplest.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">
 <span class="org-comment-delimiter">;; </span><span class="org-comment">The only dependency</span>
-(<span class="org-keyword">use-package</span> <span class="org-constant">s</span>
+(<span class="org-keyword">use-package</span> s
   <span class="org-builtin">:ensure</span> t)
 
 (<span class="org-keyword">defun</span> <span class="org-function-name">eos/org-generate-custom-ids</span> ()
@@ -1304,7 +1326,6 @@ Run the function on save, while in org-mode.
 </div>
 </div>
 </div>
-
 <div id="outline-container-projectile" class="outline-3">
 <h3 id="projectile"><span class="section-number-3">5.3.</span> Projectile</h3>
 <div class="outline-text-3" id="text-projectile">
@@ -1315,13 +1336,13 @@ on them.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">
-(<span class="org-keyword">use-package</span> <span class="org-constant">counsel-projectile</span>
+(<span class="org-keyword">use-package</span> counsel-projectile
   <span class="org-builtin">:after</span> projectile
   <span class="org-builtin">:config</span> (counsel-projectile-mode))
 
 (counsel-projectile-mode)
 
-(<span class="org-keyword">use-package</span> <span class="org-constant">projectile</span>
+(<span class="org-keyword">use-package</span> projectile
   <span class="org-builtin">:diminish</span> projectile-mode
   <span class="org-builtin">:config</span> (projectile-mode)
   <span class="org-builtin">:custom</span> ((projectile-completion-system 'ivy))
@@ -1336,39 +1357,52 @@ on them.
 </div>
 </div>
 </div>
-
 <div id="outline-container-version-control" class="outline-3">
 <h3 id="version-control"><span class="section-number-3">5.4.</span> Version Control</h3>
 <div class="outline-text-3" id="text-version-control">
 </div>
-
-<div id="outline-container-org2cd7f34" class="outline-4">
-<h4 id="org2cd7f34"><span class="section-number-4">5.4.1.</span> Magit</h4>
+<div id="outline-container-orgf7172a7" class="outline-4">
+<h4 id="orgf7172a7"><span class="section-number-4">5.4.1.</span> Magit</h4>
 <div class="outline-text-4" id="text-5-4-1">
 <p>
-The magical Git client for emacs. 
+The magical Git client for emacs.
+</p>
+
+<p>
+Since I am using emacs-plus, In order for spotlight to find the emacs
+executable, I cpoied the executable to /Applications. However, After I
+did that, Magit showed an error message saying that it could not find
+the emacsclient executable. I had to set the variable
+with-editor-emacsclient-executable to "emacsclient" in order to fix
+the issue.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">magit</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq-default</span> with-editor-emacsclient-executable <span class="org-string">"emacsclient"</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> magit
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:pin</span> melpa-stable)
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgbc4ae68" class="outline-4">
-<h4 id="orgbc4ae68"><span class="section-number-4">5.4.2.</span> Diff-hl</h4>
+<div id="outline-container-orge015ee9" class="outline-4">
+<h4 id="orge015ee9"><span class="section-number-4">5.4.2.</span> Diff-hl</h4>
 <div class="outline-text-4" id="text-5-4-2">
 <p>
 Emacs port of the Sublime Git Gutter
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">diff-hl</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> diff-hl
   <span class="org-builtin">:straight</span> (diff-hl <span class="org-builtin">:type</span> git <span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"dgutov/diff-hl"</span>)
-  <span class="org-builtin">:hook</span> (prog-mode . diff-hl-mode)
+  <span class="org-builtin">:hook</span> ((prog-mode . diff-hl-mode)
+         (org-mode . diff-hl-mode)
+         (text-mode . diff-hl-mode))
   <span class="org-builtin">:config</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Limit diff-hl to specific modes</span>
   (<span class="org-keyword">setq</span> diff-hl-global-modes '(not image-mode pdf-view-mode))
@@ -1393,7 +1427,6 @@ Emacs port of the Sublime Git Gutter
 </div>
 </div>
 </div>
-
 <div id="outline-container-completions" class="outline-3">
 <h3 id="completions"><span class="section-number-3">5.5.</span> Completions</h3>
 <div class="outline-text-3" id="text-completions">
@@ -1402,7 +1435,7 @@ Set up Ivy, Counsel, and Swiper for better completions.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">counsel</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> counsel
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:diminish</span>
   <span class="org-builtin">:bind</span> ((<span class="org-string">"C-s"</span> . swiper)                         <span class="org-comment-delimiter">;; </span><span class="org-comment">Search using Swiper</span>
@@ -1410,7 +1443,6 @@ Set up Ivy, Counsel, and Swiper for better completions.
          (<span class="org-string">"s-x"</span> . counsel-M-x)                    <span class="org-comment-delimiter">;; </span><span class="org-comment">Super-X for M-x</span>
          (<span class="org-string">"C-x C-f"</span> . counsel-find-file)          <span class="org-comment-delimiter">;; </span><span class="org-comment">Enhanced find file</span>
          (<span class="org-string">"C-x b"</span> . counsel-switch-buffer)        <span class="org-comment-delimiter">;; </span><span class="org-comment">Enhanced buffer switch</span>
-         (<span class="org-string">"C-x t"</span> . counsel-load-theme)           <span class="org-comment-delimiter">;; </span><span class="org-comment">Load theme with counsel</span>
          <span class="org-builtin">:map</span> minibuffer-local-map
          (<span class="org-string">"C-x C-r"</span> . counsel-minibuffer-history) <span class="org-comment-delimiter">;; </span><span class="org-comment">Access minibuffer history</span>
          (<span class="org-string">"C-r"</span> . counsel-minibuffer-history)     <span class="org-comment-delimiter">;; </span><span class="org-comment">Redundant, can be removed</span>
@@ -1440,7 +1472,7 @@ Prescient settings for sorting and filtering.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Package: ivy-prescient</span>
-(<span class="org-keyword">use-package</span> <span class="org-constant">ivy-prescient</span>
+(<span class="org-keyword">use-package</span> ivy-prescient
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:after</span> counsel
   <span class="org-builtin">:custom</span>
@@ -1455,10 +1487,8 @@ Prescient settings for sorting and filtering.
 </pre>
 </div>
 </div>
-
-
-<div id="outline-container-org57a1530" class="outline-4">
-<h4 id="org57a1530"><span class="section-number-4">5.5.1.</span> Ivy rich</h4>
+<div id="outline-container-orga482010" class="outline-4">
+<h4 id="orga482010"><span class="section-number-4">5.5.1.</span> Ivy rich</h4>
 <div class="outline-text-4" id="text-5-5-1">
 <p>
 Ivy-rich for better Ivy interface
@@ -1466,13 +1496,13 @@ Ivy-rich for better Ivy interface
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">package: ivy-rich</span>
-(<span class="org-keyword">use-package</span> <span class="org-constant">ivy-rich</span>
+(<span class="org-keyword">use-package</span> ivy-rich
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:init</span>
   (ivy-rich-mode 1))
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">All the icons + Ivy</span>
-(<span class="org-keyword">use-package</span> <span class="org-constant">all-the-icons-ivy-rich</span>
+(<span class="org-keyword">use-package</span> all-the-icons-ivy-rich
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:init</span> (all-the-icons-ivy-rich-mode 1))
@@ -1480,12 +1510,11 @@ Ivy-rich for better Ivy interface
 </div>
 </div>
 </div>
-
-<div id="outline-container-org4b7b606" class="outline-4">
-<h4 id="org4b7b606"><span class="section-number-4">5.5.2.</span> Hydra</h4>
+<div id="outline-container-org75a0d65" class="outline-4">
+<h4 id="org75a0d65"><span class="section-number-4">5.5.2.</span> Hydra</h4>
 <div class="outline-text-4" id="text-5-5-2">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">hydra</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> hydra
   <span class="org-builtin">:defer</span> t)
 
 (<span class="org-keyword">defhydra</span> hydra-text-scale (<span class="org-builtin">:timeout</span> 4)
@@ -1497,16 +1526,15 @@ Ivy-rich for better Ivy interface
 </div>
 </div>
 </div>
-
-<div id="outline-container-org657d399" class="outline-4">
-<h4 id="org657d399"><span class="section-number-4">5.5.3.</span> Which-key</h4>
+<div id="outline-container-orgaf3a1bc" class="outline-4">
+<h4 id="orgaf3a1bc"><span class="section-number-4">5.5.3.</span> Which-key</h4>
 <div class="outline-text-4" id="text-5-5-3">
 <p>
 It's a minor mode that shows kebindings for an incomplete command.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">which-key</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> which-key
   <span class="org-builtin">:init</span>
   (which-key-mode))
 </pre>
@@ -1514,7 +1542,6 @@ It's a minor mode that shows kebindings for an incomplete command.
 </div>
 </div>
 </div>
-
 <div id="outline-container-treemacs" class="outline-3">
 <h3 id="treemacs"><span class="section-number-3">5.6.</span> Treemacs</h3>
 <div class="outline-text-3" id="text-treemacs">
@@ -1525,7 +1552,7 @@ sometimes doesn't work as intended.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">treemacs</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> treemacs
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:defer</span> t
   <span class="org-builtin">:init</span>
@@ -1540,25 +1567,16 @@ sometimes doesn't work as intended.
     (treemacs-resize-icons 18)
     (treemacs-follow-mode t)
     (treemacs-project-follow-mode t)
-    (treemacs-filewatch-mode t))
-   <span class="org-builtin">:bind</span>
-   (<span class="org-builtin">:map</span> global-map
-         (<span class="org-string">"M-0"</span>       . treemacs-select-window)
-         (<span class="org-string">"C-x t 1"</span>   . treemacs-delete-other-windows)
-         (<span class="org-string">"C-x t t"</span>   . treemacs-add-and-display-current-project-exclusively)
-         (<span class="org-string">"C-x t d"</span>   . treemacs-select-directory)
-         (<span class="org-string">"C-x t B"</span>   . treemacs-bookmark)
-         (<span class="org-string">"C-x t C-t"</span> . treemacs-find-file)
-         (<span class="org-string">"C-x t M-t"</span> . treemacs-find-tag)))
+    (treemacs-filewatch-mode t)))
 
   <span class="org-comment-delimiter">;; </span><span class="org-comment">(add-hook 'projectile-after-switch-project-hook 'treemacs-add-and-display-current-project-exclusively)</span>
 
-  (<span class="org-keyword">use-package</span> <span class="org-constant">treemacs-evil</span>
+  (<span class="org-keyword">use-package</span> treemacs-evil
     <span class="org-builtin">:after</span> (treemacs evil)
     <span class="org-builtin">:ensure</span> t
     <span class="org-builtin">:pin</span> melpa)
 
-  (<span class="org-keyword">use-package</span> <span class="org-constant">treemacs-projectile</span>
+  (<span class="org-keyword">use-package</span> treemacs-projectile
     <span class="org-builtin">:after</span> (treemacs projectile)
     <span class="org-builtin">:ensure</span> t
     <span class="org-builtin">:pin</span> melpa) 
@@ -1567,7 +1585,6 @@ sometimes doesn't work as intended.
 </div>
 </div>
 </div>
-
 <div id="outline-container-restclient" class="outline-3">
 <h3 id="restclient"><span class="section-number-3">5.7.</span> RestClient</h3>
 <div class="outline-text-3" id="text-restclient">
@@ -1576,7 +1593,7 @@ Postman for Emacs, A mode to run HTTP queries.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">restclient</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> restclient
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:pin</span> melpa
   <span class="org-builtin">:mode</span> ((<span class="org-string">"\\.http\\'"</span> . restclient-mode)))
@@ -1584,7 +1601,6 @@ Postman for Emacs, A mode to run HTTP queries.
 </div>
 </div>
 </div>
-
 <div id="outline-container-command-log-mode" class="outline-3">
 <h3 id="command-log-mode"><span class="section-number-3">5.8.</span> Command-log-mode</h3>
 <div class="outline-text-3" id="text-command-log-mode">
@@ -1594,7 +1610,7 @@ configs. Default binding to toggle is <code>C-c M-c</code>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">command-log-mode</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> command-log-mode
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:bind</span>
   (<span class="org-string">"C-c M-c"</span> . clm/toggle-command-log-buffer)
@@ -1605,13 +1621,26 @@ configs. Default binding to toggle is <code>C-c M-c</code>
 </div>
 </div>
 </div>
-</div>
+<div id="outline-container-vterm" class="outline-3">
+<h3 id="vterm"><span class="section-number-3">5.9.</span> Vterm</h3>
+<div class="outline-text-3" id="text-vterm">
+<p>
+Probably the only usable terminal emulator for Emacs
+</p>
 
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> vterm
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:straight</span> t)
+</pre>
+</div>
+</div>
+</div>
+</div>
 <div id="outline-container-system-configuration" class="outline-2">
 <h2 id="system-configuration"><span class="section-number-2">6.</span> System configuration</h2>
 <div class="outline-text-2" id="text-system-configuration">
 </div>
-
 <div id="outline-container-emacs-environment-variables" class="outline-3">
 <h3 id="emacs-environment-variables"><span class="section-number-3">6.1.</span> Emacs environment variables</h3>
 <div class="outline-text-3" id="text-emacs-environment-variables">
@@ -1620,7 +1649,7 @@ Ensure Emacs env variables match system variables.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">exec-path-from-shell</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> exec-path-from-shell
   <span class="org-builtin">:ensure</span> t)
 
 (<span class="org-keyword">when</span> (memq window-system '(mac ns x))
@@ -1630,69 +1659,12 @@ Ensure Emacs env variables match system variables.
 </div>
 </div>
 </div>
-
 <div id="outline-container-code-completion" class="outline-2">
 <h2 id="code-completion"><span class="section-number-2">7.</span> Code Completion</h2>
 <div class="outline-text-2" id="text-code-completion">
 </div>
-
-<div id="outline-container-corfu" class="outline-3">
-<h3 id="corfu"><span class="section-number-3">7.1.</span> Corfu</h3>
-<div class="outline-text-3" id="text-corfu">
-<p>
-Corfu is a simpler alternative to Company-mode; However it doesn't show
-me the completion pop-ups automatically. #FIXME
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">corfu</span>
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">Optional customizations</span>
-  <span class="org-builtin">:custom</span>
-  (corfu-cycle t)                <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable cycling for `</span><span class="org-comment"><span class="org-constant">corfu-next/previous</span></span><span class="org-comment">'</span>
-  (corfu-preselect 'prompt)      <span class="org-comment-delimiter">;; </span><span class="org-comment">Always preselect the prompt</span>
-  (corfu-auto t)                 <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable auto-completion</span>
-  (corfu-auto-delay 0)
-  (corfu-auto-prefix 0)
-  (completion-styles '(basic))
-  <span class="org-builtin">:init</span>
-  (global-corfu-mode))
-
-<span class="org-comment-delimiter">;; </span><span class="org-comment">A few more useful configurations...</span>
-(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
-  <span class="org-builtin">:init</span>
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">TAB cycle if there are only few candidates</span>
-  (<span class="org-keyword">setq</span> completion-cycle-threshold 3)
-
-  (<span class="org-keyword">setq</span> read-extended-command-predicate
-        #'command-completion-default-include-p)
-
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable indentation+completion using the TAB key.</span>
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">`</span><span class="org-comment"><span class="org-constant">completion-at-point</span></span><span class="org-comment">' is often bound to M-TAB.</span>
-  (<span class="org-keyword">setq</span> tab-always-indent 'complete))
-</pre>
-</div>
-
-<ul class="org-ul">
-<li>Swap default Dabbrev completions.</li>
-</ul>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">dabbrev</span>
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">Swap M-/ and C-M-/</span>
-  <span class="org-builtin">:bind</span> ((<span class="org-string">"M-/"</span> . dabbrev-completion)
-         (<span class="org-string">"C-M-/"</span> . dabbrev-expand))
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">Other useful Dabbrev configurations.</span>
-  <span class="org-builtin">:custom</span>
-  (dabbrev-ignored-buffer-regexps '(<span class="org-string">"\\.</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(?:</span></span><span class="org-string">pdf</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">jpe?g</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">png</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">\\'"</span>)))
-</pre>
-</div>
-</div>
-</div>
-
-
-
 <div id="outline-container-treesitter" class="outline-3">
-<h3 id="treesitter"><span class="section-number-3">7.2.</span> Tree-sitter</h3>
+<h3 id="treesitter"><span class="section-number-3">7.1.</span> Tree-sitter</h3>
 <div class="outline-text-3" id="text-treesitter">
 <p>
 Tree-sitter is a parser generator tool and an incremental parsing
@@ -1763,8 +1735,6 @@ Custom functions to check and install tree-sitter.
 </div>
 </div>
 </div>
-
-
 <div id="outline-container-programming-stuff" class="outline-2">
 <h2 id="programming-stuff"><span class="section-number-2">8.</span> Programming stuff</h2>
 <div class="outline-text-2" id="text-programming-stuff">
@@ -1772,7 +1742,6 @@ Custom functions to check and install tree-sitter.
 This section has configurations for various programming language modes.
 </p>
 </div>
-
 <div id="outline-container-eglot" class="outline-3">
 <h3 id="eglot"><span class="section-number-3">8.1.</span> Eglot</h3>
 <div class="outline-text-3" id="text-eglot">
@@ -1787,18 +1756,16 @@ programming languages on Emacs.
 </div>
 </div>
 </div>
-
 <div id="outline-container-go" class="outline-3">
 <h3 id="go"><span class="section-number-3">8.2.</span> Go</h3>
 <div class="outline-text-3" id="text-go">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">go-mode</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> go-mode
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:init</span>
   (<span class="org-keyword">push</span> '(<span class="org-string">"\\.go\\'"</span> . go-mode) auto-mode-alist))
 </pre>
 </div>
-
 
 
 <p>
@@ -1821,12 +1788,11 @@ Eglot hooks for Go
 </div>
 </div>
 </div>
-
 <div id="outline-container-rust" class="outline-3">
 <h3 id="rust"><span class="section-number-3">8.3.</span> Rust</h3>
 <div class="outline-text-3" id="text-rust">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">rust-mode</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> rust-mode
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:init</span>
   (<span class="org-keyword">push</span> '(<span class="org-string">"\\.rs\\'"</span> . rust-mode) auto-mode-alist))
@@ -1834,7 +1800,6 @@ Eglot hooks for Go
 </div>
 </div>
 </div>
-
 <div id="outline-container-haskell" class="outline-3">
 <h3 id="haskell"><span class="section-number-3">8.4.</span> Haskell</h3>
 <div class="outline-text-3" id="text-haskell">
@@ -1843,14 +1808,13 @@ Am I a 21st century Hippie now?
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">haskell-mode</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> haskell-mode
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"haskell/haskell-mode"</span>)
   <span class="org-builtin">:mode</span> <span class="org-string">"\\.hs\\'"</span>)
 </pre>
 </div>
 </div>
 </div>
-
 <div id="outline-container-typst" class="outline-3">
 <h3 id="typst"><span class="section-number-3">8.5.</span> Typst</h3>
 <div class="outline-text-3" id="text-typst">
@@ -1862,7 +1826,7 @@ Seems like a decent alternative to LaTex.
 <pre class="src src-emacs-lisp">  <span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure Typst tree-sit grammar is installed</span>
   (ensure-treesit-grammar-installed 'typst (expand-file-name <span class="org-string">"tree-sitter/libtree-sitter-typst.dylib"</span> user-emacs-directory))
 
-(<span class="org-keyword">use-package</span> <span class="org-constant">typst-ts-mode</span>
+(<span class="org-keyword">use-package</span> typst-ts-mode
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:type</span> git <span class="org-builtin">:host</span> sourcehut <span class="org-builtin">:repo</span> <span class="org-string">"meow_king/typst-ts-mode"</span> <span class="org-builtin">:files</span> (<span class="org-builtin">:defaults</span> <span class="org-string">"*.el"</span>))
   <span class="org-builtin">:custom</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">(optional) If you want to ensure your typst tree sitter grammar version is greater than the minimum requirement</span>
@@ -1926,7 +1890,6 @@ Custom functions to ask for root directory.
 </div>
 </div>
 </div>
-
 <div id="outline-container-latex" class="outline-3">
 <h3 id="latex"><span class="section-number-3">8.6.</span> LaTex</h3>
 <div class="outline-text-3" id="text-latex">
@@ -1936,7 +1899,7 @@ Not sure if LaTex belongs here.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Install Auctex using straight.el</span>
-(<span class="org-keyword">use-package</span> <span class="org-constant">auctex</span>
+(<span class="org-keyword">use-package</span> auctex
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:type</span> git <span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"emacs-straight/auctex"</span>)
   <span class="org-builtin">:config</span>
@@ -1966,7 +1929,7 @@ Install pdf tools using straight.el with minimal configuration
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">pdf-tools</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> pdf-tools
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"vedang/pdf-tools"</span>)
   <span class="org-builtin">:config</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Initialize the PDF Tools package</span>
@@ -1976,8 +1939,7 @@ Install pdf tools using straight.el with minimal configuration
   (<span class="org-keyword">setq-default</span> pdf-view-display-size 'fit-width))
 
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable midnight mode for PDFs</span>
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">(add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode))</span>
-
+  (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Set keybinding to install PDF Tools</span>
 (global-set-key (kbd <span class="org-string">"C-c p"</span>) 'pdf-tools-install)
@@ -1990,13 +1952,12 @@ Latex Preview Pane
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">latex-preview-pane</span> <span class="org-builtin">:straight</span> t)
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> latex-preview-pane <span class="org-builtin">:straight</span> t)
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
-
 <div id="outline-container-yaml" class="outline-3">
 <h3 id="yaml"><span class="section-number-3">8.7.</span> Yaml</h3>
 <div class="outline-text-3" id="text-yaml">
@@ -2006,7 +1967,7 @@ or <code>yaml</code> files.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">yaml-mode</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> yaml-mode
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:init</span>
   (<span class="org-keyword">push</span> '(<span class="org-string">"\\.yaml$"</span> . yaml-mode) auto-mode-alist))
@@ -2014,7 +1975,6 @@ or <code>yaml</code> files.
 </div>
 </div>
 </div>
-
 <div id="outline-container-markdown" class="outline-3">
 <h3 id="markdown"><span class="section-number-3">8.8.</span> Markdown</h3>
 <div class="outline-text-3" id="text-markdown">
@@ -2023,14 +1983,13 @@ Well, most readme files are markdown anyways.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">markdown-mode</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> markdown-mode
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"jrblevin/markdown-mode"</span>)
   <span class="org-builtin">:mode</span> <span class="org-string">"\\.md\\'"</span>)
 </pre>
 </div>
 </div>
 </div>
-
 <div id="outline-container-lua" class="outline-3">
 <h3 id="lua"><span class="section-number-3">8.9.</span> Lua</h3>
 <div class="outline-text-3" id="text-lua">
@@ -2039,7 +1998,7 @@ Because every damn thing needs lua for configuration.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">lua-mode</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> lua-mode
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"immerrr/lua-mode"</span>)
   <span class="org-builtin">:mode</span> <span class="org-string">"\\.lua\\'"</span>)
 </pre>
@@ -2047,17 +2006,15 @@ Because every damn thing needs lua for configuration.
 </div>
 </div>
 </div>
-
 <div id="outline-container-ai-stuff" class="outline-2">
 <h2 id="ai-stuff"><span class="section-number-2">9.</span> Non-Human Intelligence</h2>
 <div class="outline-text-2" id="text-ai-stuff">
 </div>
-
 <div id="outline-container-copilot" class="outline-3">
 <h3 id="copilot"><span class="section-number-3">9.1.</span> Copilot</h3>
 <div class="outline-text-3" id="text-copilot">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">copilot</span>
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> copilot
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"copilot-emacs/copilot.el"</span> <span class="org-builtin">:files</span> (<span class="org-string">"*.el"</span>))
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:hook</span> (prog-mode . copilot-mode)
@@ -2074,7 +2031,6 @@ Because every damn thing needs lua for configuration.
 </div>
 </div>
 </div>
-
 <div id="outline-container-music-player" class="outline-2">
 <h2 id="music-player"><span class="section-number-2">10.</span> Music Player</h2>
 <div class="outline-text-2" id="text-music-player">
@@ -2084,28 +2040,35 @@ Emacs as a music player? Why not?
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">
-(<span class="org-keyword">use-package</span> <span class="org-constant">ready-player</span>
+(<span class="org-keyword">use-package</span> ready-player
   <span class="org-builtin">:straight</span> (ready-player <span class="org-builtin">:type</span> git <span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"xenodium/ready-player"</span>)
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:config</span>
   (ready-player-mode +1)
-  <span class="org-builtin">:bind</span> (<span class="org-builtin">:map</span> ready-player-major-mode-map
-              (<span class="org-string">"C-c m f"</span> . 'ready-player-search)))
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-c m h"</span> . 'ready-player-toggle-shuffle)
+         (<span class="org-string">"C-c m s"</span> . 'ready-player-search)
+         (<span class="org-string">"C-c m q"</span> . 'ready-player-quit)
+         (<span class="org-string">"C-c m f"</span> . 'ready-player-seek-forward)
+         (<span class="org-string">"C-c m b"</span> . 'ready-player-seek-backward)))
+
 
 (<span class="org-keyword">setq</span> ready-player-my-media-collection-location eos/music-dir)
 (<span class="org-keyword">setq</span> ready-player-set-global-bindings nil)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Reload the music collection</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">ready-player-reload-music-collection</span> ()
+  <span class="org-doc">"Reload the music collection."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">setq</span> ready-player-reload-media-collection eos/music-dir))
 
 </pre>
 </div>
 </div>
 </div>
-
-
 <div id="outline-container-miscellaneous" class="outline-2">
 <h2 id="miscellaneous"><span class="section-number-2">11.</span> Miscellaneous</h2>
 <div class="outline-text-2" id="text-miscellaneous">
 </div>
-
 <div id="outline-container-custom-functions" class="outline-3">
 <h3 id="custom-functions"><span class="section-number-3">11.1.</span> Custom Functions</h3>
 <div class="outline-text-3" id="text-custom-functions">
@@ -2142,8 +2105,6 @@ Emacs as a music player? Why not?
 </ul>
 </div>
 </div>
-
-
 <div id="outline-container-keybindings" class="outline-3">
 <h3 id="keybindings"><span class="section-number-3">11.2.</span> KeyBindings</h3>
 <div class="outline-text-3" id="text-keybindings">
@@ -2168,6 +2129,36 @@ frequently, as my requirements evolve.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(global-set-key (kbd <span class="org-string">"C-c e r"</span>) 'eos/reload-config)
+</pre>
+</div></li>
+</ul>
+
+
+<ul class="org-ul">
+<li><p>
+<code>C-c e t</code> to switch themes.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(global-set-key (kbd <span class="org-string">"C-c e t"</span>) 'counsel-load-theme)
+</pre>
+</div></li>
+
+<li><p>
+<code>C-c e d</code> to toggle debug mode
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(global-set-key (kbd <span class="org-string">"C-c e d"</span>) 'eos/toggle-debug-mode)
+</pre>
+</div></li>
+
+<li><p>
+<code>C-c e s</code> to toggle transparency
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(global-set-key (kbd <span class="org-string">"C-c e s"</span>) 'toggle-transparency)
 </pre>
 </div></li>
 </ul>
