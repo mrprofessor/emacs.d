@@ -256,10 +256,10 @@ Basic setup for Emacs appearance and behavior.
     ;; (add-to-list 'default-frame-alist
     ;;              '(title . "Emacs"))
 
+    (setq frame-title-format "I see dead people.\n")
     (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
     (add-to-list 'default-frame-alist '(ns-appearance . dark))
     (setq ns-use-proxy-icon nil)
-    (setq frame-title-format nil)
 
   #+end_src
 
@@ -389,9 +389,8 @@ like to get them all.
     (doom-themes-treemacs-config)
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config))
-
   
-    (load-theme 'leuven t)
+    (load-theme 'leuven-dark t)
 #+END_SRC
 
 I love how Org files look with poet theme, so it's a must.
