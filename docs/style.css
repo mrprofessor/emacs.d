@@ -1,16 +1,20 @@
-// Font family
-@import url('https://fonts.googleapis.com/css2?family=Enriqueta:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+/* Font family */
+@import url("https://cdn.jsdelivr.net/gh/aymanbagabas/iosevka-fonts@v6.1.2/dist/iosevka/iosevka.min.css"); 
 
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Iosevka Web', monospace;
     font-size: 1rem;
     line-height: 1.4;
     color: #33333f;
+}
+
+pre {
+    font-family: 'Iosevka Web', monospace;
+    font-size: .9rem;
 }
 
 a {
@@ -24,7 +28,6 @@ a {
 }
 
 code {
-    font-family: 'IBM Plex Mono', monospace;
     font-size: 1rem;
 }
 
@@ -34,7 +37,6 @@ p>code, li>code {
 }
 
 h1, h2, h3 {
-    font-family: 'IBM Plex Mono', monospace;
 }
 
 h2 {
@@ -238,7 +240,6 @@ div.notice-info:before {
 }
 
 pre {
-    font-size: .85rem;
     border: 0;
     box-shadow: none;
     border-radius: 5px;
@@ -377,18 +378,29 @@ div.figure {
 
     #table-of-contents {
         position: fixed;
-        top: 0;
         left: 0;
-        padding: 2em 0 2em 2em;
-        width: 15rem;
-        height: 100vh;
-        font-size: .80rem;
+        top: 0;
+        bottom: 0;
+        width: 16rem;
+        font-size: 0.80rem;
+        box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
         background: #fdf6e3; /* solarized light background */
-        overflow: auto;
+        overscroll-behavior-y: contain;
+    }
+
+    #table-of-contents #text-table-of-contents {
+        overflow-y: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2em 0 2em 2em;
     }
 
     #table-of-contents div>ul>li>a {
-	color: #cb4b16;
+	    color: #cb4b16;
     }
 
     #table-of-contents ul>li>ul>li>ul>li {
@@ -400,10 +412,10 @@ div.figure {
     }
 
     #table-of-contents h2 {
-	display: none;
-	/* margin-top: 0; */
-	/* color: #cb4b16;  */
-	/* font-weight: normal; */
+	    display: none;
+	    /* margin-top: 0; */
+	    /* color: #cb4b16;  */
+	    /* font-weight: normal; */
     }
 
     #table-of-contents code {
@@ -418,38 +430,49 @@ div.figure {
 
 @media screen and (max-width: 1024px) {
     html, body {
-        font-size: 14px;
+        font-size: 1rem;
     }
 
     h1.title {
-	text-align: center;
-	margin: 1.5rem 0;
+	    text-align: center;
+	    margin: 1.5rem 0;
     }
 
     #table-of-contents {
-	max-width: 90%;
-	margin: auto;
-	margin-left: 5%;
-        position: unset;
-        padding: 0;
-        width: 100%;
-	height: auto;
-        font-size: 1rem;
-        background: #fdf6e3; /* solarized light background */
-        overflow: auto;
+        display: none;
+
+	    /* max-width: 90%; */
+	    /* margin: auto; */
+	    /* margin-left: 5%; */
+        /* position: unset; */
+        /* padding: 0; */
+        /* width: 100%; */
+	    /* height: auto; */
+        /* font-size: 1rem; */
+        /* background: #fdf6e3; /\* solarized light background *\/ */
+        /* overflow: auto; */
+    }
+
+
+    #table-of-contents #text-table-of-contents {
+        display: none;  /* hide the table of contents */
+
+        /* overflow-y: inherit; */
+        /* position: inherit; */
+        /* /\* padding: 2em 0 2em 2em; *\/ */
     }
 
     #text-table-of-contents {
-	padding: 0 2rem;
+	    padding: 0 2rem;
     }
 
     #table-of-contents div>ul>li {
-	margin-top: 1em;
-	font-weight: normal;
+	    margin-top: 1em;
+	    font-weight: normal;
     }
 
     #table-of-contents div>ul>li>ul>li {
-	padding: .2rem 1rem;
+	    padding: .2rem 1rem;
     }
 
     div.outline-2, #footnotes {
