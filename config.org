@@ -391,7 +391,7 @@ like to get them all.
     (doom-themes-org-config))
 
   
-    (load-theme 'leuven-dark t)
+    (load-theme 'leuven t)
 #+END_SRC
 
 I love how Org files look with poet theme, so it's a must.
@@ -406,7 +406,7 @@ Always highlight the commented code. Right now, configured for Leuven theme.
 #+begin_src emacs-lisp
   (defun my-leuven-comment-face-customization ()
     "Set custom comment face only when the Leuven theme is active."
-    (if (string-equal (car custom-enabled-themes) "leuven-dark")
+    (if (string-equal (car custom-enabled-themes) "leuven")
         (custom-set-faces
          '(font-lock-comment-face ((t (:foreground "#4A90E2" :background "#E6F7FF" :slant italic)))))
       ;; Reset to the default comment face when leaving Leuven theme
@@ -443,7 +443,7 @@ faces in the other buffers.
       (dimmer-configure-which-key)
       (dimmer-mode t))
 
-  (setq dimmer-fraction .5)
+  (setq dimmer-fraction .3)
 #+end_src
 
 
@@ -1014,10 +1014,10 @@ Set up Ivy, Counsel, and Swiper for better completions.
            ("M-x" . counsel-M-x)                    ;; Enhanced M-x
            ("s-x" . counsel-M-x)                    ;; Super-X for M-x
            ("C-x C-f" . counsel-find-file)          ;; Enhanced find file
-           ("C-x b" . counsel-switch-buffer)        ;; Enhanced buffer switch
+           ("C-x b" . ivy-switch-buffer)            ;; Show filtered buffers (code buffers)
+           ("C-x B" . counsel-ibuffer)              ;; Show all buffers
            :map minibuffer-local-map
            ("C-x C-r" . counsel-minibuffer-history) ;; Access minibuffer history
-           ("C-r" . counsel-minibuffer-history)     ;; Redundant, can be removed
            :map ivy-minibuffer-map
            ("C-j" . ivy-next-line)                  ;; Move down the list
            ("C-k" . ivy-previous-line)              ;; Move up the list
@@ -1035,6 +1035,21 @@ Set up Ivy, Counsel, and Swiper for better completions.
     (ivy-mode 1)                                    ;; Enable Ivy
     :config
     (counsel-mode 1))                               ;; Enable Counsel
+#+end_src
+
+=C-x b= doesn't show emacs garbage buffers, =C-x B= shows all the buffers.
+
+#+begin_src emacs-lisp
+  ;; Configure ivy-switch-buffer (C-x b) to ignore certain buffers
+  (setq ivy-ignore-buffers
+        '("\\` "
+          "\\`\\*"
+          "\\`magit"
+          "\\`.+_archive\\'"
+          "\\`TAGS\\'"
+          "\\`COMMIT_EDITMSG\\'"
+          "\\`MERGE_MSG\\'"
+          "\\`undo-tree\\*\\'"))
 #+end_src
 
 Prescient settings for sorting and filtering.
@@ -1602,12 +1617,42 @@ Emacs as a music player? Why not?
 - =eos/reload-config= to reload =init.el=.
 
   #+begin_src emacs-lisp
-  (defun eos/reload-config ()
+  (defun eos/reload-emacs-config ()
     "Reload the Emacs configuration file (init.el)."
     (interactive)
     (load-file (expand-file-name "~/.emacs.d/init.el")))
   #+end_src
 
+- =eos/open-config-file= to open =config.org=.
+
+  #+begin_src emacs-lisp
+    (defun eos/open-emacs-config ()
+      "Open the Emacs configuration file (config.org)."
+      (interactive)
+      (find-file "~/.emacs.d/config.org"))
+  #+end_src
+
+- =eos/kill-other-buffers= to kill all buffers except the current one.
+
+  #+begin_src emacs-lisp
+    ;; Kill all other un-important buffers except the current one
+    ;; Ask for confirmation
+
+    (defun kill-other-buffers ()
+      "Kill all other buffers, with confirmation."
+      (interactive)
+      (when (yes-or-no-p "Are you sure you want to kill all other buffers?")
+        (mapc (lambda (buffer)
+                (let ((buffer-name (buffer-name buffer)))
+                  (unless (or (eq buffer (current-buffer))
+                              (string-match "^\\*scratch\\*$" buffer-name)
+                              (string-match "^\\*straight" buffer-name)
+                              (string-match "^\\*copilot" buffer-name))
+                    
+                    (kill-buffer buffer))))
+              (buffer-list))
+        (delete-other-windows)))
+  #+end_src
 
 *** KeyBindings
 :PROPERTIES:
@@ -1617,33 +1662,17 @@ Emacs as a music player? Why not?
 Custom keybindings for emacs. This section is expected to be edited
 frequently, as my requirements evolve.
 
-- =ESC= Quit prompts
+#+begin_src emacs-lisp
+  ;; Keybindings
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)          ;; ESC to quit prompts
 
-  #+begin_src emacs-lisp
-    (global-set-key  (kbd "<escape>") 'keyboard-escape-quit)
-  #+end_src
+  ;; Custom commands
+  (global-set-key (kbd "C-c e r") 'eos/reload-emacs-config)        ;; Reload init.el
+  (global-set-key (kbd "C-c e t") 'counsel-load-theme)             ;; Switch themes
+  (global-set-key (kbd "C-c e d") 'eos/toggle-debug-mode)          ;; Toggle debug mode
+  (global-set-key (kbd "C-c e s") 'toggle-transparency)            ;; Toggle transparency
+  (global-set-key (kbd "C-c e f") 'treemacs)                       ;; Open Treemacs
+  (global-set-key (kbd "C-c e c") 'eos/open-emacs-config)          ;; Open config.org
+  (global-set-key (kbd "C-c e k") 'kill-other-buffers)             ;; Kill other buffers
 
-- =C-c e r= to reload the config file(init.el)
-
-  #+begin_src emacs-lisp
-    (global-set-key (kbd "C-c e r") 'eos/reload-config)
-  #+end_src
-
-
-- =C-c e t= to switch themes.
-
-  #+begin_src emacs-lisp
-    (global-set-key (kbd "C-c e t") 'counsel-load-theme)
-  #+end_src
-
-- =C-c e d= to toggle debug mode
-
-  #+begin_src emacs-lisp
-    (global-set-key (kbd "C-c e d") 'eos/toggle-debug-mode)
-  #+end_src
-
-- =C-c e s= to toggle transparency
-
-  #+begin_src emacs-lisp
-    (global-set-key (kbd "C-c e s") 'toggle-transparency)
-  #+end_src
+#+end_src
