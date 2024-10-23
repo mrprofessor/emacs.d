@@ -73,25 +73,19 @@
   - [[#music-player][Music Player]]
   - [[#miscellaneous][Miscellaneous]]
     - [[#custom-functions][Custom Functions]]
-    - [[#keybindings][KeyBindings]]
+    - [[#custom-keybindings][Custom keybindings]]
 
 ** Overview
 :PROPERTIES:
 :CUSTOM_ID: overview
 :END:
 
-It's been a while since I started using Emacs, and after using DOOM
-Emacs for some time, I decided to scratch my own itch and create my
-very own Emacs configuration. It's not as refined as DOOM or
-Spacemacs, and it doesn't have all the bells and whistles, but it's
-mine.
-
 Why do I like Emacs, you ask? For me, it's like riding a sports bike;
 it's not for everyone, but it's exhilarating! It has its quirks and
 might not be the most efficient tool for the job, but it’s a joy to
 use. As a "professional" programmer, I should probably use the most
-efficient tool for the job, but "professional" is boring, and I don't
-like boring.
+efficient tool for the job, but as long as my employers can't tell the
+difference, I'll stick with Emacs.
 
 [[https://imgs.xkcd.com/comics/real_programmers.png]]
 
@@ -318,22 +312,22 @@ repositories.
 
 #+begin_src emacs-lisp
 
-    (defvar bootstrap-version)
+  (defvar bootstrap-version)
   (let ((bootstrap-file
-	 (expand-file-name
-	  "straight/repos/straight.el/bootstrap.el"
-	  (or (bound-and-true-p straight-base-dir)
-	      user-emacs-directory)))
-	(bootstrap-version 7))
+         (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          (or (bound-and-true-p straight-base-dir)
+              user-emacs-directory)))
+        (bootstrap-version 7))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
-	  (url-retrieve-synchronously
-	   "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-	   'silent 'inhibit-cookies)
-	(goto-char (point-max))
-	(eval-print-last-sexp)))
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
- #+end_src
+#+end_src
 
 
 #+begin_src emacs-lisp
@@ -389,8 +383,8 @@ like to get them all.
     (doom-themes-treemacs-config)
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config))
-  
-    (load-theme 'leuven-dark t)
+
+  (load-theme 'leuven t)
 #+END_SRC
 
 I love how Org files look with poet theme, so it's a must.
@@ -398,22 +392,6 @@ I love how Org files look with poet theme, so it's a must.
 #+begin_src emacs-lisp
   (use-package poet-theme
     :ensure t)
-#+end_src
-
-Always highlight the commented code. Right now, configured for Leuven theme.
-
-#+begin_src emacs-lisp
-  (defun my-leuven-comment-face-customization ()
-    "Set custom comment face only when the Leuven theme is active."
-    (if (string-equal (car custom-enabled-themes) "leuven")
-        (custom-set-faces
-         '(font-lock-comment-face ((t (:foreground "#4A90E2" :background "#E6F7FF" :slant italic)))))
-      ;; Reset to the default comment face when leaving Leuven theme
-      (custom-set-faces
-       '(font-lock-comment-face ((t (:foreground "dim gray" :slant italic)))))))
-
-  ;; Add the function to the after-load-theme-hook to dynamically handle theme changes
-  (add-hook 'after-load-theme-hook 'my-leuven-comment-face-customization)
 #+end_src
 
 *** Better Focus
@@ -437,10 +415,10 @@ faces in the other buffers.
 
 #+begin_src emacs-lisp
   (use-package dimmer
-      :straight t
-      :config
-      (dimmer-configure-which-key)
-      (dimmer-mode t))
+    :straight t
+    :config
+    (dimmer-configure-which-key)
+    (dimmer-mode t))
 
   (setq dimmer-fraction .3)
 #+end_src
@@ -464,21 +442,6 @@ a tiling window manager on a large monitor.
 
   (defvar transparency-enabled t
     "Toggle for the transparency feature.")
-
-  (defun toggle-transparency ()
-    "Toggle between transparent and opaque Emacs frames."
-    (interactive)
-    (if transparency-enabled
-        (progn
-          (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
-          (setq transparency-enabled nil)
-          (message "Transparency disabled"))
-      (progn
-        (set-frame-parameter (selected-frame) 'alpha
-                             `(,transparency-level-active . ,transparency-level-inactive))
-        (setq transparency-enabled t)
-        (message "Transparency enabled"))))
-
 #+end_src
 
 *** Dashboard
@@ -549,14 +512,14 @@ better. Mini-frame mode is enabled by default.
   (use-package mini-frame
     :straight t
     :config
-      (mini-frame-mode 1))
+    (mini-frame-mode 1))
 
   ;; make sure they are in the middle of the screen
   (custom-set-variables
-    '(mini-frame-show-parameters
-      '((top . 200)
-        (width . 0.7)
-        (left . 0.5))))
+   '(mini-frame-show-parameters
+     '((top . 200)
+       (width . 0.7)
+       (left . 0.5))))
 #+end_src
 
 *** Indentation
@@ -572,13 +535,15 @@ better. Mini-frame mode is enabled by default.
     (indent-bars-treesit-ignore-blank-lines-types '("module"))
     ;; Add other languages as needed
     (indent-bars-treesit-scope '((python function_definition class_definition for_statement
-  	  if_statement with_statement while_statement)))
+  	                                   if_statement with_statement while_statement)))
     ;; Note: wrap may not be needed if no-descend-list is enough
     ;;(indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
     ;;				      list list_comprehension
     ;;				      dictionary dictionary_comprehension
     ;;				      parenthesized_expression subscript)))
     :hook ((python-base-mode yaml-mode) . indent-bars-mode))
+
+  (indent-bars-mode -1)
 #+end_src
 
 ** Functionality
@@ -614,7 +579,7 @@ better. Mini-frame mode is enabled by default.
     ;; Use visual line motions even outside of visual-line-mode buffers
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-    
+
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal)
   #+end_src
@@ -699,9 +664,9 @@ ref: [[https://github.com/snosov1/toc-org][toc-org]]
 Active Babel languages
 
 #+begin_src emacs-lisp
-   (org-babel-do-load-languages
-    'org-babel-load-languages
-    '((C . t) (python . t) (haskell . t) ))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((C . t) (python . t) (haskell . t) ))
 #+end_src
 
 **** Org Hugo(ox-hugo)
@@ -712,9 +677,9 @@ I couldn't install =tomelr= package, using =use-package=, so had to
 install it manually. Edit: 08/09/2024 - Installed it using straight.el
 
 #+begin_src emacs-lisp
-(use-package tomelr
-  :straight (:host github :repo "kaushalmodi/tomelr" :files ("*.el"))
-  :ensure t)
+  (use-package tomelr
+    :straight (:host github :repo "kaushalmodi/tomelr" :files ("*.el"))
+    :ensure t)
 #+end_src
 
 
@@ -756,19 +721,19 @@ A sophisticated note taking mechanishm. Essentially a clone of
 [[https://roamresearch.com/][Roam-research]] running on Emacs.
 
 #+begin_src emacs-lisp
-    (use-package org-roam
-      :ensure t
-      :bind (("C-c n l" . org-roam-buffer-toggle)
-             ("C-c n f" . org-roam-node-find)
-             ("C-c n g" . org-roam-graph)
-             ("C-c n c" . org-roam-capture)
-             ("C-c n i" . org-roam-node-insert)
-             ("C-c n t" . org-roam-tag-add)
-             ("C-c n b" . org-roam-buffer-toggle)
-             ("C-c n j" . org-roam-dailies-capture-today))
-      :pin melpa-stable
-      :config
-      (org-roam-setup))
+  (use-package org-roam
+    :ensure t
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n t" . org-roam-tag-add)
+           ("C-c n b" . org-roam-buffer-toggle)
+           ("C-c n j" . org-roam-dailies-capture-today))
+    :pin melpa-stable
+    :config
+    (org-roam-setup))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -800,11 +765,11 @@ Org-roam backlink buffer, [[https:github.com/org-roam/org-roam/wiki/Hitchhiker's
   ;; for org-roam-buffer-toggle
   ;; Recommendation in the official manual
   (add-to-list 'display-buffer-alist
-                 '("\\*org-roam\\*"
-                    (display-buffer-in-direction)
-                    (direction . right)
-                    (window-width . 0.33)
-                    (window-height . fit-window-to-buffer)))
+               '("\\*org-roam\\*"
+                 (display-buffer-in-direction)
+                 (direction . right)
+                 (window-width . 0.33)
+                 (window-height . fit-window-to-buffer)))
 #+end_src
 
 **** Org Roam UI
@@ -814,17 +779,17 @@ A visual interface for Org Roam.
 #+begin_src emacs-lisp
   (use-package org-roam-ui
     :straight
-      (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
-      :after org-roam
-  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-  ;;         a hookable mode anymore, you're advised to pick something yourself
-  ;;         if you don't care about startup time, use
-  ;;  :hook (after-init . org-roam-ui-mode)
-      :config
-      (setq org-roam-ui-sync-theme t
-            org-roam-ui-follow t
-            org-roam-ui-update-on-save t
-            org-roam-ui-open-on-start t))
+    (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
+    :after org-roam
+    ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+    ;;         a hookable mode anymore, you're advised to pick something yourself
+    ;;         if you don't care about startup time, use
+    ;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
 
 #+end_src
 
@@ -1138,17 +1103,17 @@ sometimes doesn't work as intended.
       (treemacs-project-follow-mode t)
       (treemacs-filewatch-mode t)))
 
-    ;; (add-hook 'projectile-after-switch-project-hook 'treemacs-add-and-display-current-project-exclusively)
+  ;; (add-hook 'projectile-after-switch-project-hook 'treemacs-add-and-display-current-project-exclusively)
 
-    (use-package treemacs-evil
-      :after (treemacs evil)
-      :ensure t
-      :pin melpa)
+  (use-package treemacs-evil
+    :after (treemacs evil)
+    :ensure t
+    :pin melpa)
 
-    (use-package treemacs-projectile
-      :after (treemacs projectile)
-      :ensure t
-      :pin melpa) 
+  (use-package treemacs-projectile
+    :after (treemacs projectile)
+    :ensure t
+    :pin melpa) 
 
 #+end_src
 
@@ -1235,43 +1200,43 @@ efficiently update the syntax tree as the source file is edited.
 #+begin_src emacs-lisp
 
   (setq treesit-language-source-alist
-      '(  ; use `sort-lines' to sort
-        (bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
-        (c . ("https://github.com/tree-sitter/tree-sitter-c"))
-        (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
-        (css "https://github.com/tree-sitter/tree-sitter-css")
-        (go "https://github.com/tree-sitter/tree-sitter-go")
-        (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
-        (html "https://github.com/tree-sitter/tree-sitter-html")
-        (java "https://github.com/tree-sitter/tree-sitter-java")
-        (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
-        (json "https://github.com/tree-sitter/tree-sitter-json")
-        (kotlin "https://github.com/fwcd/tree-sitter-kotlin")
-        (python . ("https://github.com/tree-sitter/tree-sitter-python"))
-        (rust "https://github.com/tree-sitter/tree-sitter-rust")
-        (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
-        (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
-        (typst "https://github.com/uben0/tree-sitter-typst")
-        (vue "https://github.com/ikatyang/tree-sitter-vue")
-        (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-        (toml "https://github.com/ikatyang/tree-sitter-toml")))
+        '(  ; use `sort-lines' to sort
+          (bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
+          (c . ("https://github.com/tree-sitter/tree-sitter-c"))
+          (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+          (css "https://github.com/tree-sitter/tree-sitter-css")
+          (go "https://github.com/tree-sitter/tree-sitter-go")
+          (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+          (html "https://github.com/tree-sitter/tree-sitter-html")
+          (java "https://github.com/tree-sitter/tree-sitter-java")
+          (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+          (json "https://github.com/tree-sitter/tree-sitter-json")
+          (kotlin "https://github.com/fwcd/tree-sitter-kotlin")
+          (python . ("https://github.com/tree-sitter/tree-sitter-python"))
+          (rust "https://github.com/tree-sitter/tree-sitter-rust")
+          (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
+          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
+          (typst "https://github.com/uben0/tree-sitter-typst")
+          (vue "https://github.com/ikatyang/tree-sitter-vue")
+          (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+          (toml "https://github.com/ikatyang/tree-sitter-toml")))
 
 
   (defun eos/treesit-install-all-languages ()
-  "Install all languages specified by `treesit-language-source-alist'."
-  (interactive)
-  (let ((languages (mapcar 'car treesit-language-source-alist)))
-    (dolist (lang languages)
-	    (treesit-install-language-grammar lang)
-	    (message "`%s' parser was installed." lang)
-	    (sit-for 0.75))))
+    "Install all languages specified by `treesit-language-source-alist'."
+    (interactive)
+    (let ((languages (mapcar 'car treesit-language-source-alist)))
+      (dolist (lang languages)
+        (treesit-install-language-grammar lang)
+        (message "`%s' parser was installed." lang)
+        (sit-for 0.75))))
 
 #+end_src
 
 Custom functions to check and install tree-sitter.
 
 #+begin_src emacs-lisp
-  
+
   ;; Checks if a specific tree-sitter grammar file exists.
   (defun treesit-grammar-installed-p (grammar-file)
     "Check if a specific tree-sitter GRAMMAR-FILE is installed."
@@ -1371,9 +1336,9 @@ Am I a 21st century Hippie now?
 Seems like a decent alternative to LaTex.
 
 #+begin_src emacs-lisp
-    ;; Ensure Typst tree-sit grammar is installed
-    (ensure-treesit-grammar-installed 'typst (expand-file-name "tree-sitter/libtree-sitter-typst.dylib" user-emacs-directory))
-  
+  ;; Ensure Typst tree-sit grammar is installed
+  (ensure-treesit-grammar-installed 'typst (expand-file-name "tree-sitter/libtree-sitter-typst.dylib" user-emacs-directory))
+
   (use-package typst-ts-mode
     :straight (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :files (:defaults "*.el"))
     :custom
@@ -1463,7 +1428,7 @@ Not sure if LaTex belongs here.
 #+end_src
 
 
-  Install pdf tools using straight.el with minimal configuration
+Install pdf tools using straight.el with minimal configuration
 
 #+begin_src emacs-lisp
   (use-package pdf-tools
@@ -1475,8 +1440,8 @@ Not sure if LaTex belongs here.
     ;; Set PDF view mode to continuous mode
     (setq-default pdf-view-display-size 'fit-width))
 
-    ;; Enable midnight mode for PDFs
-    (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
+  ;; Enable midnight mode for PDFs
+  (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
 
   ;; Set keybinding to install PDF Tools
   (global-set-key (kbd "C-c p") 'pdf-tools-install)
@@ -1574,7 +1539,7 @@ Emacs as a music player? Why not?
            ("C-c m q" . 'ready-player-quit)
            ("C-c m f" . 'ready-player-seek-forward)
            ("C-c m b" . 'ready-player-seek-backward)))
-                
+
 
   (setq ready-player-my-media-collection-location eos/music-dir)
   (setq ready-player-set-global-bindings nil)
@@ -1616,10 +1581,10 @@ Emacs as a music player? Why not?
 - =eos/reload-config= to reload =init.el=.
 
   #+begin_src emacs-lisp
-  (defun eos/reload-emacs-config ()
-    "Reload the Emacs configuration file (init.el)."
-    (interactive)
-    (load-file (expand-file-name "~/.emacs.d/init.el")))
+    (defun eos/reload-emacs-config ()
+      "Reload the Emacs configuration file (init.el)."
+      (interactive)
+      (load-file (expand-file-name "~/.emacs.d/init.el")))
   #+end_src
 
 - =eos/open-config-file= to open =config.org=.
@@ -1637,7 +1602,7 @@ Emacs as a music player? Why not?
     ;; Kill all other un-important buffers except the current one
     ;; Ask for confirmation
 
-    (defun kill-other-buffers ()
+    (defun eos/kill-other-buffers ()
       "Kill all other buffers, with confirmation."
       (interactive)
       (when (yes-or-no-p "Are you sure you want to kill all other buffers?")
@@ -1653,9 +1618,42 @@ Emacs as a music player? Why not?
         (delete-other-windows)))
   #+end_src
 
-*** KeyBindings
+- =eos/highlight-comments= to highlight comments. It's tricky to revert
+  back to the default settings, so either re-apply the theme or reload
+  the config.
+
+  #+begin_src elisp
+    (defun eos/toggle-highlight-comments ()
+      "Set the style for highlighted comments with custom foreground, background, and slant."
+      (interactive)
+      (set-face-attribute 'font-lock-comment-face nil
+                          :foreground "#4A90E2"
+                          :background "#E6F7FF"
+                          :slant 'italic))
+  #+end_src
+
+- =eos/toggle-transparency= to toggle transparency.
+        
+  #+begin_src emacs-lisp 
+    (defun eos/toggle-transparency ()
+      "Toggle between transparent and opaque Emacs frames."
+      (interactive)
+      (if transparency-enabled
+          (progn
+            (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+            (setq transparency-enabled nil)
+            (message "Transparency disabled"))
+        (progn
+          (set-frame-parameter (selected-frame) 'alpha
+                               `(,transparency-level-active . ,transparency-level-inactive))
+          (setq transparency-enabled t)
+          (message "Transparency enabled"))))
+  #+end_src       
+
+
+*** Custom keybindings
 :PROPERTIES:
-:CUSTOM_ID: keybindings
+:CUSTOM_ID: custom-keybindings
 :END:
 
 Custom keybindings for emacs. This section is expected to be edited
@@ -1666,12 +1664,13 @@ frequently, as my requirements evolve.
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)          ;; ESC to quit prompts
 
   ;; Custom commands
-  (global-set-key (kbd "C-c e r") 'eos/reload-emacs-config)        ;; Reload init.el
-  (global-set-key (kbd "C-c e t") 'counsel-load-theme)             ;; Switch themes
-  (global-set-key (kbd "C-c e d") 'eos/toggle-debug-mode)          ;; Toggle debug mode
-  (global-set-key (kbd "C-c e s") 'toggle-transparency)            ;; Toggle transparency
-  (global-set-key (kbd "C-c e f") 'treemacs)                       ;; Open Treemacs
   (global-set-key (kbd "C-c e c") 'eos/open-emacs-config)          ;; Open config.org
-  (global-set-key (kbd "C-c e k") 'kill-other-buffers)             ;; Kill other buffers
+  (global-set-key (kbd "C-c e d") 'eos/toggle-debug-mode)          ;; Toggle debug mode
+  (global-set-key (kbd "C-c e f") 'treemacs)                       ;; Open Treemacs
+  (global-set-key (kbd "C-c e h") 'eos/highlight-comments)         ;; Highlight comments
+  (global-set-key (kbd "C-c e k") 'eos/kill-other-buffers)         ;; Kill other buffers
+  (global-set-key (kbd "C-c e r") 'eos/reload-emacs-config)        ;; Reload init.el
+  (global-set-key (kbd "C-c e s") 'eos/toggle-transparency)        ;; Toggle transparency
+  (global-set-key (kbd "C-c e t") 'counsel-load-theme)             ;; Switch themes
 
 #+end_src

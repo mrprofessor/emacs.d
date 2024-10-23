@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-10-15 Tue 05:50 -->
+<!-- 2024-10-23 Wed 04:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Emacs Operating System</title>
@@ -207,7 +207,7 @@
 <li><a href="#faster-startup">2.1. Faster Startup</a></li>
 <li><a href="#custom-variables">2.2. Custom Variables</a>
 <ul>
-<li><a href="#orge35fd23">2.2.1. Directories</a></li>
+<li><a href="#orga540257">2.2.1. Directories</a></li>
 </ul>
 </li>
 <li><a href="#basics">2.3. Basics</a></li>
@@ -217,7 +217,7 @@
 <ul>
 <li><a href="#intialize-packages">3.1. Intialize packages</a>
 <ul>
-<li><a href="#org79b766b">3.1.1. Install straight.el</a></li>
+<li><a href="#orgbd28f27">3.1.1. Install straight.el</a></li>
 </ul>
 </li>
 </ul>
@@ -239,28 +239,28 @@
 <li><a href="#evil-mode">5.1. Evil Mode</a></li>
 <li><a href="#org-mode">5.2. Org Mode</a>
 <ul>
-<li><a href="#orga58731c">5.2.1. Org TOC</a></li>
-<li><a href="#orgf335de4">5.2.2. Org Babel</a></li>
-<li><a href="#org2514d7e">5.2.3. Org Hugo(ox-hugo)</a></li>
-<li><a href="#orgcf955a8">5.2.4. Org Download</a></li>
-<li><a href="#org60a4b35">5.2.5. Org Roam</a></li>
-<li><a href="#orgb06de5d">5.2.6. Org Roam UI</a></li>
-<li><a href="#org692e0d4">5.2.7. Org Export Settings(htmlize)</a></li>
-<li><a href="#org895e33e">5.2.8. Human Readable IDs</a></li>
+<li><a href="#orgc9776e5">5.2.1. Org TOC</a></li>
+<li><a href="#orgd2ddfa2">5.2.2. Org Babel</a></li>
+<li><a href="#org32ad05b">5.2.3. Org Hugo(ox-hugo)</a></li>
+<li><a href="#org138657c">5.2.4. Org Download</a></li>
+<li><a href="#orgd2031a4">5.2.5. Org Roam</a></li>
+<li><a href="#org83d171a">5.2.6. Org Roam UI</a></li>
+<li><a href="#org45f349a">5.2.7. Org Export Settings(htmlize)</a></li>
+<li><a href="#org9a77a49">5.2.8. Human Readable IDs</a></li>
 </ul>
 </li>
 <li><a href="#projectile">5.3. Projectile</a></li>
 <li><a href="#version-control">5.4. Version Control</a>
 <ul>
-<li><a href="#org78c626e">5.4.1. Magit</a></li>
-<li><a href="#org730b83f">5.4.2. Diff-hl</a></li>
+<li><a href="#orgc12dd7f">5.4.1. Magit</a></li>
+<li><a href="#org3287cd3">5.4.2. Diff-hl</a></li>
 </ul>
 </li>
 <li><a href="#completions">5.5. Completions</a>
 <ul>
-<li><a href="#org4ec1367">5.5.1. Ivy rich</a></li>
-<li><a href="#org74c15dd">5.5.2. Hydra</a></li>
-<li><a href="#org02a59ee">5.5.3. Which-key</a></li>
+<li><a href="#orgc8f11c7">5.5.1. Ivy rich</a></li>
+<li><a href="#org4347718">5.5.2. Hydra</a></li>
+<li><a href="#org1609828">5.5.3. Which-key</a></li>
 </ul>
 </li>
 <li><a href="#treemacs">5.6. Treemacs</a></li>
@@ -301,7 +301,7 @@
 <li><a href="#miscellaneous">11. Miscellaneous</a>
 <ul>
 <li><a href="#custom-functions">11.1. Custom Functions</a></li>
-<li><a href="#keybindings">11.2. KeyBindings</a></li>
+<li><a href="#custom-keybindings">11.2. Custom keybindings</a></li>
 </ul>
 </li>
 </ul>
@@ -311,24 +311,16 @@
 <h2 id="overview"><span class="section-number-2">1.</span> Overview</h2>
 <div class="outline-text-2" id="text-overview">
 <p>
-It's been a while since I started using Emacs, and after using DOOM
-Emacs for some time, I decided to scratch my own itch and create my
-very own Emacs configuration. It's not as refined as DOOM or
-Spacemacs, and it doesn't have all the bells and whistles, but it's
-mine.
-</p>
-
-<p>
 Why do I like Emacs, you ask? For me, it's like riding a sports bike;
 it's not for everyone, but it's exhilarating! It has its quirks and
 might not be the most efficient tool for the job, but it’s a joy to
 use. As a "professional" programmer, I should probably use the most
-efficient tool for the job, but "professional" is boring, and I don't
-like boring.
+efficient tool for the job, but as long as my employers can't tell the
+difference, I'll stick with Emacs.
 </p>
 
 
-<div id="org54c92e2" class="figure">
+<div id="org04a84e3" class="figure">
 <p><img src="https://imgs.xkcd.com/comics/real_programmers.png" alt="real_programmers.png" />
 </p>
 </div>
@@ -360,8 +352,8 @@ time spent in GC, speeding things up:
 <h3 id="custom-variables"><span class="section-number-3">2.2.</span> Custom Variables</h3>
 <div class="outline-text-3" id="text-custom-variables">
 </div>
-<div id="outline-container-orge35fd23" class="outline-4">
-<h4 id="orge35fd23"><span class="section-number-4">2.2.1.</span> Directories</h4>
+<div id="outline-container-orga540257" class="outline-4">
+<h4 id="orga540257"><span class="section-number-4">2.2.1.</span> Directories</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Consolidate all the directories here.
@@ -523,10 +515,10 @@ Customize window behavior.
 <span class="org-comment-delimiter">;; </span><span class="org-comment">(add-to-list 'default-frame-alist</span>
 <span class="org-comment-delimiter">;;              </span><span class="org-comment">'(title . "Emacs"))</span>
 
+(<span class="org-keyword">setq</span> frame-title-format <span class="org-string">"I see dead people.\n"</span>)
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (<span class="org-keyword">setq</span> ns-use-proxy-icon nil)
-(<span class="org-keyword">setq</span> frame-title-format nil)
 
 </pre>
 </div></li>
@@ -586,8 +578,8 @@ Setting up package managers and installing essential packages.
 </pre>
 </div>
 </div>
-<div id="outline-container-org79b766b" class="outline-4">
-<h4 id="org79b766b"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
+<div id="outline-container-orgbd28f27" class="outline-4">
+<h4 id="orgbd28f27"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 <code>use-package</code> does not support the additional properties  like :type,
@@ -598,20 +590,20 @@ repositories.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">
-  (<span class="org-keyword">defvar</span> <span class="org-variable-name">bootstrap-version</span>)
+(<span class="org-keyword">defvar</span> <span class="org-variable-name">bootstrap-version</span>)
 (<span class="org-keyword">let</span> ((bootstrap-file
-   (expand-file-name
-    <span class="org-string">"straight/repos/straight.el/bootstrap.el"</span>
-    (<span class="org-keyword">or</span> (<span class="org-keyword">bound-and-true-p</span> straight-base-dir)
-        user-emacs-directory)))
-  (bootstrap-version 7))
+       (expand-file-name
+        <span class="org-string">"straight/repos/straight.el/bootstrap.el"</span>
+        (<span class="org-keyword">or</span> (<span class="org-keyword">bound-and-true-p</span> straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
   (<span class="org-keyword">unless</span> (file-exists-p bootstrap-file)
     (<span class="org-keyword">with-current-buffer</span>
-    (url-retrieve-synchronously
-     <span class="org-string">"https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"</span>
-     'silent 'inhibit-cookies)
-  (goto-char (point-max))
-  (eval-print-last-sexp)))
+        (url-retrieve-synchronously
+         <span class="org-string">"https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"</span>
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 </pre>
 </div>
@@ -679,8 +671,7 @@ like to get them all.
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Corrects (and improves) org-mode's native fontification.</span>
   (doom-themes-org-config))
 
-
-  (load-theme 'leuven t)
+(load-theme 'leuven t)
 </pre>
 </div>
 
@@ -691,25 +682,6 @@ I love how Org files look with poet theme, so it's a must.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> poet-theme
   <span class="org-builtin">:ensure</span> t)
-</pre>
-</div>
-
-<p>
-Always highlight the commented code. Right now, configured for Leuven theme.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my-leuven-comment-face-customization</span> ()
-  <span class="org-doc">"Set custom comment face only when the Leuven theme is active."</span>
-  (<span class="org-keyword">if</span> (string-equal (car custom-enabled-themes) <span class="org-string">"leuven"</span>)
-      (custom-set-faces
-       '(font-lock-comment-face ((t (<span class="org-builtin">:foreground</span> <span class="org-string">"#4A90E2"</span> <span class="org-builtin">:background</span> <span class="org-string">"#E6F7FF"</span> <span class="org-builtin">:slant</span> italic)))))
-    <span class="org-comment-delimiter">;; </span><span class="org-comment">Reset to the default comment face when leaving Leuven theme</span>
-    (custom-set-faces
-     '(font-lock-comment-face ((t (<span class="org-builtin">:foreground</span> <span class="org-string">"dim gray"</span> <span class="org-builtin">:slant</span> italic)))))))
-
-<span class="org-comment-delimiter">;; </span><span class="org-comment">Add the function to the after-load-theme-hook to dynamically handle theme changes</span>
-(add-hook 'after-load-theme-hook 'my-leuven-comment-face-customization)
 </pre>
 </div>
 </div>
@@ -738,10 +710,10 @@ faces in the other buffers.
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> dimmer
-    <span class="org-builtin">:straight</span> t
-    <span class="org-builtin">:config</span>
-    (dimmer-configure-which-key)
-    (dimmer-mode t))
+  <span class="org-builtin">:straight</span> t
+  <span class="org-builtin">:config</span>
+  (dimmer-configure-which-key)
+  (dimmer-mode t))
 
 (<span class="org-keyword">setq</span> dimmer-fraction .3)
 </pre>
@@ -766,21 +738,6 @@ a tiling window manager on a large monitor.
 
 (<span class="org-keyword">defvar</span> <span class="org-variable-name">transparency-enabled</span> t
   <span class="org-doc">"Toggle for the transparency feature."</span>)
-
-(<span class="org-keyword">defun</span> <span class="org-function-name">toggle-transparency</span> ()
-  <span class="org-doc">"Toggle between transparent and opaque Emacs frames."</span>
-  (<span class="org-keyword">interactive</span>)
-  (<span class="org-keyword">if</span> transparency-enabled
-      (<span class="org-keyword">progn</span>
-        (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
-        (<span class="org-keyword">setq</span> transparency-enabled nil)
-        (message <span class="org-string">"Transparency disabled"</span>))
-    (<span class="org-keyword">progn</span>
-      (set-frame-parameter (selected-frame) 'alpha
-                           `(,transparency-level-active . ,transparency-level-inactive))
-      (<span class="org-keyword">setq</span> transparency-enabled t)
-      (message <span class="org-string">"Transparency enabled"</span>))))
-
 </pre>
 </div>
 </div>
@@ -808,7 +765,7 @@ We would need emacs-dashboard package for an easier configuration.
 <div class="outline-text-3" id="text-modeline">
 </div>
 <ol class="org-ol">
-<li><a id="orgcb397eb"></a>Nano Modeline<br />
+<li><a id="orgf8df4ab"></a>Nano Modeline<br />
 <div class="outline-text-5" id="text-4-6-0-1">
 <p>
 A minimal modeline for Emacs.
@@ -835,7 +792,7 @@ A minimal modeline for Emacs.
 </div>
 </div>
 </li>
-<li><a id="org2d687dc"></a>Doom Modeline<br />
+<li><a id="orgd5715dd"></a>Doom Modeline<br />
 <div class="outline-text-5" id="text-4-6-0-2">
 <p>
 I keep getting bored with "nicer" looking modelines and keep coming
@@ -866,14 +823,14 @@ better. Mini-frame mode is enabled by default.
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> mini-frame
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:config</span>
-    (mini-frame-mode 1))
+  (mini-frame-mode 1))
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">make sure they are in the middle of the screen</span>
 (custom-set-variables
-  '(mini-frame-show-parameters
-    '((top . 200)
-      (width . 0.7)
-      (left . 0.5))))
+ '(mini-frame-show-parameters
+   '((top . 200)
+     (width . 0.7)
+     (left . 0.5))))
 </pre>
 </div>
 </div>
@@ -889,13 +846,15 @@ better. Mini-frame mode is enabled by default.
   (indent-bars-treesit-ignore-blank-lines-types '(<span class="org-string">"module"</span>))
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Add other languages as needed</span>
   (indent-bars-treesit-scope '((python function_definition class_definition for_statement
-      if_statement with_statement while_statement)))
+                                       if_statement with_statement while_statement)))
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Note: wrap may not be needed if no-descend-list is enough</span>
   <span class="org-comment-delimiter">;;</span><span class="org-comment">(indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example</span>
   <span class="org-comment-delimiter">;;</span><span class="org-comment">                      list list_comprehension</span>
   <span class="org-comment-delimiter">;;</span><span class="org-comment">                      dictionary dictionary_comprehension</span>
   <span class="org-comment-delimiter">;;</span><span class="org-comment">                      parenthesized_expression subscript)))</span>
   <span class="org-builtin">:hook</span> ((python-base-mode yaml-mode) . indent-bars-mode))
+
+(indent-bars-mode -1)
 </pre>
 </div>
 </div>
@@ -1024,8 +983,8 @@ For shorthand completions, lile &lt;s-TAB for source code blocks.
 </div></li>
 </ul>
 </div>
-<div id="outline-container-orga58731c" class="outline-4">
-<h4 id="orga58731c"><span class="section-number-4">5.2.1.</span> Org TOC</h4>
+<div id="outline-container-orgc9776e5" class="outline-4">
+<h4 id="orgc9776e5"><span class="section-number-4">5.2.1.</span> Org TOC</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 Create table of contents for Org files.
@@ -1051,8 +1010,8 @@ ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf335de4" class="outline-4">
-<h4 id="orgf335de4"><span class="section-number-4">5.2.2.</span> Org Babel</h4>
+<div id="outline-container-orgd2ddfa2" class="outline-4">
+<h4 id="orgd2ddfa2"><span class="section-number-4">5.2.2.</span> Org Babel</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Active Babel languages
@@ -1066,8 +1025,8 @@ Active Babel languages
 </div>
 </div>
 </div>
-<div id="outline-container-org2514d7e" class="outline-4">
-<h4 id="org2514d7e"><span class="section-number-4">5.2.3.</span> Org Hugo(ox-hugo)</h4>
+<div id="outline-container-org32ad05b" class="outline-4">
+<h4 id="org32ad05b"><span class="section-number-4">5.2.3.</span> Org Hugo(ox-hugo)</h4>
 <div class="outline-text-4" id="text-5-2-3">
 <p>
 ox-hugo helps me manage my website using org files.
@@ -1096,8 +1055,8 @@ install it manually. Edit: 08/09/2024 - Installed it using straight.el
 </div>
 </div>
 </div>
-<div id="outline-container-orgcf955a8" class="outline-4">
-<h4 id="orgcf955a8"><span class="section-number-4">5.2.4.</span> Org Download</h4>
+<div id="outline-container-org138657c" class="outline-4">
+<h4 id="org138657c"><span class="section-number-4">5.2.4.</span> Org Download</h4>
 <div class="outline-text-4" id="text-5-2-4">
 <p>
 This nice package helps add images to an Org file in a better way.
@@ -1127,8 +1086,8 @@ we need to install <code>pngpaste</code> using Homebrew.
 </div>
 </div>
 </div>
-<div id="outline-container-org60a4b35" class="outline-4">
-<h4 id="org60a4b35"><span class="section-number-4">5.2.5.</span> Org Roam</h4>
+<div id="outline-container-orgd2031a4" class="outline-4">
+<h4 id="orgd2031a4"><span class="section-number-4">5.2.5.</span> Org Roam</h4>
 <div class="outline-text-4" id="text-5-2-5">
 <p>
 A sophisticated note taking mechanishm. Essentially a clone of
@@ -1158,7 +1117,7 @@ A sophisticated note taking mechanishm. Essentially a clone of
 </div>
 </div>
 <ol class="org-ol">
-<li><a id="org0160cdf"></a>Full text search with Deft<br />
+<li><a id="org8bf19c4"></a>Full text search with Deft<br />
 <div class="outline-text-5" id="text-5-2-5-1">
 <p>
 Deft is an Emacs mode for quickly browsing and filtering plain text
@@ -1179,7 +1138,7 @@ notes.
 </div>
 </div>
 </li>
-<li><a id="org87440a6"></a>Backlink buffer<br />
+<li><a id="org56e4683"></a>Backlink buffer<br />
 <div class="outline-text-5" id="text-5-2-5-2">
 <p>
 Org-roam backlink buffer, <a href="https:github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2#backlink-buffer">source</a>
@@ -1189,19 +1148,19 @@ Org-roam backlink buffer, <a href="https:github.com/org-roam/org-roam/wiki/Hitch
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">for org-roam-buffer-toggle</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Recommendation in the official manual</span>
 (add-to-list 'display-buffer-alist
-               '(<span class="org-string">"\\*org-roam\\*"</span>
-                  (display-buffer-in-direction)
-                  (direction . right)
-                  (window-width . 0.33)
-                  (window-height . fit-window-to-buffer)))
+             '(<span class="org-string">"\\*org-roam\\*"</span>
+               (display-buffer-in-direction)
+               (direction . right)
+               (window-width . 0.33)
+               (window-height . fit-window-to-buffer)))
 </pre>
 </div>
 </div>
 </li>
 </ol>
 </div>
-<div id="outline-container-orgb06de5d" class="outline-4">
-<h4 id="orgb06de5d"><span class="section-number-4">5.2.6.</span> Org Roam UI</h4>
+<div id="outline-container-org83d171a" class="outline-4">
+<h4 id="org83d171a"><span class="section-number-4">5.2.6.</span> Org Roam UI</h4>
 <div class="outline-text-4" id="text-5-2-6">
 <p>
 A visual interface for Org Roam. 
@@ -1210,24 +1169,24 @@ A visual interface for Org Roam.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> org-roam-ui
   <span class="org-builtin">:straight</span>
-    (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"org-roam/org-roam-ui"</span> <span class="org-builtin">:branch</span> <span class="org-string">"main"</span> <span class="org-builtin">:files</span> (<span class="org-string">"*.el"</span> <span class="org-string">"out"</span>))
-    <span class="org-builtin">:after</span> org-roam
-<span class="org-comment-delimiter">;;         </span><span class="org-comment">normally we'd recommend hooking orui after org-roam, but since org-roam does not have</span>
-<span class="org-comment-delimiter">;;         </span><span class="org-comment">a hookable mode anymore, you're advised to pick something yourself</span>
-<span class="org-comment-delimiter">;;         </span><span class="org-comment">if you don't care about startup time, use</span>
-<span class="org-comment-delimiter">;;  </span><span class="org-comment">:hook (after-init . org-roam-ui-mode)</span>
-    <span class="org-builtin">:config</span>
-    (<span class="org-keyword">setq</span> org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+  (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"org-roam/org-roam-ui"</span> <span class="org-builtin">:branch</span> <span class="org-string">"main"</span> <span class="org-builtin">:files</span> (<span class="org-string">"*.el"</span> <span class="org-string">"out"</span>))
+  <span class="org-builtin">:after</span> org-roam
+  <span class="org-comment-delimiter">;;         </span><span class="org-comment">normally we'd recommend hooking orui after org-roam, but since org-roam does not have</span>
+  <span class="org-comment-delimiter">;;         </span><span class="org-comment">a hookable mode anymore, you're advised to pick something yourself</span>
+  <span class="org-comment-delimiter">;;         </span><span class="org-comment">if you don't care about startup time, use</span>
+  <span class="org-comment-delimiter">;;  </span><span class="org-comment">:hook (after-init . org-roam-ui-mode)</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org692e0d4" class="outline-4">
-<h4 id="org692e0d4"><span class="section-number-4">5.2.7.</span> Org Export Settings(htmlize)</h4>
+<div id="outline-container-org45f349a" class="outline-4">
+<h4 id="org45f349a"><span class="section-number-4">5.2.7.</span> Org Export Settings(htmlize)</h4>
 <div class="outline-text-4" id="text-5-2-7">
 <p>
 Org mode usually ships with this package, However in certain cases you
@@ -1246,8 +1205,8 @@ might need to install it manually.
 </div>
 </div>
 </div>
-<div id="outline-container-org895e33e" class="outline-4">
-<h4 id="org895e33e"><span class="section-number-4">5.2.8.</span> Human Readable IDs</h4>
+<div id="outline-container-org9a77a49" class="outline-4">
+<h4 id="org9a77a49"><span class="section-number-4">5.2.8.</span> Human Readable IDs</h4>
 <div class="outline-text-4" id="text-5-2-8">
 <p>
 While exporting html, <code>org-html-export-to-html</code>  function generates
@@ -1361,8 +1320,8 @@ on them.
 <h3 id="version-control"><span class="section-number-3">5.4.</span> Version Control</h3>
 <div class="outline-text-3" id="text-version-control">
 </div>
-<div id="outline-container-org78c626e" class="outline-4">
-<h4 id="org78c626e"><span class="section-number-4">5.4.1.</span> Magit</h4>
+<div id="outline-container-orgc12dd7f" class="outline-4">
+<h4 id="orgc12dd7f"><span class="section-number-4">5.4.1.</span> Magit</h4>
 <div class="outline-text-4" id="text-5-4-1">
 <p>
 The magical Git client for emacs.
@@ -1390,8 +1349,8 @@ the issue.
 </div>
 </div>
 </div>
-<div id="outline-container-org730b83f" class="outline-4">
-<h4 id="org730b83f"><span class="section-number-4">5.4.2.</span> Diff-hl</h4>
+<div id="outline-container-org3287cd3" class="outline-4">
+<h4 id="org3287cd3"><span class="section-number-4">5.4.2.</span> Diff-hl</h4>
 <div class="outline-text-4" id="text-5-4-2">
 <p>
 Emacs port of the Sublime Git Gutter
@@ -1505,8 +1464,8 @@ Prescient settings for sorting and filtering.
 </pre>
 </div>
 </div>
-<div id="outline-container-org4ec1367" class="outline-4">
-<h4 id="org4ec1367"><span class="section-number-4">5.5.1.</span> Ivy rich</h4>
+<div id="outline-container-orgc8f11c7" class="outline-4">
+<h4 id="orgc8f11c7"><span class="section-number-4">5.5.1.</span> Ivy rich</h4>
 <div class="outline-text-4" id="text-5-5-1">
 <p>
 Ivy-rich for better Ivy interface
@@ -1528,8 +1487,8 @@ Ivy-rich for better Ivy interface
 </div>
 </div>
 </div>
-<div id="outline-container-org74c15dd" class="outline-4">
-<h4 id="org74c15dd"><span class="section-number-4">5.5.2.</span> Hydra</h4>
+<div id="outline-container-org4347718" class="outline-4">
+<h4 id="org4347718"><span class="section-number-4">5.5.2.</span> Hydra</h4>
 <div class="outline-text-4" id="text-5-5-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> hydra
@@ -1544,8 +1503,8 @@ Ivy-rich for better Ivy interface
 </div>
 </div>
 </div>
-<div id="outline-container-org02a59ee" class="outline-4">
-<h4 id="org02a59ee"><span class="section-number-4">5.5.3.</span> Which-key</h4>
+<div id="outline-container-org1609828" class="outline-4">
+<h4 id="org1609828"><span class="section-number-4">5.5.3.</span> Which-key</h4>
 <div class="outline-text-4" id="text-5-5-3">
 <p>
 It's a minor mode that shows kebindings for an incomplete command.
@@ -1587,17 +1546,17 @@ sometimes doesn't work as intended.
     (treemacs-project-follow-mode t)
     (treemacs-filewatch-mode t)))
 
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">(add-hook 'projectile-after-switch-project-hook 'treemacs-add-and-display-current-project-exclusively)</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(add-hook 'projectile-after-switch-project-hook 'treemacs-add-and-display-current-project-exclusively)</span>
 
-  (<span class="org-keyword">use-package</span> treemacs-evil
-    <span class="org-builtin">:after</span> (treemacs evil)
-    <span class="org-builtin">:ensure</span> t
-    <span class="org-builtin">:pin</span> melpa)
+(<span class="org-keyword">use-package</span> treemacs-evil
+  <span class="org-builtin">:after</span> (treemacs evil)
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:pin</span> melpa)
 
-  (<span class="org-keyword">use-package</span> treemacs-projectile
-    <span class="org-builtin">:after</span> (treemacs projectile)
-    <span class="org-builtin">:ensure</span> t
-    <span class="org-builtin">:pin</span> melpa) 
+(<span class="org-keyword">use-package</span> treemacs-projectile
+  <span class="org-builtin">:after</span> (treemacs projectile)
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:pin</span> melpa) 
 
 </pre>
 </div>
@@ -1693,33 +1652,33 @@ efficiently update the syntax tree as the source file is edited.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">
 (<span class="org-keyword">setq</span> treesit-language-source-alist
-    '(  <span class="org-comment-delimiter">; </span><span class="org-comment">use `</span><span class="org-comment"><span class="org-constant">sort-lines</span></span><span class="org-comment">' to sort</span>
-      (bash . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-bash"</span>))
-      (c . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-c"</span>))
-      (cpp . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-cpp"</span>))
-      (css <span class="org-string">"https://github.com/tree-sitter/tree-sitter-css"</span>)
-      (go <span class="org-string">"https://github.com/tree-sitter/tree-sitter-go"</span>)
-      (gomod <span class="org-string">"https://github.com/camdencheek/tree-sitter-go-mod"</span>)
-      (html <span class="org-string">"https://github.com/tree-sitter/tree-sitter-html"</span>)
-      (java <span class="org-string">"https://github.com/tree-sitter/tree-sitter-java"</span>)
-      (javascript <span class="org-string">"https://github.com/tree-sitter/tree-sitter-javascript"</span>)
-      (json <span class="org-string">"https://github.com/tree-sitter/tree-sitter-json"</span>)
-      (kotlin <span class="org-string">"https://github.com/fwcd/tree-sitter-kotlin"</span>)
-      (python . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-python"</span>))
-      (rust <span class="org-string">"https://github.com/tree-sitter/tree-sitter-rust"</span>)
-      (tsx . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-typescript"</span> nil <span class="org-string">"tsx/src"</span>))
-      (typescript . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-typescript"</span> nil <span class="org-string">"typescript/src"</span>))
-      (typst <span class="org-string">"https://github.com/uben0/tree-sitter-typst"</span>)
-      (vue <span class="org-string">"https://github.com/ikatyang/tree-sitter-vue"</span>)
-      (yaml <span class="org-string">"https://github.com/ikatyang/tree-sitter-yaml"</span>)
-      (toml <span class="org-string">"https://github.com/ikatyang/tree-sitter-toml"</span>)))
+      '(  <span class="org-comment-delimiter">; </span><span class="org-comment">use `</span><span class="org-comment"><span class="org-constant">sort-lines</span></span><span class="org-comment">' to sort</span>
+        (bash . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-bash"</span>))
+        (c . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-c"</span>))
+        (cpp . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-cpp"</span>))
+        (css <span class="org-string">"https://github.com/tree-sitter/tree-sitter-css"</span>)
+        (go <span class="org-string">"https://github.com/tree-sitter/tree-sitter-go"</span>)
+        (gomod <span class="org-string">"https://github.com/camdencheek/tree-sitter-go-mod"</span>)
+        (html <span class="org-string">"https://github.com/tree-sitter/tree-sitter-html"</span>)
+        (java <span class="org-string">"https://github.com/tree-sitter/tree-sitter-java"</span>)
+        (javascript <span class="org-string">"https://github.com/tree-sitter/tree-sitter-javascript"</span>)
+        (json <span class="org-string">"https://github.com/tree-sitter/tree-sitter-json"</span>)
+        (kotlin <span class="org-string">"https://github.com/fwcd/tree-sitter-kotlin"</span>)
+        (python . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-python"</span>))
+        (rust <span class="org-string">"https://github.com/tree-sitter/tree-sitter-rust"</span>)
+        (tsx . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-typescript"</span> nil <span class="org-string">"tsx/src"</span>))
+        (typescript . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-typescript"</span> nil <span class="org-string">"typescript/src"</span>))
+        (typst <span class="org-string">"https://github.com/uben0/tree-sitter-typst"</span>)
+        (vue <span class="org-string">"https://github.com/ikatyang/tree-sitter-vue"</span>)
+        (yaml <span class="org-string">"https://github.com/ikatyang/tree-sitter-yaml"</span>)
+        (toml <span class="org-string">"https://github.com/ikatyang/tree-sitter-toml"</span>)))
 
 
 (<span class="org-keyword">defun</span> <span class="org-function-name">eos/treesit-install-all-languages</span> ()
-<span class="org-doc">"Install all languages specified by `</span><span class="org-doc"><span class="org-constant">treesit-language-source-alist</span></span><span class="org-doc">'."</span>
-(<span class="org-keyword">interactive</span>)
-(<span class="org-keyword">let</span> ((languages (mapcar 'car treesit-language-source-alist)))
-  (<span class="org-keyword">dolist</span> (lang languages)
+  <span class="org-doc">"Install all languages specified by `</span><span class="org-doc"><span class="org-constant">treesit-language-source-alist</span></span><span class="org-doc">'."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((languages (mapcar 'car treesit-language-source-alist)))
+    (<span class="org-keyword">dolist</span> (lang languages)
       (treesit-install-language-grammar lang)
       (message <span class="org-string">"`</span><span class="org-string"><span class="org-constant">%s</span></span><span class="org-string">' parser was installed."</span> lang)
       (sit-for 0.75))))
@@ -1841,8 +1800,8 @@ Seems like a decent alternative to LaTex.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">  <span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure Typst tree-sit grammar is installed</span>
-  (ensure-treesit-grammar-installed 'typst (expand-file-name <span class="org-string">"tree-sitter/libtree-sitter-typst.dylib"</span> user-emacs-directory))
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure Typst tree-sit grammar is installed</span>
+(ensure-treesit-grammar-installed 'typst (expand-file-name <span class="org-string">"tree-sitter/libtree-sitter-typst.dylib"</span> user-emacs-directory))
 
 (<span class="org-keyword">use-package</span> typst-ts-mode
   <span class="org-builtin">:straight</span> (<span class="org-builtin">:type</span> git <span class="org-builtin">:host</span> sourcehut <span class="org-builtin">:repo</span> <span class="org-string">"meow_king/typst-ts-mode"</span> <span class="org-builtin">:files</span> (<span class="org-builtin">:defaults</span> <span class="org-string">"*.el"</span>))
@@ -1956,8 +1915,8 @@ Install pdf tools using straight.el with minimal configuration
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Set PDF view mode to continuous mode</span>
   (<span class="org-keyword">setq-default</span> pdf-view-display-size 'fit-width))
 
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable midnight mode for PDFs</span>
-  (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Enable midnight mode for PDFs</span>
+(add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Set keybinding to install PDF Tools</span>
 (global-set-key (kbd <span class="org-string">"C-c p"</span>) 'pdf-tools-install)
@@ -2141,7 +2100,7 @@ Emacs as a music player? Why not?
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Kill all other un-important buffers except the current one</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Ask for confirmation</span>
 
-(<span class="org-keyword">defun</span> <span class="org-function-name">kill-other-buffers</span> ()
+(<span class="org-keyword">defun</span> <span class="org-function-name">eos/kill-other-buffers</span> ()
   <span class="org-doc">"Kill all other buffers, with confirmation."</span>
   (<span class="org-keyword">interactive</span>)
   (<span class="org-keyword">when</span> (yes-or-no-p <span class="org-string">"Are you sure you want to kill all other buffers?"</span>)
@@ -2157,12 +2116,50 @@ Emacs as a music player? Why not?
     (delete-other-windows)))
 </pre>
 </div></li>
+
+<li><p>
+<code>eos/highlight-comments</code> to highlight comments. It's tricky to revert
+back to the default settings, so either re-apply the theme or reload
+the config.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eos/toggle-highlight-comments</span> ()
+  <span class="org-doc">"Set the style for highlighted comments with custom foreground, background, and slant."</span>
+  (<span class="org-keyword">interactive</span>)
+  (set-face-attribute 'font-lock-comment-face nil
+                      <span class="org-builtin">:foreground</span> <span class="org-string">"#4A90E2"</span>
+                      <span class="org-builtin">:background</span> <span class="org-string">"#E6F7FF"</span>
+                      <span class="org-builtin">:slant</span> 'italic))
+</pre>
+</div></li>
+
+<li><p>
+<code>eos/toggle-transparency</code> to toggle transparency.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eos/toggle-transparency</span> ()
+  <span class="org-doc">"Toggle between transparent and opaque Emacs frames."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">if</span> transparency-enabled
+      (<span class="org-keyword">progn</span>
+        (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+        (<span class="org-keyword">setq</span> transparency-enabled nil)
+        (message <span class="org-string">"Transparency disabled"</span>))
+    (<span class="org-keyword">progn</span>
+      (set-frame-parameter (selected-frame) 'alpha
+                           `(,transparency-level-active . ,transparency-level-inactive))
+      (<span class="org-keyword">setq</span> transparency-enabled t)
+      (message <span class="org-string">"Transparency enabled"</span>))))
+</pre>
+</div></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-keybindings" class="outline-3">
-<h3 id="keybindings"><span class="section-number-3">11.2.</span> KeyBindings</h3>
-<div class="outline-text-3" id="text-keybindings">
+<div id="outline-container-custom-keybindings" class="outline-3">
+<h3 id="custom-keybindings"><span class="section-number-3">11.2.</span> Custom keybindings</h3>
+<div class="outline-text-3" id="text-custom-keybindings">
 <p>
 Custom keybindings for emacs. This section is expected to be edited
 frequently, as my requirements evolve.
@@ -2173,13 +2170,14 @@ frequently, as my requirements evolve.
 (global-set-key (kbd <span class="org-string">"&lt;escape&gt;"</span>) 'keyboard-escape-quit)          <span class="org-comment-delimiter">;; </span><span class="org-comment">ESC to quit prompts</span>
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Custom commands</span>
-(global-set-key (kbd <span class="org-string">"C-c e r"</span>) 'eos/reload-emacs-config)        <span class="org-comment-delimiter">;; </span><span class="org-comment">Reload init.el</span>
-(global-set-key (kbd <span class="org-string">"C-c e t"</span>) 'counsel-load-theme)             <span class="org-comment-delimiter">;; </span><span class="org-comment">Switch themes</span>
-(global-set-key (kbd <span class="org-string">"C-c e d"</span>) 'eos/toggle-debug-mode)          <span class="org-comment-delimiter">;; </span><span class="org-comment">Toggle debug mode</span>
-(global-set-key (kbd <span class="org-string">"C-c e s"</span>) 'toggle-transparency)            <span class="org-comment-delimiter">;; </span><span class="org-comment">Toggle transparency</span>
-(global-set-key (kbd <span class="org-string">"C-c e f"</span>) 'treemacs)                       <span class="org-comment-delimiter">;; </span><span class="org-comment">Open Treemacs</span>
 (global-set-key (kbd <span class="org-string">"C-c e c"</span>) 'eos/open-emacs-config)          <span class="org-comment-delimiter">;; </span><span class="org-comment">Open config.org</span>
-(global-set-key (kbd <span class="org-string">"C-c e k"</span>) 'kill-other-buffers)             <span class="org-comment-delimiter">;; </span><span class="org-comment">Kill other buffers</span>
+(global-set-key (kbd <span class="org-string">"C-c e d"</span>) 'eos/toggle-debug-mode)          <span class="org-comment-delimiter">;; </span><span class="org-comment">Toggle debug mode</span>
+(global-set-key (kbd <span class="org-string">"C-c e f"</span>) 'treemacs)                       <span class="org-comment-delimiter">;; </span><span class="org-comment">Open Treemacs</span>
+(global-set-key (kbd <span class="org-string">"C-c e h"</span>) 'eos/highlight-comments)         <span class="org-comment-delimiter">;; </span><span class="org-comment">Highlight comments</span>
+(global-set-key (kbd <span class="org-string">"C-c e k"</span>) 'eos/kill-other-buffers)         <span class="org-comment-delimiter">;; </span><span class="org-comment">Kill other buffers</span>
+(global-set-key (kbd <span class="org-string">"C-c e r"</span>) 'eos/reload-emacs-config)        <span class="org-comment-delimiter">;; </span><span class="org-comment">Reload init.el</span>
+(global-set-key (kbd <span class="org-string">"C-c e s"</span>) 'eos/toggle-transparency)        <span class="org-comment-delimiter">;; </span><span class="org-comment">Toggle transparency</span>
+(global-set-key (kbd <span class="org-string">"C-c e t"</span>) 'counsel-load-theme)             <span class="org-comment-delimiter">;; </span><span class="org-comment">Switch themes</span>
 
 </pre>
 </div>
