@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-10-23 Wed 04:56 -->
+<!-- 2024-11-04 Mon 15:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Emacs Operating System</title>
@@ -207,7 +207,7 @@
 <li><a href="#faster-startup">2.1. Faster Startup</a></li>
 <li><a href="#custom-variables">2.2. Custom Variables</a>
 <ul>
-<li><a href="#orga540257">2.2.1. Directories</a></li>
+<li><a href="#org4b28f0e">2.2.1. Directories</a></li>
 </ul>
 </li>
 <li><a href="#basics">2.3. Basics</a></li>
@@ -217,7 +217,7 @@
 <ul>
 <li><a href="#intialize-packages">3.1. Intialize packages</a>
 <ul>
-<li><a href="#orgbd28f27">3.1.1. Install straight.el</a></li>
+<li><a href="#org1d974dc">3.1.1. Install straight.el</a></li>
 </ul>
 </li>
 </ul>
@@ -225,7 +225,11 @@
 <li><a href="#appearence">4. Appearence</a>
 <ul>
 <li><a href="#all-the-icons">4.1. All the Icons</a></li>
-<li><a href="#themes">4.2. Themes</a></li>
+<li><a href="#themes">4.2. Themes</a>
+<ul>
+<li><a href="#org9dc6a54">4.2.1. Auto-Dark mode</a></li>
+</ul>
+</li>
 <li><a href="#better-focus">4.3. Better Focus</a></li>
 <li><a href="#transparency">4.4. Transparency</a></li>
 <li><a href="#dashboard">4.5. Dashboard</a></li>
@@ -239,28 +243,28 @@
 <li><a href="#evil-mode">5.1. Evil Mode</a></li>
 <li><a href="#org-mode">5.2. Org Mode</a>
 <ul>
-<li><a href="#orgc9776e5">5.2.1. Org TOC</a></li>
-<li><a href="#orgd2ddfa2">5.2.2. Org Babel</a></li>
-<li><a href="#org32ad05b">5.2.3. Org Hugo(ox-hugo)</a></li>
-<li><a href="#org138657c">5.2.4. Org Download</a></li>
-<li><a href="#orgd2031a4">5.2.5. Org Roam</a></li>
-<li><a href="#org83d171a">5.2.6. Org Roam UI</a></li>
-<li><a href="#org45f349a">5.2.7. Org Export Settings(htmlize)</a></li>
-<li><a href="#org9a77a49">5.2.8. Human Readable IDs</a></li>
+<li><a href="#org872a2af">5.2.1. Org TOC</a></li>
+<li><a href="#orgeb88915">5.2.2. Org Babel</a></li>
+<li><a href="#org87c3991">5.2.3. Org Hugo(ox-hugo)</a></li>
+<li><a href="#org6734451">5.2.4. Org Download</a></li>
+<li><a href="#org025b9a2">5.2.5. Org Roam</a></li>
+<li><a href="#orgedb3a35">5.2.6. Org Roam UI</a></li>
+<li><a href="#org4ad9cbf">5.2.7. Org Export Settings(htmlize)</a></li>
+<li><a href="#org1c0c54c">5.2.8. Human Readable IDs</a></li>
 </ul>
 </li>
 <li><a href="#projectile">5.3. Projectile</a></li>
 <li><a href="#version-control">5.4. Version Control</a>
 <ul>
-<li><a href="#orgc12dd7f">5.4.1. Magit</a></li>
-<li><a href="#org3287cd3">5.4.2. Diff-hl</a></li>
+<li><a href="#org918e733">5.4.1. Magit</a></li>
+<li><a href="#orgf4cb7a1">5.4.2. Diff-hl</a></li>
 </ul>
 </li>
 <li><a href="#completions">5.5. Completions</a>
 <ul>
-<li><a href="#orgc8f11c7">5.5.1. Ivy rich</a></li>
-<li><a href="#org4347718">5.5.2. Hydra</a></li>
-<li><a href="#org1609828">5.5.3. Which-key</a></li>
+<li><a href="#orgc758397">5.5.1. Ivy rich</a></li>
+<li><a href="#orgbe5a6c5">5.5.2. Hydra</a></li>
+<li><a href="#orgf2fb9cd">5.5.3. Which-key</a></li>
 </ul>
 </li>
 <li><a href="#treemacs">5.6. Treemacs</a></li>
@@ -292,16 +296,25 @@
 <li><a href="#lua">8.9. Lua</a></li>
 </ul>
 </li>
-<li><a href="#ai-stuff">9. Non-Human Intelligence</a>
+<li><a href="#code-execution">9. Code Execution</a>
 <ul>
-<li><a href="#copilot">9.1. Copilot</a></li>
+<li><a href="#makefile">9.1. Makefile</a></li>
 </ul>
 </li>
-<li><a href="#music-player">10. Music Player</a></li>
-<li><a href="#miscellaneous">11. Miscellaneous</a>
+<li><a href="#ai-stuff">10. Non-Human Intelligence</a>
 <ul>
-<li><a href="#custom-functions">11.1. Custom Functions</a></li>
-<li><a href="#custom-keybindings">11.2. Custom keybindings</a></li>
+<li><a href="#copilot">10.1. Copilot</a></li>
+</ul>
+</li>
+<li><a href="#real-life-stuff">11. Real life stuff</a>
+<ul>
+<li><a href="#music-player">11.1. Music Player</a></li>
+</ul>
+</li>
+<li><a href="#miscellaneous">12. Miscellaneous</a>
+<ul>
+<li><a href="#custom-functions">12.1. Custom Functions</a></li>
+<li><a href="#custom-keybindings">12.2. Custom keybindings</a></li>
 </ul>
 </li>
 </ul>
@@ -320,7 +333,7 @@ difference, I'll stick with Emacs.
 </p>
 
 
-<div id="org04a84e3" class="figure">
+<div id="org58d37a1" class="figure">
 <p><img src="https://imgs.xkcd.com/comics/real_programmers.png" alt="real_programmers.png" />
 </p>
 </div>
@@ -342,8 +355,8 @@ time spent in GC, speeding things up:
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Increase to 50MB during startup</span>
 (<span class="org-keyword">setq</span> gc-cons-threshold (* 50 1000 1000))
 (add-hook 'emacs-startup-hook
-          <span class="org-comment-delimiter">;; </span><span class="org-comment">Restore to 2MB after startup</span>
-          (<span class="org-keyword">lambda</span> () (<span class="org-keyword">setq</span> gc-cons-threshold (* 2 1000 1000))))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-comment-delimiter">;; </span><span class="org-comment">Restore to 2MB after startup</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> (<span class="org-keyword">lambda</span> () (<span class="org-keyword">setq</span> gc-cons-threshold (* 2 1000 1000))))
 </pre>
 </div>
 </div>
@@ -352,8 +365,8 @@ time spent in GC, speeding things up:
 <h3 id="custom-variables"><span class="section-number-3">2.2.</span> Custom Variables</h3>
 <div class="outline-text-3" id="text-custom-variables">
 </div>
-<div id="outline-container-orga540257" class="outline-4">
-<h4 id="orga540257"><span class="section-number-4">2.2.1.</span> Directories</h4>
+<div id="outline-container-org4b28f0e" class="outline-4">
+<h4 id="org4b28f0e"><span class="section-number-4">2.2.1.</span> Directories</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Consolidate all the directories here.
@@ -391,13 +404,13 @@ Consolidate all the directories here.
 (<span class="org-keyword">defun</span> <span class="org-function-name">eos/ensure-directory-exists</span> (dir)
   <span class="org-doc">"Ensure that the directory DIR exists. Create it if necessary."</span>
   (<span class="org-keyword">unless</span> (file-exists-p dir)
-    (make-directory dir t)))
-
+  <span class="org-indent-bars-1"> </span> (make-directory dir t)))
+   
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure required directories exist</span>
 (mapc #'eos/ensure-directory-exists
-      (list eos/org-images-dir
-            eos/org-roam-dir
-            eos/emacs-backup-dir))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (list eos/org-images-dir
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> eos/org-roam-dir
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> eos/emacs-backup-dir))
 </pre>
 </div>
 </div>
@@ -532,6 +545,17 @@ Backup in one place, flat, no tree structure
 </div></li>
 
 <li><p>
+MacOs smooth scrolling
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> scroll-conservatively 101)
+(<span class="org-keyword">setq</span> mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(<span class="org-keyword">setq</span> mouse-wheel-progressive-speed nil)
+</pre>
+</div></li>
+
+<li><p>
 Miscellaneous
 </p>
 
@@ -562,10 +586,10 @@ Setting up package managers and installing essential packages.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">package</span>)
 (<span class="org-keyword">setq</span> package-archives '((<span class="org-string">"elpa"</span>   . <span class="org-string">"https://elpa.gnu.org/packages/"</span>)
-                         (<span class="org-string">"melpa"</span>  . <span class="org-string">"https://melpa.org/packages/"</span>)
-                         (<span class="org-string">"melpa-stable"</span> . <span class="org-string">"https://stable.melpa.org/packages/"</span>)
-                         (<span class="org-string">"org"</span> . <span class="org-string">"https://orgmode.org/elpa/"</span>)))
-
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-indent-bars-11"> </span> <span class="org-indent-bars-12"> </span>(<span class="org-string">"melpa"</span>  . <span class="org-string">"https://melpa.org/packages/"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-indent-bars-11"> </span> <span class="org-indent-bars-12"> </span>(<span class="org-string">"melpa-stable"</span> . <span class="org-string">"https://stable.melpa.org/packages/"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-indent-bars-11"> </span> <span class="org-indent-bars-12"> </span>(<span class="org-string">"org"</span> . <span class="org-string">"https://orgmode.org/elpa/"</span>)))
+                         
 (package-initialize)
 (<span class="org-keyword">unless</span> package-archive-contents
   (package-refresh-contents))
@@ -578,8 +602,8 @@ Setting up package managers and installing essential packages.
 </pre>
 </div>
 </div>
-<div id="outline-container-orgbd28f27" class="outline-4">
-<h4 id="orgbd28f27"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
+<div id="outline-container-org1d974dc" class="outline-4">
+<h4 id="org1d974dc"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 <code>use-package</code> does not support the additional properties  like :type,
@@ -592,18 +616,18 @@ repositories.
 <pre class="src src-emacs-lisp">
 (<span class="org-keyword">defvar</span> <span class="org-variable-name">bootstrap-version</span>)
 (<span class="org-keyword">let</span> ((bootstrap-file
-       (expand-file-name
-        <span class="org-string">"straight/repos/straight.el/bootstrap.el"</span>
-        (<span class="org-keyword">or</span> (<span class="org-keyword">bound-and-true-p</span> straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span>(expand-file-name
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-string">"straight/repos/straight.el/bootstrap.el"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (<span class="org-keyword">or</span> (<span class="org-keyword">bound-and-true-p</span> straight-base-dir)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> user-emacs-directory)))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (bootstrap-version 7))
   (<span class="org-keyword">unless</span> (file-exists-p bootstrap-file)
-    (<span class="org-keyword">with-current-buffer</span>
-        (url-retrieve-synchronously
-         <span class="org-string">"https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"</span>
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
+  <span class="org-indent-bars-1"> </span> (<span class="org-keyword">with-current-buffer</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (url-retrieve-synchronously
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span><span class="org-string">"https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>'silent 'inhibit-cookies)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (goto-char (point-max))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 </pre>
 </div>
@@ -659,8 +683,8 @@ like to get them all.
   <span class="org-builtin">:config</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Global settings (defaults)</span>
   (<span class="org-keyword">setq</span> doom-themes-enable-bold t    <span class="org-comment-delimiter">; </span><span class="org-comment">If nil, bold is universally disabled</span>
-        doom-themes-enable-italic t) <span class="org-comment-delimiter">; </span><span class="org-comment">If nil, italics is universally disabled</span>
-
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> doom-themes-enable-italic t) <span class="org-comment-delimiter">; </span><span class="org-comment">If nil, italics is universally disabled</span>
+       
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable flashing mode-line on errors</span>
   (doom-themes-visual-bell-config)
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable custom neotree theme (all-the-icons must be installed!)</span>
@@ -683,6 +707,40 @@ I love how Org files look with poet theme, so it's a must.
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> poet-theme
   <span class="org-builtin">:ensure</span> t)
 </pre>
+</div>
+</div>
+<div id="outline-container-org9dc6a54" class="outline-4">
+<h4 id="org9dc6a54"><span class="section-number-4">4.2.1.</span> Auto-Dark mode</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+For the past 6 months, I have been manually switching between light
+and dark themes, until I found this package.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> auto-dark-allow-osascript t)
+
+(<span class="org-keyword">use-package</span> auto-dark
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:straight</span> t
+  <span class="org-builtin">:custom</span>
+  (auto-dark-themes '((wombat) (leuven)))
+  (auto-dark-polling-interval-seconds 5)
+  (auto-dark-allow-osascript nil)
+  (auto-dark-allow-powershell nil)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(auto-dark-detection-method nil) ;; dangerous to be set manually</span>
+  <span class="org-builtin">:hook</span>
+  (auto-dark-dark-mode
+  <span class="org-indent-bars-1"> </span>. (<span class="org-keyword">lambda</span> ()
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-comment-delimiter">;; </span><span class="org-comment">something to execute when dark mode is detected</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> ))
+  (auto-dark-light-mode
+  <span class="org-indent-bars-1"> </span>. (<span class="org-keyword">lambda</span> ()
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-comment-delimiter">;; </span><span class="org-comment">something to execute when light mode is detected</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> ))
+  <span class="org-builtin">:init</span> (auto-dark-mode))
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -765,7 +823,7 @@ We would need emacs-dashboard package for an easier configuration.
 <div class="outline-text-3" id="text-modeline">
 </div>
 <ol class="org-ol">
-<li><a id="orgf8df4ab"></a>Nano Modeline<br />
+<li><a id="orgfbe8d20"></a>Nano Modeline<br />
 <div class="outline-text-5" id="text-4-6-0-1">
 <p>
 A minimal modeline for Emacs.
@@ -792,7 +850,7 @@ A minimal modeline for Emacs.
 </div>
 </div>
 </li>
-<li><a id="orgd5715dd"></a>Doom Modeline<br />
+<li><a id="org7beb838"></a>Doom Modeline<br />
 <div class="outline-text-5" id="text-4-6-0-2">
 <p>
 I keep getting bored with "nicer" looking modelines and keep coming
@@ -828,9 +886,9 @@ better. Mini-frame mode is enabled by default.
 <span class="org-comment-delimiter">;; </span><span class="org-comment">make sure they are in the middle of the screen</span>
 (custom-set-variables
  '(mini-frame-show-parameters
-   '((top . 200)
-     (width . 0.7)
-     (left . 0.5))))
+  <span class="org-indent-bars-1"> </span>'((top . 200)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span>(width . 0.7)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span>(left . 0.5))))
 </pre>
 </div>
 </div>
@@ -838,23 +896,31 @@ better. Mini-frame mode is enabled by default.
 <div id="outline-container-indentation" class="outline-3">
 <h3 id="indentation"><span class="section-number-3">4.8.</span> Indentation</h3>
 <div class="outline-text-3" id="text-indentation">
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> indent-bars
-  <span class="org-builtin">:config</span>
-  <span class="org-builtin">:custom</span>
-  (indent-bars-treesit-support t)
-  (indent-bars-treesit-ignore-blank-lines-types '(<span class="org-string">"module"</span>))
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">Add other languages as needed</span>
-  (indent-bars-treesit-scope '((python function_definition class_definition for_statement
-                                       if_statement with_statement while_statement)))
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">Note: wrap may not be needed if no-descend-list is enough</span>
-  <span class="org-comment-delimiter">;;</span><span class="org-comment">(indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example</span>
-  <span class="org-comment-delimiter">;;</span><span class="org-comment">                      list list_comprehension</span>
-  <span class="org-comment-delimiter">;;</span><span class="org-comment">                      dictionary dictionary_comprehension</span>
-  <span class="org-comment-delimiter">;;</span><span class="org-comment">                      parenthesized_expression subscript)))</span>
-  <span class="org-builtin">:hook</span> ((python-base-mode yaml-mode) . indent-bars-mode))
+<p>
+Indent bars is a better package, however each bar is flanked by two
+dotted line and looks quite weird.
+</p>
 
-(indent-bars-mode -1)
+<p>
+GitHub issue: <a href="https://github.com/jdtsmith/indent-bars/issues/84">https://github.com/jdtsmith/indent-bars/issues/84</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">(use-package indent-bars</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">:hook ((prog-mode) . indent-bars-mode))</span>
+</pre>
+</div>
+
+<p>
+highlight-indent-guides
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> highlight-indent-guides
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:straight</span> t
+  <span class="org-builtin">:config</span> (<span class="org-keyword">setq</span> highlight-indent-guides-method 'character)
+  <span class="org-builtin">:hook</span> (prog-mode . highlight-indent-guides-mode))
 </pre>
 </div>
 </div>
@@ -983,8 +1049,8 @@ For shorthand completions, lile &lt;s-TAB for source code blocks.
 </div></li>
 </ul>
 </div>
-<div id="outline-container-orgc9776e5" class="outline-4">
-<h4 id="orgc9776e5"><span class="section-number-4">5.2.1.</span> Org TOC</h4>
+<div id="outline-container-org872a2af" class="outline-4">
+<h4 id="org872a2af"><span class="section-number-4">5.2.1.</span> Org TOC</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 Create table of contents for Org files.
@@ -1010,8 +1076,8 @@ ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd2ddfa2" class="outline-4">
-<h4 id="orgd2ddfa2"><span class="section-number-4">5.2.2.</span> Org Babel</h4>
+<div id="outline-container-orgeb88915" class="outline-4">
+<h4 id="orgeb88915"><span class="section-number-4">5.2.2.</span> Org Babel</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Active Babel languages
@@ -1025,8 +1091,8 @@ Active Babel languages
 </div>
 </div>
 </div>
-<div id="outline-container-org32ad05b" class="outline-4">
-<h4 id="org32ad05b"><span class="section-number-4">5.2.3.</span> Org Hugo(ox-hugo)</h4>
+<div id="outline-container-org87c3991" class="outline-4">
+<h4 id="org87c3991"><span class="section-number-4">5.2.3.</span> Org Hugo(ox-hugo)</h4>
 <div class="outline-text-4" id="text-5-2-3">
 <p>
 ox-hugo helps me manage my website using org files.
@@ -1055,8 +1121,8 @@ install it manually. Edit: 08/09/2024 - Installed it using straight.el
 </div>
 </div>
 </div>
-<div id="outline-container-org138657c" class="outline-4">
-<h4 id="org138657c"><span class="section-number-4">5.2.4.</span> Org Download</h4>
+<div id="outline-container-org6734451" class="outline-4">
+<h4 id="org6734451"><span class="section-number-4">5.2.4.</span> Org Download</h4>
 <div class="outline-text-4" id="text-5-2-4">
 <p>
 This nice package helps add images to an Org file in a better way.
@@ -1086,8 +1152,8 @@ we need to install <code>pngpaste</code> using Homebrew.
 </div>
 </div>
 </div>
-<div id="outline-container-orgd2031a4" class="outline-4">
-<h4 id="orgd2031a4"><span class="section-number-4">5.2.5.</span> Org Roam</h4>
+<div id="outline-container-org025b9a2" class="outline-4">
+<h4 id="org025b9a2"><span class="section-number-4">5.2.5.</span> Org Roam</h4>
 <div class="outline-text-4" id="text-5-2-5">
 <p>
 A sophisticated note taking mechanishm. Essentially a clone of
@@ -1098,13 +1164,13 @@ A sophisticated note taking mechanishm. Essentially a clone of
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> org-roam
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:bind</span> ((<span class="org-string">"C-c n l"</span> . org-roam-buffer-toggle)
-         (<span class="org-string">"C-c n f"</span> . org-roam-node-find)
-         (<span class="org-string">"C-c n g"</span> . org-roam-graph)
-         (<span class="org-string">"C-c n c"</span> . org-roam-capture)
-         (<span class="org-string">"C-c n i"</span> . org-roam-node-insert)
-         (<span class="org-string">"C-c n t"</span> . org-roam-tag-add)
-         (<span class="org-string">"C-c n b"</span> . org-roam-buffer-toggle)
-         (<span class="org-string">"C-c n j"</span> . org-roam-dailies-capture-today))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c n f"</span> . org-roam-node-find)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c n g"</span> . org-roam-graph)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c n c"</span> . org-roam-capture)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c n i"</span> . org-roam-node-insert)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c n t"</span> . org-roam-tag-add)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c n b"</span> . org-roam-buffer-toggle)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c n j"</span> . org-roam-dailies-capture-today))
   <span class="org-builtin">:pin</span> melpa-stable
   <span class="org-builtin">:config</span>
   (org-roam-setup))
@@ -1117,7 +1183,7 @@ A sophisticated note taking mechanishm. Essentially a clone of
 </div>
 </div>
 <ol class="org-ol">
-<li><a id="org8bf19c4"></a>Full text search with Deft<br />
+<li><a id="org1d964f5"></a>Full text search with Deft<br />
 <div class="outline-text-5" id="text-5-2-5-1">
 <p>
 Deft is an Emacs mode for quickly browsing and filtering plain text
@@ -1138,7 +1204,7 @@ notes.
 </div>
 </div>
 </li>
-<li><a id="org56e4683"></a>Backlink buffer<br />
+<li><a id="org76362a0"></a>Backlink buffer<br />
 <div class="outline-text-5" id="text-5-2-5-2">
 <p>
 Org-roam backlink buffer, <a href="https:github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2#backlink-buffer">source</a>
@@ -1148,19 +1214,19 @@ Org-roam backlink buffer, <a href="https:github.com/org-roam/org-roam/wiki/Hitch
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">for org-roam-buffer-toggle</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Recommendation in the official manual</span>
 (add-to-list 'display-buffer-alist
-             '(<span class="org-string">"\\*org-roam\\*"</span>
-               (display-buffer-in-direction)
-               (direction . right)
-               (window-width . 0.33)
-               (window-height . fit-window-to-buffer)))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span>'(<span class="org-string">"\\*org-roam\\*"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span>(display-buffer-in-direction)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span>(direction . right)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span>(window-width . 0.33)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span>(window-height . fit-window-to-buffer)))
 </pre>
 </div>
 </div>
 </li>
 </ol>
 </div>
-<div id="outline-container-org83d171a" class="outline-4">
-<h4 id="org83d171a"><span class="section-number-4">5.2.6.</span> Org Roam UI</h4>
+<div id="outline-container-orgedb3a35" class="outline-4">
+<h4 id="orgedb3a35"><span class="section-number-4">5.2.6.</span> Org Roam UI</h4>
 <div class="outline-text-4" id="text-5-2-6">
 <p>
 A visual interface for Org Roam. 
@@ -1177,16 +1243,16 @@ A visual interface for Org Roam.
   <span class="org-comment-delimiter">;;  </span><span class="org-comment">:hook (after-init . org-roam-ui-mode)</span>
   <span class="org-builtin">:config</span>
   (<span class="org-keyword">setq</span> org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> org-roam-ui-follow t
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> org-roam-ui-update-on-save t
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> org-roam-ui-open-on-start t))
 
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org45f349a" class="outline-4">
-<h4 id="org45f349a"><span class="section-number-4">5.2.7.</span> Org Export Settings(htmlize)</h4>
+<div id="outline-container-org4ad9cbf" class="outline-4">
+<h4 id="org4ad9cbf"><span class="section-number-4">5.2.7.</span> Org Export Settings(htmlize)</h4>
 <div class="outline-text-4" id="text-5-2-7">
 <p>
 Org mode usually ships with this package, However in certain cases you
@@ -1205,8 +1271,8 @@ might need to install it manually.
 </div>
 </div>
 </div>
-<div id="outline-container-org9a77a49" class="outline-4">
-<h4 id="org9a77a49"><span class="section-number-4">5.2.8.</span> Human Readable IDs</h4>
+<div id="outline-container-org1c0c54c" class="outline-4">
+<h4 id="org1c0c54c"><span class="section-number-4">5.2.8.</span> Human Readable IDs</h4>
 <div class="outline-text-4" id="text-5-2-8">
 <p>
 While exporting html, <code>org-html-export-to-html</code>  function generates
@@ -1234,31 +1300,31 @@ seemed like the simplest.
 (<span class="org-keyword">defun</span> <span class="org-function-name">eos/org-generate-custom-ids</span> ()
   <span class="org-doc">"Generate CUSTOM_ID for any headings that are missing one, but only in Org mode."</span>
   (<span class="org-keyword">when</span> (derived-mode-p 'org-mode)
-    (<span class="org-keyword">let</span> ((existing-ids (org-map-entries 
-                         (<span class="org-keyword">lambda</span> () (org-entry-get nil <span class="org-string">"CUSTOM_ID"</span>)))))
-
-      (org-map-entries
-       (<span class="org-keyword">lambda</span> ()
-         (<span class="org-keyword">when</span> (org-at-heading-p)  <span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure we're at a heading</span>
-           (<span class="org-keyword">let*</span> ((custom-id (org-entry-get nil <span class="org-string">"CUSTOM_ID"</span>))
-                  (heading (org-heading-components))
-                  (level (nth 0 heading))
-                  (todo (nth 2 heading))
-                  (headline (nth 4 heading))
-                  (slug (eos/title-to-filename headline))
-                  (duplicate-id (member slug existing-ids)))
-             (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> (not custom-id)
-                        (&lt; level 4)
-                        (not todo)
-                        (not duplicate-id))
-               (message <span class="org-string">"Adding entry %s to %s"</span> slug headline)
-               (org-entry-put nil <span class="org-string">"CUSTOM_ID"</span> slug)))))))))
-
+  <span class="org-indent-bars-1"> </span> (<span class="org-keyword">let</span> ((existing-ids (org-map-entries 
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-indent-bars-11"> </span> <span class="org-indent-bars-12"> </span>(<span class="org-keyword">lambda</span> () (org-entry-get nil <span class="org-string">"CUSTOM_ID"</span>)))))
+                         
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (org-map-entries
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span>(<span class="org-keyword">lambda</span> ()
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-keyword">when</span> (org-at-heading-p)  <span class="org-comment-delimiter">;; </span><span class="org-comment">Ensure we're at a heading</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span>(<span class="org-keyword">let*</span> ((custom-id (org-entry-get nil <span class="org-string">"CUSTOM_ID"</span>))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> (heading (org-heading-components))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> (level (nth 0 heading))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> (todo (nth 2 heading))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> (headline (nth 4 heading))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> (slug (eos/title-to-filename headline))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> (duplicate-id (member slug existing-ids)))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span>(<span class="org-keyword">when</span> (<span class="org-keyword">and</span> (not custom-id)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-indent-bars-11"> </span> (&lt; level 4)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-indent-bars-11"> </span> (not todo)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-indent-bars-11"> </span> (not duplicate-id))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span>(message <span class="org-string">"Adding entry %s to %s"</span> slug headline)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span>(org-entry-put nil <span class="org-string">"CUSTOM_ID"</span> slug)))))))))
+               
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Function to the after-save-hook only in Org mode</span>
 (add-hook 'org-mode-hook
-          (<span class="org-keyword">lambda</span> () 
-            (add-hook 'after-save-hook 'eos/org-generate-custom-ids nil 'local)))
-
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> (<span class="org-keyword">lambda</span> () 
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> (add-hook 'after-save-hook 'eos/org-generate-custom-ids nil 'local)))
+           
 (<span class="org-keyword">defun</span> <span class="org-function-name">eos/title-to-filename</span> (title)
   <span class="org-doc">"Convert TITLE to a reasonable filename."</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Based on the slug logic in org-roam, but org-roam also uses a</span>
@@ -1306,7 +1372,7 @@ on them.
   <span class="org-builtin">:config</span> (projectile-mode)
   <span class="org-builtin">:custom</span> ((projectile-completion-system 'ivy))
   <span class="org-builtin">:bind</span> (<span class="org-builtin">:map</span> projectile-mode-map
-              (<span class="org-string">"C-c p"</span> . projectile-command-map))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> (<span class="org-string">"C-c p"</span> . projectile-command-map))
   <span class="org-builtin">:init</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">NOTE: Set this to the folder where you keep your Git repos!</span>
   (<span class="org-keyword">setq</span> projectile-project-search-path eos/project-dirs)
@@ -1320,8 +1386,8 @@ on them.
 <h3 id="version-control"><span class="section-number-3">5.4.</span> Version Control</h3>
 <div class="outline-text-3" id="text-version-control">
 </div>
-<div id="outline-container-orgc12dd7f" class="outline-4">
-<h4 id="orgc12dd7f"><span class="section-number-4">5.4.1.</span> Magit</h4>
+<div id="outline-container-org918e733" class="outline-4">
+<h4 id="org918e733"><span class="section-number-4">5.4.1.</span> Magit</h4>
 <div class="outline-text-4" id="text-5-4-1">
 <p>
 The magical Git client for emacs.
@@ -1349,8 +1415,8 @@ the issue.
 </div>
 </div>
 </div>
-<div id="outline-container-org3287cd3" class="outline-4">
-<h4 id="org3287cd3"><span class="section-number-4">5.4.2.</span> Diff-hl</h4>
+<div id="outline-container-orgf4cb7a1" class="outline-4">
+<h4 id="orgf4cb7a1"><span class="section-number-4">5.4.2.</span> Diff-hl</h4>
 <div class="outline-text-4" id="text-5-4-2">
 <p>
 Emacs port of the Sublime Git Gutter
@@ -1360,8 +1426,8 @@ Emacs port of the Sublime Git Gutter
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> diff-hl
   <span class="org-builtin">:straight</span> (diff-hl <span class="org-builtin">:type</span> git <span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"dgutov/diff-hl"</span>)
   <span class="org-builtin">:hook</span> ((prog-mode . diff-hl-mode)
-         (org-mode . diff-hl-mode)
-         (text-mode . diff-hl-mode))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(org-mode . diff-hl-mode)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(text-mode . diff-hl-mode))
   <span class="org-builtin">:config</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Limit diff-hl to specific modes</span>
   (<span class="org-keyword">setq</span> diff-hl-global-modes '(not image-mode pdf-view-mode))
@@ -1398,24 +1464,24 @@ Set up Ivy, Counsel, and Swiper for better completions.
   <span class="org-builtin">:straight</span> t
   <span class="org-builtin">:diminish</span>
   <span class="org-builtin">:bind</span> ((<span class="org-string">"C-s"</span> . swiper)                         <span class="org-comment-delimiter">;; </span><span class="org-comment">Search using Swiper</span>
-         (<span class="org-string">"M-x"</span> . counsel-M-x)                    <span class="org-comment-delimiter">;; </span><span class="org-comment">Enhanced M-x</span>
-         (<span class="org-string">"s-x"</span> . counsel-M-x)                    <span class="org-comment-delimiter">;; </span><span class="org-comment">Super-X for M-x</span>
-         (<span class="org-string">"C-x C-f"</span> . counsel-find-file)          <span class="org-comment-delimiter">;; </span><span class="org-comment">Enhanced find file</span>
-         (<span class="org-string">"C-x b"</span> . ivy-switch-buffer)            <span class="org-comment-delimiter">;; </span><span class="org-comment">Show filtered buffers (code buffers)</span>
-         (<span class="org-string">"C-x B"</span> . counsel-ibuffer)              <span class="org-comment-delimiter">;; </span><span class="org-comment">Show all buffers</span>
-         <span class="org-builtin">:map</span> minibuffer-local-map
-         (<span class="org-string">"C-x C-r"</span> . counsel-minibuffer-history) <span class="org-comment-delimiter">;; </span><span class="org-comment">Access minibuffer history</span>
-         <span class="org-builtin">:map</span> ivy-minibuffer-map
-         (<span class="org-string">"C-j"</span> . ivy-next-line)                  <span class="org-comment-delimiter">;; </span><span class="org-comment">Move down the list</span>
-         (<span class="org-string">"C-k"</span> . ivy-previous-line)              <span class="org-comment-delimiter">;; </span><span class="org-comment">Move up the list</span>
-         (<span class="org-string">"C-f"</span> . ivy-alt-done)                   <span class="org-comment-delimiter">;; </span><span class="org-comment">Complete selection</span>
-         <span class="org-builtin">:map</span> ivy-switch-buffer-map
-         (<span class="org-string">"C-k"</span> . ivy-previous-line)              <span class="org-comment-delimiter">;; </span><span class="org-comment">Move up in buffer list</span>
-         (<span class="org-string">"C-d"</span> . ivy-switch-buffer-kill)         <span class="org-comment-delimiter">;; </span><span class="org-comment">Kill selected buffer</span>
-         (<span class="org-string">"C-f"</span> . ivy-done)                       <span class="org-comment-delimiter">;; </span><span class="org-comment">Complete buffer selection</span>
-         <span class="org-builtin">:map</span> ivy-reverse-i-search-map
-         (<span class="org-string">"C-k"</span> . ivy-previous-line)              <span class="org-comment-delimiter">;; </span><span class="org-comment">Move up in reverse search</span>
-         (<span class="org-string">"C-d"</span> . ivy-reverse-i-search-kill))     <span class="org-comment-delimiter">;; </span><span class="org-comment">Kill in reverse search</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"M-x"</span> . counsel-M-x)                    <span class="org-comment-delimiter">;; </span><span class="org-comment">Enhanced M-x</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"s-x"</span> . counsel-M-x)                    <span class="org-comment-delimiter">;; </span><span class="org-comment">Super-X for M-x</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-x C-f"</span> . counsel-find-file)          <span class="org-comment-delimiter">;; </span><span class="org-comment">Enhanced find file</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-x b"</span> . ivy-switch-buffer)            <span class="org-comment-delimiter">;; </span><span class="org-comment">Show filtered buffers (code buffers)</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-x B"</span> . counsel-ibuffer)              <span class="org-comment-delimiter">;; </span><span class="org-comment">Show all buffers</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span><span class="org-builtin">:map</span> minibuffer-local-map
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-x C-r"</span> . counsel-minibuffer-history) <span class="org-comment-delimiter">;; </span><span class="org-comment">Access minibuffer history</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span><span class="org-builtin">:map</span> ivy-minibuffer-map
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-j"</span> . ivy-next-line)                  <span class="org-comment-delimiter">;; </span><span class="org-comment">Move down the list</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-k"</span> . ivy-previous-line)              <span class="org-comment-delimiter">;; </span><span class="org-comment">Move up the list</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-f"</span> . ivy-alt-done)                   <span class="org-comment-delimiter">;; </span><span class="org-comment">Complete selection</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span><span class="org-builtin">:map</span> ivy-switch-buffer-map
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-k"</span> . ivy-previous-line)              <span class="org-comment-delimiter">;; </span><span class="org-comment">Move up in buffer list</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-d"</span> . ivy-switch-buffer-kill)         <span class="org-comment-delimiter">;; </span><span class="org-comment">Kill selected buffer</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-f"</span> . ivy-done)                       <span class="org-comment-delimiter">;; </span><span class="org-comment">Complete buffer selection</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span><span class="org-builtin">:map</span> ivy-reverse-i-search-map
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-k"</span> . ivy-previous-line)              <span class="org-comment-delimiter">;; </span><span class="org-comment">Move up in reverse search</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-d"</span> . ivy-reverse-i-search-kill))     <span class="org-comment-delimiter">;; </span><span class="org-comment">Kill in reverse search</span>
   <span class="org-builtin">:custom</span>
   (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only)
   <span class="org-builtin">:init</span>
@@ -1432,14 +1498,14 @@ Set up Ivy, Counsel, and Swiper for better completions.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Configure ivy-switch-buffer (C-x b) to ignore certain buffers</span>
 (<span class="org-keyword">setq</span> ivy-ignore-buffers
-      '(<span class="org-string">"\\` "</span>
-        <span class="org-string">"\\`\\*"</span>
-        <span class="org-string">"\\`magit"</span>
-        <span class="org-string">"\\`</span><span class="org-string"><span class="org-constant"><span class="org-constant">.+_archive\\</span></span></span><span class="org-string">'"</span>
-        <span class="org-string">"\\`</span><span class="org-string"><span class="org-constant"><span class="org-constant">TAGS\\</span></span></span><span class="org-string">'"</span>
-        <span class="org-string">"\\`</span><span class="org-string"><span class="org-constant"><span class="org-constant">COMMIT_EDITMSG\\</span></span></span><span class="org-string">'"</span>
-        <span class="org-string">"\\`</span><span class="org-string"><span class="org-constant"><span class="org-constant">MERGE_MSG\\</span></span></span><span class="org-string">'"</span>
-        <span class="org-string">"\\`</span><span class="org-string"><span class="org-constant"><span class="org-constant">undo-tree\\*\\</span></span></span><span class="org-string">'"</span>))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> '(<span class="org-string">"\\` "</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-string">"\\`\\*"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-string">"\\`magit"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-string">"\\`</span><span class="org-string"><span class="org-constant"><span class="org-constant">.+_archive\\</span></span></span><span class="org-string">'"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-string">"\\`</span><span class="org-string"><span class="org-constant"><span class="org-constant">TAGS\\</span></span></span><span class="org-string">'"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-string">"\\`</span><span class="org-string"><span class="org-constant"><span class="org-constant">COMMIT_EDITMSG\\</span></span></span><span class="org-string">'"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-string">"\\`</span><span class="org-string"><span class="org-constant"><span class="org-constant">MERGE_MSG\\</span></span></span><span class="org-string">'"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-string">"\\`</span><span class="org-string"><span class="org-constant"><span class="org-constant">undo-tree\\*\\</span></span></span><span class="org-string">'"</span>))
 </pre>
 </div>
 
@@ -1464,8 +1530,8 @@ Prescient settings for sorting and filtering.
 </pre>
 </div>
 </div>
-<div id="outline-container-orgc8f11c7" class="outline-4">
-<h4 id="orgc8f11c7"><span class="section-number-4">5.5.1.</span> Ivy rich</h4>
+<div id="outline-container-orgc758397" class="outline-4">
+<h4 id="orgc758397"><span class="section-number-4">5.5.1.</span> Ivy rich</h4>
 <div class="outline-text-4" id="text-5-5-1">
 <p>
 Ivy-rich for better Ivy interface
@@ -1487,8 +1553,8 @@ Ivy-rich for better Ivy interface
 </div>
 </div>
 </div>
-<div id="outline-container-org4347718" class="outline-4">
-<h4 id="org4347718"><span class="section-number-4">5.5.2.</span> Hydra</h4>
+<div id="outline-container-orgbe5a6c5" class="outline-4">
+<h4 id="orgbe5a6c5"><span class="section-number-4">5.5.2.</span> Hydra</h4>
 <div class="outline-text-4" id="text-5-5-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> hydra
@@ -1503,8 +1569,8 @@ Ivy-rich for better Ivy interface
 </div>
 </div>
 </div>
-<div id="outline-container-org1609828" class="outline-4">
-<h4 id="org1609828"><span class="section-number-4">5.5.3.</span> Which-key</h4>
+<div id="outline-container-orgf2fb9cd" class="outline-4">
+<h4 id="orgf2fb9cd"><span class="section-number-4">5.5.3.</span> Which-key</h4>
 <div class="outline-text-4" id="text-5-5-3">
 <p>
 It's a minor mode that shows kebindings for an incomplete command.
@@ -1534,18 +1600,18 @@ sometimes doesn't work as intended.
   <span class="org-builtin">:defer</span> t
   <span class="org-builtin">:init</span>
   (<span class="org-keyword">with-eval-after-load</span> 'winum
-    (define-key winum-keymap (kbd <span class="org-string">"M-0"</span>) #'treemacs-select-window))
+  <span class="org-indent-bars-1"> </span> (define-key winum-keymap (kbd <span class="org-string">"M-0"</span>) #'treemacs-select-window))
   <span class="org-builtin">:config</span>
   (<span class="org-keyword">progn</span>
-    (<span class="org-keyword">setq</span> treemacs-collapse-dirs                 (<span class="org-keyword">if</span> (treemacs--find-python3) 3 0)
-          treemacs-deferred-git-apply-delay      0.5
-          treemacs-width                         35)
-
-    (treemacs-resize-icons 18)
-    (treemacs-follow-mode t)
-    (treemacs-project-follow-mode t)
-    (treemacs-filewatch-mode t)))
-
+  <span class="org-indent-bars-1"> </span> (<span class="org-keyword">setq</span> treemacs-collapse-dirs                 (<span class="org-keyword">if</span> (treemacs--find-python3) 3 0)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> treemacs-deferred-git-apply-delay      0.5
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> treemacs-width                         35)
+         
+  <span class="org-indent-bars-1"> </span> (treemacs-resize-icons 18)
+  <span class="org-indent-bars-1"> </span> (treemacs-follow-mode t)
+  <span class="org-indent-bars-1"> </span> (treemacs-project-follow-mode t)
+  <span class="org-indent-bars-1"> </span> (treemacs-filewatch-mode t)))
+   
 <span class="org-comment-delimiter">;; </span><span class="org-comment">(add-hook 'projectile-after-switch-project-hook 'treemacs-add-and-display-current-project-exclusively)</span>
 
 (<span class="org-keyword">use-package</span> treemacs-evil
@@ -1652,36 +1718,36 @@ efficiently update the syntax tree as the source file is edited.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">
 (<span class="org-keyword">setq</span> treesit-language-source-alist
-      '(  <span class="org-comment-delimiter">; </span><span class="org-comment">use `</span><span class="org-comment"><span class="org-constant">sort-lines</span></span><span class="org-comment">' to sort</span>
-        (bash . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-bash"</span>))
-        (c . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-c"</span>))
-        (cpp . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-cpp"</span>))
-        (css <span class="org-string">"https://github.com/tree-sitter/tree-sitter-css"</span>)
-        (go <span class="org-string">"https://github.com/tree-sitter/tree-sitter-go"</span>)
-        (gomod <span class="org-string">"https://github.com/camdencheek/tree-sitter-go-mod"</span>)
-        (html <span class="org-string">"https://github.com/tree-sitter/tree-sitter-html"</span>)
-        (java <span class="org-string">"https://github.com/tree-sitter/tree-sitter-java"</span>)
-        (javascript <span class="org-string">"https://github.com/tree-sitter/tree-sitter-javascript"</span>)
-        (json <span class="org-string">"https://github.com/tree-sitter/tree-sitter-json"</span>)
-        (kotlin <span class="org-string">"https://github.com/fwcd/tree-sitter-kotlin"</span>)
-        (python . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-python"</span>))
-        (rust <span class="org-string">"https://github.com/tree-sitter/tree-sitter-rust"</span>)
-        (tsx . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-typescript"</span> nil <span class="org-string">"tsx/src"</span>))
-        (typescript . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-typescript"</span> nil <span class="org-string">"typescript/src"</span>))
-        (typst <span class="org-string">"https://github.com/uben0/tree-sitter-typst"</span>)
-        (vue <span class="org-string">"https://github.com/ikatyang/tree-sitter-vue"</span>)
-        (yaml <span class="org-string">"https://github.com/ikatyang/tree-sitter-yaml"</span>)
-        (toml <span class="org-string">"https://github.com/ikatyang/tree-sitter-toml"</span>)))
-
-
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> '(  <span class="org-comment-delimiter">; </span><span class="org-comment">use `</span><span class="org-comment"><span class="org-constant">sort-lines</span></span><span class="org-comment">' to sort</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (bash . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-bash"</span>))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (c . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-c"</span>))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (cpp . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-cpp"</span>))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (css <span class="org-string">"https://github.com/tree-sitter/tree-sitter-css"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (go <span class="org-string">"https://github.com/tree-sitter/tree-sitter-go"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (gomod <span class="org-string">"https://github.com/camdencheek/tree-sitter-go-mod"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (html <span class="org-string">"https://github.com/tree-sitter/tree-sitter-html"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (java <span class="org-string">"https://github.com/tree-sitter/tree-sitter-java"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (javascript <span class="org-string">"https://github.com/tree-sitter/tree-sitter-javascript"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (json <span class="org-string">"https://github.com/tree-sitter/tree-sitter-json"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (kotlin <span class="org-string">"https://github.com/fwcd/tree-sitter-kotlin"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (python . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-python"</span>))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (rust <span class="org-string">"https://github.com/tree-sitter/tree-sitter-rust"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (tsx . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-typescript"</span> nil <span class="org-string">"tsx/src"</span>))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (typescript . (<span class="org-string">"https://github.com/tree-sitter/tree-sitter-typescript"</span> nil <span class="org-string">"typescript/src"</span>))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (typst <span class="org-string">"https://github.com/uben0/tree-sitter-typst"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (vue <span class="org-string">"https://github.com/ikatyang/tree-sitter-vue"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (yaml <span class="org-string">"https://github.com/ikatyang/tree-sitter-yaml"</span>)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (toml <span class="org-string">"https://github.com/ikatyang/tree-sitter-toml"</span>)))
+       
+       
 (<span class="org-keyword">defun</span> <span class="org-function-name">eos/treesit-install-all-languages</span> ()
   <span class="org-doc">"Install all languages specified by `</span><span class="org-doc"><span class="org-constant">treesit-language-source-alist</span></span><span class="org-doc">'."</span>
   (<span class="org-keyword">interactive</span>)
   (<span class="org-keyword">let</span> ((languages (mapcar 'car treesit-language-source-alist)))
-    (<span class="org-keyword">dolist</span> (lang languages)
-      (treesit-install-language-grammar lang)
-      (message <span class="org-string">"`</span><span class="org-string"><span class="org-constant">%s</span></span><span class="org-string">' parser was installed."</span> lang)
-      (sit-for 0.75))))
+  <span class="org-indent-bars-1"> </span> (<span class="org-keyword">dolist</span> (lang languages)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (treesit-install-language-grammar lang)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (message <span class="org-string">"`</span><span class="org-string"><span class="org-constant">%s</span></span><span class="org-string">' parser was installed."</span> lang)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (sit-for 0.75))))
 
 </pre>
 </div>
@@ -1702,11 +1768,11 @@ Custom functions to check and install tree-sitter.
 <span class="org-comment-delimiter">;; </span><span class="org-comment">is available.</span>
 (<span class="org-keyword">defun</span> <span class="org-function-name">ensure-treesit-grammar-installed</span> (language grammar-file)
   <span class="org-doc">"Ensure a tree-sitter grammar for LANGUAGE is installed.</span>
-<span class="org-doc">   GRAMMAR-FILE is the path to the grammar file."</span>
+<span class="org-doc">  </span><span class="org-indent-bars-1"> </span><span class="org-doc">GRAMMAR-FILE is the path to the grammar file."</span>
   (<span class="org-keyword">unless</span> (treesit-grammar-installed-p grammar-file)
-    (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> (fboundp 'treesit-available-p)
-               (treesit-available-p))
-      (treesit-install-language-grammar language))))
+  <span class="org-indent-bars-1"> </span> (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> (fboundp 'treesit-available-p)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span>(treesit-available-p))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (treesit-install-language-grammar language))))
 </pre>
 </div>
 </div>
@@ -1750,17 +1816,17 @@ Eglot hooks for Go
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">lsp-go-install-save-hooks</span> ()
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">Format before save</span>
-  (add-hook 'before-save-hook #'eglot-format-buffer t t)
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">Sort imports before save</span>
-  (add-hook 'before-save-hook #'eglot-code-action-organize-imports t t))
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">(defun lsp-go-install-save-hooks ()</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">;; Format before save</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(add-hook 'before-save-hook #'eglot-format-buffer t t)</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">;; Sort imports before save</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(add-hook 'before-save-hook #'eglot-code-action-organize-imports t t))</span>
 
 
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)</span>
 
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Start eglot mode</span>
-(add-hook 'go-mode-hook 'eglot-ensure)
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(add-hook 'go-mode-hook 'eglot-ensure)</span>
 </pre>
 </div>
 </div>
@@ -1823,14 +1889,14 @@ Modify typst-ts-compile to use absolute path.
   (<span class="org-keyword">interactive</span>)
   (run-hooks typst-ts-compile-before-compilation-hook)
   (<span class="org-keyword">let</span> ((full-file-path (expand-file-name buffer-file-name)))
-    (add-hook 'compilation-finish-functions
-              (typst-ts-compile--compilation-finish-function (current-buffer)))
-    (compile
-     (format <span class="org-string">"%s compile %s %s"</span>
-             typst-ts-compile-executable-location
-             full-file-path
-             typst-ts-compile-options)
-     'typst-ts-compilation-mode)))
+  <span class="org-indent-bars-1"> </span> (add-hook 'compilation-finish-functions
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> (typst-ts-compile--compilation-finish-function (current-buffer)))
+  <span class="org-indent-bars-1"> </span> (compile
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span>(format <span class="org-string">"%s compile %s %s"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span>typst-ts-compile-executable-location
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span>full-file-path
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span>typst-ts-compile-options)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span>'typst-ts-compilation-mode)))
 </pre>
 </div>
 
@@ -1855,10 +1921,10 @@ Custom functions to ask for root directory.
   <span class="org-doc">"Compile current Typst file with the root folder set."</span>
   (<span class="org-keyword">interactive</span>)
   (<span class="org-keyword">unless</span> typst-ts-root-folder
-    (call-interactively 'typst-ts-set-root-folder))
+  <span class="org-indent-bars-1"> </span> (call-interactively 'typst-ts-set-root-folder))
   (<span class="org-keyword">let</span> ((default-directory typst-ts-root-folder))
-    (typst-ts-compile)))
-
+  <span class="org-indent-bars-1"> </span> (typst-ts-compile)))
+   
 (<span class="org-keyword">with-eval-after-load</span> 'typst-ts-mode
   (define-key typst-ts-mode-map (kbd <span class="org-string">"C-c C-c s"</span>) #'typst-ts-set-root-folder)
   (define-key typst-ts-mode-map (kbd <span class="org-string">"C-c C-c r"</span>) #'typst-ts-compile-with-root))
@@ -1887,9 +1953,9 @@ Not sure if LaTex belongs here.
   (<span class="org-keyword">setq</span> TeX-source-correlate-mode t)
   (<span class="org-keyword">setq</span> TeX-source-correlate-start-server t)
   (<span class="org-keyword">setq</span> TeX-view-program-selection '((output-pdf <span class="org-string">"PDF Tools"</span>))
-        TeX-view-program-list '((<span class="org-string">"PDF Tools"</span> TeX-pdf-tools-sync-view))
-        TeX-source-correlate-start-server t)
-
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> TeX-view-program-list '((<span class="org-string">"PDF Tools"</span> TeX-pdf-tools-sync-view))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> TeX-source-correlate-start-server t)
+       
   (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
   (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
   (add-hook 'LaTeX-mode-hook 'TeX-fold-mode)
@@ -1983,12 +2049,33 @@ Because every damn thing needs lua for configuration.
 </div>
 </div>
 </div>
+<div id="outline-container-code-execution" class="outline-2">
+<h2 id="code-execution"><span class="section-number-2">9.</span> Code Execution</h2>
+<div class="outline-text-2" id="text-code-execution">
+</div>
+<div id="outline-container-makefile" class="outline-3">
+<h3 id="makefile"><span class="section-number-3">9.1.</span> Makefile</h3>
+<div class="outline-text-3" id="text-makefile">
+<p>
+Emacs helpers to run things from makefiles
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> makefile-executor
+  <span class="org-builtin">:straight</span> (<span class="org-builtin">:host</span> github <span class="org-builtin">:repo</span> <span class="org-string">"Olivia5k/makefile-executor.el"</span>)
+  <span class="org-builtin">:config</span>
+  (add-hook 'makefile-mode-hook 'makefile-executor-mode))
+</pre>
+</div>
+</div>
+</div>
+</div>
 <div id="outline-container-ai-stuff" class="outline-2">
-<h2 id="ai-stuff"><span class="section-number-2">9.</span> Non-Human Intelligence</h2>
+<h2 id="ai-stuff"><span class="section-number-2">10.</span> Non-Human Intelligence</h2>
 <div class="outline-text-2" id="text-ai-stuff">
 </div>
 <div id="outline-container-copilot" class="outline-3">
-<h3 id="copilot"><span class="section-number-3">9.1.</span> Copilot</h3>
+<h3 id="copilot"><span class="section-number-3">10.1.</span> Copilot</h3>
 <div class="outline-text-3" id="text-copilot">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> copilot
@@ -1996,11 +2083,11 @@ Because every damn thing needs lua for configuration.
   <span class="org-builtin">:ensure</span> t
   <span class="org-builtin">:hook</span> (prog-mode . copilot-mode)
   <span class="org-builtin">:bind</span> (<span class="org-builtin">:map</span> copilot-completion-map
-              (<span class="org-string">"&lt;tab&gt;"</span> . 'copilot-accept-completion-by-word)
-              (<span class="org-string">"TAB"</span> . 'copilot-accept-completion-by-word)
-              (<span class="org-string">"C-TAB"</span> . 'copilot-accept-completion)
-              (<span class="org-string">"C-&lt;tab&gt;"</span> . 'copilot-accept-completion)))
-
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> (<span class="org-string">"&lt;tab&gt;"</span> . 'copilot-accept-completion-by-word)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> (<span class="org-string">"TAB"</span> . 'copilot-accept-completion-by-word)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> (<span class="org-string">"C-TAB"</span> . 'copilot-accept-completion)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> (<span class="org-string">"C-&lt;tab&gt;"</span> . 'copilot-accept-completion)))
+             
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Suppress warnings from copilot</span>
 (<span class="org-keyword">setq</span> warning-suppress-types '((copilot)))
 </pre>
@@ -2008,11 +2095,25 @@ Because every damn thing needs lua for configuration.
 </div>
 </div>
 </div>
-<div id="outline-container-music-player" class="outline-2">
-<h2 id="music-player"><span class="section-number-2">10.</span> Music Player</h2>
-<div class="outline-text-2" id="text-music-player">
+<div id="outline-container-real-life-stuff" class="outline-2">
+<h2 id="real-life-stuff"><span class="section-number-2">11.</span> Real life stuff</h2>
+<div class="outline-text-2" id="text-real-life-stuff">
+<p>
+Emacs can do more than just text editing. Some are better, some are not.
+</p>
+</div>
+<div id="outline-container-music-player" class="outline-3">
+<h3 id="music-player"><span class="section-number-3">11.1.</span> Music Player</h3>
+<div class="outline-text-3" id="text-music-player">
 <p>
 Emacs as a music player? Why not?
+</p>
+
+<p>
+Honestly, I am really sick of the subscription model for music that
+randomly removes music from my playlist, because they lost the rights
+to it. I have decided to go back to the old school way of managing
+music myself.
 </p>
 
 <div class="org-src-container">
@@ -2023,12 +2124,12 @@ Emacs as a music player? Why not?
   <span class="org-builtin">:config</span>
   (ready-player-mode +1)
   <span class="org-builtin">:bind</span> ((<span class="org-string">"C-c m h"</span> . 'ready-player-toggle-shuffle)
-         (<span class="org-string">"C-c m s"</span> . 'ready-player-search)
-         (<span class="org-string">"C-c m q"</span> . 'ready-player-quit)
-         (<span class="org-string">"C-c m f"</span> . 'ready-player-seek-forward)
-         (<span class="org-string">"C-c m b"</span> . 'ready-player-seek-backward)))
-
-
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c m s"</span> . 'ready-player-search)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c m q"</span> . 'ready-player-quit)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c m f"</span> . 'ready-player-seek-forward)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span>(<span class="org-string">"C-c m b"</span> . 'ready-player-seek-backward)))
+         
+         
 (<span class="org-keyword">setq</span> ready-player-my-media-collection-location eos/music-dir)
 (<span class="org-keyword">setq</span> ready-player-set-global-bindings nil)
 
@@ -2042,12 +2143,13 @@ Emacs as a music player? Why not?
 </div>
 </div>
 </div>
+</div>
 <div id="outline-container-miscellaneous" class="outline-2">
-<h2 id="miscellaneous"><span class="section-number-2">11.</span> Miscellaneous</h2>
+<h2 id="miscellaneous"><span class="section-number-2">12.</span> Miscellaneous</h2>
 <div class="outline-text-2" id="text-miscellaneous">
 </div>
 <div id="outline-container-custom-functions" class="outline-3">
-<h3 id="custom-functions"><span class="section-number-3">11.1.</span> Custom Functions</h3>
+<h3 id="custom-functions"><span class="section-number-3">12.1.</span> Custom Functions</h3>
 <div class="outline-text-3" id="text-custom-functions">
 <ul class="org-ul">
 <li><p>
@@ -2060,9 +2162,9 @@ Emacs as a music player? Why not?
   (<span class="org-keyword">interactive</span>)
   (<span class="org-keyword">setq</span> debug-on-error (not debug-on-error))
   (<span class="org-keyword">if</span> debug-on-error
-      (message <span class="org-string">"Debug mode enabled"</span>)
-    (message <span class="org-string">"Debug mode disabled"</span>)))
-
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (message <span class="org-string">"Debug mode enabled"</span>)
+  <span class="org-indent-bars-1"> </span> (message <span class="org-string">"Debug mode disabled"</span>)))
+   
 <span class="org-comment-delimiter">;; </span><span class="org-comment">Default enable debug-on-error mode</span>
 (<span class="org-keyword">setq</span> debug-on-error t)
 </pre>
@@ -2093,31 +2195,6 @@ Emacs as a music player? Why not?
 </div></li>
 
 <li><p>
-<code>eos/kill-other-buffers</code> to kill all buffers except the current one.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Kill all other un-important buffers except the current one</span>
-<span class="org-comment-delimiter">;; </span><span class="org-comment">Ask for confirmation</span>
-
-(<span class="org-keyword">defun</span> <span class="org-function-name">eos/kill-other-buffers</span> ()
-  <span class="org-doc">"Kill all other buffers, with confirmation."</span>
-  (<span class="org-keyword">interactive</span>)
-  (<span class="org-keyword">when</span> (yes-or-no-p <span class="org-string">"Are you sure you want to kill all other buffers?"</span>)
-    (mapc (<span class="org-keyword">lambda</span> (buffer)
-            (<span class="org-keyword">let</span> ((buffer-name (buffer-name buffer)))
-              (<span class="org-keyword">unless</span> (<span class="org-keyword">or</span> (eq buffer (current-buffer))
-                          (string-match <span class="org-string">"^\\*scratch\\*$"</span> buffer-name)
-                          (string-match <span class="org-string">"^\\*straight"</span> buffer-name)
-                          (string-match <span class="org-string">"^\\*copilot"</span> buffer-name))
-
-                (kill-buffer buffer))))
-          (buffer-list))
-    (delete-other-windows)))
-</pre>
-</div></li>
-
-<li><p>
 <code>eos/highlight-comments</code> to highlight comments. It's tricky to revert
 back to the default settings, so either re-apply the theme or reload
 the config.
@@ -2128,9 +2205,9 @@ the config.
   <span class="org-doc">"Set the style for highlighted comments with custom foreground, background, and slant."</span>
   (<span class="org-keyword">interactive</span>)
   (set-face-attribute 'font-lock-comment-face nil
-                      <span class="org-builtin">:foreground</span> <span class="org-string">"#4A90E2"</span>
-                      <span class="org-builtin">:background</span> <span class="org-string">"#E6F7FF"</span>
-                      <span class="org-builtin">:slant</span> 'italic))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-builtin">:foreground</span> <span class="org-string">"#4A90E2"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-builtin">:background</span> <span class="org-string">"#E6F7FF"</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-builtin">:slant</span> 'italic))
 </pre>
 </div></li>
 
@@ -2143,22 +2220,22 @@ the config.
   <span class="org-doc">"Toggle between transparent and opaque Emacs frames."</span>
   (<span class="org-keyword">interactive</span>)
   (<span class="org-keyword">if</span> transparency-enabled
-      (<span class="org-keyword">progn</span>
-        (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
-        (<span class="org-keyword">setq</span> transparency-enabled nil)
-        (message <span class="org-string">"Transparency disabled"</span>))
-    (<span class="org-keyword">progn</span>
-      (set-frame-parameter (selected-frame) 'alpha
-                           `(,transparency-level-active . ,transparency-level-inactive))
-      (<span class="org-keyword">setq</span> transparency-enabled t)
-      (message <span class="org-string">"Transparency enabled"</span>))))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (<span class="org-keyword">progn</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (<span class="org-keyword">setq</span> transparency-enabled nil)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> (message <span class="org-string">"Transparency disabled"</span>))
+  <span class="org-indent-bars-1"> </span> (<span class="org-keyword">progn</span>
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (set-frame-parameter (selected-frame) 'alpha
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> <span class="org-indent-bars-3"> </span> <span class="org-indent-bars-4"> </span> <span class="org-indent-bars-5"> </span> <span class="org-indent-bars-6"> </span> <span class="org-indent-bars-7"> </span> <span class="org-indent-bars-8"> </span> <span class="org-indent-bars-9"> </span> <span class="org-indent-bars-10"> </span> <span class="org-indent-bars-11"> </span> <span class="org-indent-bars-12"> </span> <span class="org-indent-bars-13"> </span>`(,transparency-level-active . ,transparency-level-inactive))
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (<span class="org-keyword">setq</span> transparency-enabled t)
+  <span class="org-indent-bars-1"> </span> <span class="org-indent-bars-2"> </span> (message <span class="org-string">"Transparency enabled"</span>))))
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
 <div id="outline-container-custom-keybindings" class="outline-3">
-<h3 id="custom-keybindings"><span class="section-number-3">11.2.</span> Custom keybindings</h3>
+<h3 id="custom-keybindings"><span class="section-number-3">12.2.</span> Custom keybindings</h3>
 <div class="outline-text-3" id="text-custom-keybindings">
 <p>
 Custom keybindings for emacs. This section is expected to be edited
@@ -2174,7 +2251,6 @@ frequently, as my requirements evolve.
 (global-set-key (kbd <span class="org-string">"C-c e d"</span>) 'eos/toggle-debug-mode)          <span class="org-comment-delimiter">;; </span><span class="org-comment">Toggle debug mode</span>
 (global-set-key (kbd <span class="org-string">"C-c e f"</span>) 'treemacs)                       <span class="org-comment-delimiter">;; </span><span class="org-comment">Open Treemacs</span>
 (global-set-key (kbd <span class="org-string">"C-c e h"</span>) 'eos/highlight-comments)         <span class="org-comment-delimiter">;; </span><span class="org-comment">Highlight comments</span>
-(global-set-key (kbd <span class="org-string">"C-c e k"</span>) 'eos/kill-other-buffers)         <span class="org-comment-delimiter">;; </span><span class="org-comment">Kill other buffers</span>
 (global-set-key (kbd <span class="org-string">"C-c e r"</span>) 'eos/reload-emacs-config)        <span class="org-comment-delimiter">;; </span><span class="org-comment">Reload init.el</span>
 (global-set-key (kbd <span class="org-string">"C-c e s"</span>) 'eos/toggle-transparency)        <span class="org-comment-delimiter">;; </span><span class="org-comment">Toggle transparency</span>
 (global-set-key (kbd <span class="org-string">"C-c e t"</span>) 'counsel-load-theme)             <span class="org-comment-delimiter">;; </span><span class="org-comment">Switch themes</span>

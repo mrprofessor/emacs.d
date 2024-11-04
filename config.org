@@ -21,6 +21,7 @@
   - [[#appearence][Appearence]]
     - [[#all-the-icons][All the Icons]]
     - [[#themes][Themes]]
+      - [[#auto-dark-mode][Auto-Dark mode]]
     - [[#better-focus][Better Focus]]
     - [[#transparency][Transparency]]
     - [[#dashboard][Dashboard]]
@@ -68,9 +69,12 @@
     - [[#yaml][Yaml]]
     - [[#markdown][Markdown]]
     - [[#lua][Lua]]
+  - [[#code-execution][Code Execution]]
+    - [[#makefile][Makefile]]
   - [[#non-human-intelligence][Non-Human Intelligence]]
     - [[#copilot][Copilot]]
-  - [[#music-player][Music Player]]
+  - [[#real-life-stuff][Real life stuff]]
+    - [[#music-player][Music Player]]
   - [[#miscellaneous][Miscellaneous]]
     - [[#custom-functions][Custom Functions]]
     - [[#custom-keybindings][Custom keybindings]]
@@ -262,6 +266,14 @@ Basic setup for Emacs appearance and behavior.
     (setq backup-directory-alist `((".*" . ,eos/emacs-backup-dir)))
   #+end_src
 
+- MacOs smooth scrolling
+
+  #+begin_src emacs-lisp
+    (setq scroll-conservatively 101)
+    (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+    (setq mouse-wheel-progressive-speed nil)
+  #+end_src
+
 - Miscellaneous
   
   #+begin_src emacs-lisp
@@ -392,6 +404,35 @@ I love how Org files look with poet theme, so it's a must.
 #+begin_src emacs-lisp
   (use-package poet-theme
     :ensure t)
+#+end_src
+
+**** Auto-Dark mode
+
+For the past 6 months, I have been manually switching between light
+and dark themes, until I found this package.
+
+#+begin_src emacs-lisp
+  (setq auto-dark-allow-osascript t)
+
+  (use-package auto-dark
+    :ensure t
+    :straight t
+    :custom
+    (auto-dark-themes '((wombat) (leuven)))
+    (auto-dark-polling-interval-seconds 5)
+    (auto-dark-allow-osascript nil)
+    (auto-dark-allow-powershell nil)
+    ;; (auto-dark-detection-method nil) ;; dangerous to be set manually
+    :hook
+    (auto-dark-dark-mode
+     . (lambda ()
+          ;; something to execute when dark mode is detected
+          ))
+    (auto-dark-light-mode
+     . (lambda ()
+          ;; something to execute when light mode is detected
+          ))
+    :init (auto-dark-mode))
 #+end_src
 
 *** Better Focus
@@ -527,23 +568,24 @@ better. Mini-frame mode is enabled by default.
 :CUSTOM_ID: indentation
 :END:
 
-#+begin_src emacs-lisp
-  (use-package indent-bars
-    :config
-    :custom
-    (indent-bars-treesit-support t)
-    (indent-bars-treesit-ignore-blank-lines-types '("module"))
-    ;; Add other languages as needed
-    (indent-bars-treesit-scope '((python function_definition class_definition for_statement
-  	                                   if_statement with_statement while_statement)))
-    ;; Note: wrap may not be needed if no-descend-list is enough
-    ;;(indent-bars-treesit-wrap '((python argument_list parameters ; for python, as an example
-    ;;				      list list_comprehension
-    ;;				      dictionary dictionary_comprehension
-    ;;				      parenthesized_expression subscript)))
-    :hook ((python-base-mode yaml-mode) . indent-bars-mode))
+Indent bars is a better package, however each bar is flanked by two
+dotted line and looks quite weird.
 
-  (indent-bars-mode -1)
+GitHub issue: https://github.com/jdtsmith/indent-bars/issues/84
+
+#+begin_src emacs-lisp
+  ;; (use-package indent-bars
+  ;; :hook ((prog-mode) . indent-bars-mode))
+#+end_src
+
+highlight-indent-guides
+
+#+begin_src emacs-lisp
+  (use-package highlight-indent-guides
+    :ensure t
+    :straight t
+    :config (setq highlight-indent-guides-method 'character)
+    :hook (prog-mode . highlight-indent-guides-mode))
 #+end_src
 
 ** Functionality
@@ -1290,17 +1332,17 @@ programming languages on Emacs.
 Eglot hooks for Go
 
 #+begin_src emacs-lisp
-  (defun lsp-go-install-save-hooks ()
-    ;; Format before save
-    (add-hook 'before-save-hook #'eglot-format-buffer t t)
-    ;; Sort imports before save
-    (add-hook 'before-save-hook #'eglot-code-action-organize-imports t t))
+  ;; (defun lsp-go-install-save-hooks ()
+  ;;   ;; Format before save
+  ;;   (add-hook 'before-save-hook #'eglot-format-buffer t t)
+  ;;   ;; Sort imports before save
+  ;;   (add-hook 'before-save-hook #'eglot-code-action-organize-imports t t))
 
 
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  ;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
 
   ;; Start eglot mode
-  (add-hook 'go-mode-hook 'eglot-ensure)
+  ;; (add-hook 'go-mode-hook 'eglot-ensure)
 #+end_src
 
 *** Rust
@@ -1495,6 +1537,25 @@ Because every damn thing needs lua for configuration.
     :mode "\\.lua\\'")
 #+end_src
 
+** Code Execution
+:PROPERTIES:
+:CUSTOM_ID: code-execution
+:END:
+
+*** Makefile
+:PROPERTIES:
+:CUSTOM_ID: makefile
+:END:
+
+Emacs helpers to run things from makefiles
+
+#+begin_src emacs-lisp
+  (use-package makefile-executor
+    :straight (:host github :repo "Olivia5k/makefile-executor.el")
+    :config
+    (add-hook 'makefile-mode-hook 'makefile-executor-mode))
+#+end_src
+
 ** Non-Human Intelligence
 :PROPERTIES:
 :CUSTOM_ID: ai-stuff
@@ -1520,12 +1581,24 @@ Because every damn thing needs lua for configuration.
   (setq warning-suppress-types '((copilot)))
 #+end_src
 
-** Music Player
+** Real life stuff
+:PROPERTIES:
+:CUSTOM_ID: real-life-stuff
+:END:
+
+Emacs can do more than just text editing. Some are better, some are not.
+
+*** Music Player
 :PROPERTIES:
 :CUSTOM_ID: music-player
 :END:
 
 Emacs as a music player? Why not?
+
+Honestly, I am really sick of the subscription model for music that
+randomly removes music from my playlist, because they lost the rights
+to it. I have decided to go back to the old school way of managing
+music myself.
 
 #+begin_src emacs-lisp
 
@@ -1596,28 +1669,6 @@ Emacs as a music player? Why not?
       (find-file "~/.emacs.d/config.org"))
   #+end_src
 
-- =eos/kill-other-buffers= to kill all buffers except the current one.
-
-  #+begin_src emacs-lisp
-    ;; Kill all other un-important buffers except the current one
-    ;; Ask for confirmation
-
-    (defun eos/kill-other-buffers ()
-      "Kill all other buffers, with confirmation."
-      (interactive)
-      (when (yes-or-no-p "Are you sure you want to kill all other buffers?")
-        (mapc (lambda (buffer)
-                (let ((buffer-name (buffer-name buffer)))
-                  (unless (or (eq buffer (current-buffer))
-                              (string-match "^\\*scratch\\*$" buffer-name)
-                              (string-match "^\\*straight" buffer-name)
-                              (string-match "^\\*copilot" buffer-name))
-                    
-                    (kill-buffer buffer))))
-              (buffer-list))
-        (delete-other-windows)))
-  #+end_src
-
 - =eos/highlight-comments= to highlight comments. It's tricky to revert
   back to the default settings, so either re-apply the theme or reload
   the config.
@@ -1668,7 +1719,6 @@ frequently, as my requirements evolve.
   (global-set-key (kbd "C-c e d") 'eos/toggle-debug-mode)          ;; Toggle debug mode
   (global-set-key (kbd "C-c e f") 'treemacs)                       ;; Open Treemacs
   (global-set-key (kbd "C-c e h") 'eos/highlight-comments)         ;; Highlight comments
-  (global-set-key (kbd "C-c e k") 'eos/kill-other-buffers)         ;; Kill other buffers
   (global-set-key (kbd "C-c e r") 'eos/reload-emacs-config)        ;; Reload init.el
   (global-set-key (kbd "C-c e s") 'eos/toggle-transparency)        ;; Toggle transparency
   (global-set-key (kbd "C-c e t") 'counsel-load-theme)             ;; Switch themes
