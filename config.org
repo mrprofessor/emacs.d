@@ -37,16 +37,11 @@
       - [[#org-babel][Org Babel]]
       - [[#org-hugoox-hugo][Org Hugo(ox-hugo)]]
       - [[#org-download][Org Download]]
-      - [[#org-roam][Org Roam]]
-        - [[#full-text-search-with-deft][Full text search with Deft]]
-        - [[#backlink-buffer][Backlink buffer]]
-      - [[#org-roam-ui][Org Roam UI]]
       - [[#org-export-settingshtmlize][Org Export Settings(htmlize)]]
       - [[#human-readable-ids][Human Readable IDs]]
     - [[#projectile][Projectile]]
     - [[#version-control][Version Control]]
       - [[#magit][Magit]]
-      - [[#diff-hl][Diff-hl]]
     - [[#completions][Completions]]
       - [[#ivy-rich][Ivy rich]]
       - [[#hydra][Hydra]]
@@ -129,9 +124,6 @@ Consolidate all the directories here.
   (defvar eos/org-images-dir "~/Documents/org/images"
     "Directory to store images downloaded with org-download.")
 
-  (defvar eos/org-roam-dir "~/Documents/org/hivemind/notes"
-    "Directory to store org-roam notes.")
-
   (defvar eos/emacs-backup-dir "~/.emacs.d/emacs-backup"
     "Directory where Emacs backup files are stored.")
 
@@ -161,7 +153,6 @@ Consolidate all the directories here.
   ;; Ensure required directories exist
   (mapc #'eos/ensure-directory-exists
         (list eos/org-images-dir
-              eos/org-roam-dir
               eos/emacs-backup-dir))
 #+end_src
 
@@ -201,6 +192,14 @@ Basic setup for Emacs appearance and behavior.
     ;; (set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
     (set-face-attribute 'default nil :font "Iosevka" :height 160)
   #+end_src
+
+- Enable ligatures on Mac
+
+  #+begin_src emacs-lisp
+    (if (fboundp 'mac-auto-operator-composition-mode)
+        (mac-auto-operator-composition-mode))
+  #+end_src
+
 
 - Configure line numbers
   
@@ -379,7 +378,7 @@ like to get them all.
 
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes
-    :straight (:host github :repo "doomemacs/themes")
+    :straight t
     :ensure t
     :config
     ;; Global settings (defaults)
@@ -396,7 +395,8 @@ like to get them all.
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config))
 
-  (load-theme 'leuven t)
+  (setq custom-safe-themes t) ;; I trust all these themes
+
 #+END_SRC
 
 I love how Org files look with poet theme, so it's a must.
@@ -418,7 +418,7 @@ and dark themes, until I found this package.
     :ensure t
     :straight t
     :custom
-    (auto-dark-themes '((wombat) (leuven)))
+    (auto-dark-themes '((doom-bluloco-dark) (doom-bluloco-light)))
     (auto-dark-polling-interval-seconds 5)
     (auto-dark-allow-osascript nil)
     (auto-dark-allow-powershell nil)
@@ -581,11 +581,11 @@ GitHub issue: https://github.com/jdtsmith/indent-bars/issues/84
 highlight-indent-guides
 
 #+begin_src emacs-lisp
-  (use-package highlight-indent-guides
-    :ensure t
-    :straight t
-    :config (setq highlight-indent-guides-method 'character)
-    :hook (prog-mode . highlight-indent-guides-mode))
+  ;; (use-package highlight-indent-guides
+  ;;   :ensure t
+  ;;   :straight t
+  ;;   :config (setq highlight-indent-guides-method 'character)
+  ;;   :hook (prog-mode . highlight-indent-guides-mode))
 #+end_src
 
 ** Functionality
@@ -757,84 +757,6 @@ we need to install ~pngpaste~ using Homebrew.
   (setq org-download-heading-lvl nil)
 #+end_src
 
-**** Org Roam
-
-A sophisticated note taking mechanishm. Essentially a clone of
-[[https://roamresearch.com/][Roam-research]] running on Emacs.
-
-#+begin_src emacs-lisp
-  (use-package org-roam
-    :ensure t
-    :bind (("C-c n l" . org-roam-buffer-toggle)
-           ("C-c n f" . org-roam-node-find)
-           ("C-c n g" . org-roam-graph)
-           ("C-c n c" . org-roam-capture)
-           ("C-c n i" . org-roam-node-insert)
-           ("C-c n t" . org-roam-tag-add)
-           ("C-c n b" . org-roam-buffer-toggle)
-           ("C-c n j" . org-roam-dailies-capture-today))
-    :pin melpa-stable
-    :config
-    (org-roam-setup))
-#+end_src
-
-#+begin_src emacs-lisp
-  (setq org-roam-directory eos/org-roam-dir)
-#+end_src
-
-***** Full text search with Deft
-
-Deft is an Emacs mode for quickly browsing and filtering plain text
-notes.
-
-#+begin_src emacs-lisp
-  (use-package deft
-    :after org
-    :bind
-    ("C-c n d" . deft)
-    :custom
-    (deft-recursive t)
-    (deft-use-filter-string-for-filename t)
-    (deft-default-extension "org")
-    (deft-directory org-roam-directory))
-#+end_src
-
-***** Backlink buffer
-
-Org-roam backlink buffer, [[https:github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2#backlink-buffer][source]]
-
-#+begin_src emacs-lisp
-  ;; for org-roam-buffer-toggle
-  ;; Recommendation in the official manual
-  (add-to-list 'display-buffer-alist
-               '("\\*org-roam\\*"
-                 (display-buffer-in-direction)
-                 (direction . right)
-                 (window-width . 0.33)
-                 (window-height . fit-window-to-buffer)))
-#+end_src
-
-**** Org Roam UI
-
-A visual interface for Org Roam. 
-
-#+begin_src emacs-lisp
-  (use-package org-roam-ui
-    :straight
-    (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
-    :after org-roam
-    ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-    ;;         a hookable mode anymore, you're advised to pick something yourself
-    ;;         if you don't care about startup time, use
-    ;;  :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
-
-#+end_src
-
 
 **** Org Export Settings(htmlize)
 
@@ -971,38 +893,6 @@ the issue.
   (use-package magit
     :ensure t
     :pin melpa-stable)
-#+end_src
-
-
-**** Diff-hl
-
-Emacs port of the Sublime Git Gutter
-
-#+begin_src emacs-lisp
-  (use-package diff-hl
-    :straight (diff-hl :type git :host github :repo "dgutov/diff-hl")
-    :hook ((prog-mode . diff-hl-mode)
-           (org-mode . diff-hl-mode)
-           (text-mode . diff-hl-mode))
-    :config
-    ;; Limit diff-hl to specific modes
-    (setq diff-hl-global-modes '(not image-mode pdf-view-mode))
-
-    ;; Use histogram diff algorithm
-    (setq vc-git-diff-switches '("--histogram"))
-
-    ;; Slightly more conservative delay before updating the diff
-    (setq diff-hl-flydiff-delay 0.5)  ; default: 0.3
-
-    ;; Perform async updates to avoid blocking Emacs
-    (setq diff-hl-update-async t)
-
-    ;; Do not show staged changes in real-time
-    (setq diff-hl-show-staged-changes nil)
-
-    ;; Enable on-the-fly diff highlighting and margin mode
-    (diff-hl-flydiff-mode)
-    (diff-hl-margin-mode))
 #+end_src
 
 *** Completions
@@ -1366,7 +1256,8 @@ Am I a 21st century Hippie now?
 
 #+begin_src emacs-lisp
   (use-package haskell-mode
-    :straight (:host github :repo "haskell/haskell-mode")
+    :ensure t
+    :hook (haskell-mode . turn-on-haskell-indent)
     :mode "\\.hs\\'")
 #+end_src
 
@@ -1432,8 +1323,8 @@ Custom functions to ask for root directory.
       (typst-ts-compile)))
 
   (with-eval-after-load 'typst-ts-mode
-    (define-key typst-ts-mode-map (kbd "C-c C-c s") #'typst-ts-set-root-folder)
-    (define-key typst-ts-mode-map (kbd "C-c C-c r") #'typst-ts-compile-with-root))
+    (define-key typst-ts-mode-map (kbd "C-c s") #'typst-ts-set-root-folder)
+    (define-key typst-ts-mode-map (kbd "C-c r") #'typst-ts-compile-with-root))
 
 #+end_src
 
@@ -1448,7 +1339,6 @@ Not sure if LaTex belongs here.
   ;; Install Auctex using straight.el
   (use-package auctex
     :straight t
-    :straight (:type git :host github :repo "emacs-straight/auctex")
     :config
     (setq TeX-auto-save t)
     (setq TeX-parse-self t)
@@ -1474,7 +1364,6 @@ Install pdf tools using straight.el with minimal configuration
 
 #+begin_src emacs-lisp
   (use-package pdf-tools
-    :straight (:host github :repo "vedang/pdf-tools")
     :config
     ;; Initialize the PDF Tools package
     (pdf-tools-install)
@@ -1520,7 +1409,6 @@ Well, most readme files are markdown anyways.
 
 #+begin_src emacs-lisp
   (use-package markdown-mode
-    :straight (:host github :repo "jrblevin/markdown-mode")
     :mode "\\.md\\'")
 #+end_src
 
@@ -1533,7 +1421,6 @@ Because every damn thing needs lua for configuration.
 
 #+begin_src emacs-lisp
   (use-package lua-mode
-    :straight (:host github :repo "immerrr/lua-mode")
     :mode "\\.lua\\'")
 #+end_src
 
@@ -1551,7 +1438,6 @@ Emacs helpers to run things from makefiles
 
 #+begin_src emacs-lisp
   (use-package makefile-executor
-    :straight (:host github :repo "Olivia5k/makefile-executor.el")
     :config
     (add-hook 'makefile-mode-hook 'makefile-executor-mode))
 #+end_src
@@ -1568,7 +1454,6 @@ Emacs helpers to run things from makefiles
 
 #+begin_src emacs-lisp
   (use-package copilot
-    :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
     :ensure t
     :hook (prog-mode . copilot-mode)
     :bind (:map copilot-completion-map
@@ -1603,7 +1488,6 @@ music myself.
 #+begin_src emacs-lisp
 
   (use-package ready-player
-    :straight (ready-player :type git :host github :repo "xenodium/ready-player")
     :ensure t
     :config
     (ready-player-mode +1)
