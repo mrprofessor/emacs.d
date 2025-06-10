@@ -535,10 +535,15 @@ back to the default Emacs one. Here are a few tweaks to make it look
 good.
 
 #+begin_src emacs-lisp
-
   (use-package doom-modeline
     :straight t
-    :init (doom-modeline-mode 1))
+    :init
+    (doom-modeline-mode 1)
+    :config
+    (column-number-mode 1)
+    (setq doom-modeline-column-zero-based t
+          doom-modeline-position-column-format '("C%c")
+          doom-modeline-position-column-line-format '("%l:%c")))
 #+end_src
 
 *** Fancy Mini-Buffer
