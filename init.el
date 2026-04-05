@@ -156,7 +156,7 @@
      "adaf421037f4ae6725aa9f5654a2ed49e2cd2765f71e19a7d26a454491b486eb"
      default))
  '(mini-frame-show-parameters '((top . 200) (width . 0.7) (left . 0.5)))
- '(org-agenda-files '("~/emacs.d/config.org"))
+ '(org-agenda-files nil)
  '(org-safe-remote-resources
    '("\\`https://imgs\\.xkcd\\.com/comics/real_programmers\\.png\\'"))
  '(package-selected-packages

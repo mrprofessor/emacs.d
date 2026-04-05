@@ -1,2 +1,13 @@
 #.*
 .DS_STORE
+.cache/
+agent/
+auto-save-list/
+config.el
+elpa/
+emacs-backup/
+projectile-bookmarks.eld
+projects
+recentf
+straight/
+tree-sitter/

@@ -49,7 +49,7 @@
     - [[#treemacs][Treemacs]]
     - [[#restclient][RestClient]]
     - [[#command-log-mode][Command-log-mode]]
-    - [[#vterm][Vterm]]
+    - [[#ghostel][Ghostel]]
   - [[#system-configuration][System configuration]]
     - [[#emacs-environment-variables][Emacs environment variables]]
   - [[#code-completion][Code Completion]]
@@ -60,17 +60,15 @@
     - [[#rust][Rust]]
     - [[#haskell][Haskell]]
     - [[#typst][Typst]]
-    - [[#latex][LaTex]]
     - [[#yaml][Yaml]]
     - [[#markdown][Markdown]]
     - [[#lua][Lua]]
+    - [[#swift][Swift]]
   - [[#code-execution][Code Execution]]
     - [[#makefile][Makefile]]
-  - [[#non-human-intelligence][Non-Human Intelligence]]
-    - [[#copilot][Copilot]]
   - [[#real-life-stuff][Real life stuff]]
     - [[#music-player][Music Player]]
-  - [[#miscellaneous][Miscellaneous]]
+  - [[#custom-stuff][Custom Stuff]]
     - [[#custom-functions][Custom Functions]]
     - [[#custom-keybindings][Custom keybindings]]
 
@@ -165,7 +163,7 @@ Consolidate all the directories here.
 Basic setup for Emacs appearance and behavior.
 
 - Disable toolbars, scrollbars, and tooltips.
-  
+
   #+begin_src emacs-lisp
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
@@ -175,22 +173,22 @@ Basic setup for Emacs appearance and behavior.
   #+end_src
 
 - Set scroll length
-  
+
   #+begin_src emacs-lisp
     (setq scroll-step 1 scroll-conservatively 10000)
   #+end_src
 
 - Set visible bell
-  
+
   #+begin_src emacs-lisp
     (setq visible-bell t)
   #+end_src
-  
+
 - Set fonts. TODO: Check if the font exists
-  
+
   #+begin_src emacs-lisp
     ;; (set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
-    (set-face-attribute 'default nil :font "Iosevka" :height 160)
+    (set-face-attribute 'default nil :font "Iosevka" :height 180)
   #+end_src
 
 - Enable ligatures on Mac
@@ -202,23 +200,16 @@ Basic setup for Emacs appearance and behavior.
 
 
 - Configure line numbers
-  
+
   #+begin_src emacs-lisp
     ;;(global-display-line-numbers-mode t)
 
-    ;; We don't want line numbers in certain modes, e.g., shell and pdf-view
-    ;; (dolist (mode '(org-mode-hook
-    ;;                 term-mode-hook
-    ;;                 eshell-mode-hook
-    ;;                 shell-mode-hook
-    ;;                 pdf-view-mode-hook))
-    ;;   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
+    ;; We want line numbers only in prog modes not in shell and pdf-view.
     (add-hook 'prog-mode-hook 'display-line-numbers-mode)
   #+end_src
 
 - Configure tabs behavior
-  
+
   #+begin_src emacs-lisp
     ;; (tab-bar-mode 1)
     (setq-default indent-tabs-mode nil)
@@ -227,12 +218,12 @@ Basic setup for Emacs appearance and behavior.
   #+end_src
 
 - Display vertical line at 79 characters
-  
+
   #+begin_src emacs-lisp
     (setq-default display-fill-column-indicator-column 79)
     (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
   #+end_src
-  
+
 - Customize window behavior.
   #+begin_src emacs-lisp
     ;; Start emacs in fullscreen mode (Mac tiling manager conflict)
@@ -249,7 +240,7 @@ Basic setup for Emacs appearance and behavior.
 
     ;; This displays "Emacs - buffer_name"
     ;; (setq frame-title-format
-    ;;       '("Emacs - %b"))  
+    ;;       '("Emacs - %b"))
     ;; (add-to-list 'default-frame-alist
     ;;              '(title . "Emacs"))
 
@@ -274,7 +265,7 @@ Basic setup for Emacs appearance and behavior.
   #+end_src
 
 - Miscellaneous
-  
+
   #+begin_src emacs-lisp
     ;; Truncate long lines in certain modes
     (add-hook 'org-mode-hook (lambda() (setq truncate-lines nil)))
@@ -296,24 +287,11 @@ Setting up package managers and installing essential packages.
 - Initialize Melpa
 
 #+BEGIN_SRC emacs-lisp
-  (require 'package)
-  (setq package-archives '(("elpa"   . "https://elpa.gnu.org/packages/")
-                           ("melpa"  . "https://melpa.org/packages/")
-                           ("melpa-stable" . "https://stable.melpa.org/packages/")
-                           ("org" . "https://orgmode.org/elpa/")))
-
-  (package-initialize)
-  (unless package-archive-contents
-    (package-refresh-contents))
-
-  ;; Initialize use-package on non-linux platforms
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-  (require 'use-package)
-  (setq use-package-always-ensure t)
+  ;; Use straight.el as the package manager and keep package.el out of startup.
+  ;; This avoids loading two copies of the same package.
 #+END_SRC
 
-    
+
 **** Install straight.el
 
 =use-package= does not support the additional properties  like :type,
@@ -343,6 +321,8 @@ repositories.
 
 #+begin_src emacs-lisp
   (setq straight-use-package-by-default t)
+  (straight-use-package 'use-package)
+  (require 'use-package)
 #+end_src
 
 Avoid Org version mismatch with Straight.el
@@ -365,7 +345,10 @@ Why we need all the icons? Because they are pretty.
 
 #+begin_src emacs-lisp
   (use-package all-the-icons
-    :ensure t)
+    :straight t)
+
+  (use-package nerd-icons
+    :straight t)
 #+end_src
 
 *** Themes
@@ -379,7 +362,6 @@ like to get them all.
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes
     :straight t
-    :ensure t
     :config
     ;; Global settings (defaults)
     (setq doom-themes-enable-bold t    ; If nil, bold is universally disabled
@@ -403,7 +385,7 @@ I love how Org files look with poet theme, so it's a must.
 
 #+begin_src emacs-lisp
   (use-package poet-theme
-    :ensure t)
+    :straight t)
 #+end_src
 
 **** Auto-Dark mode
@@ -415,10 +397,9 @@ and dark themes, until I found this package.
   (setq auto-dark-allow-osascript t)
 
   (use-package auto-dark
-    :ensure t
     :straight t
     :custom
-    (auto-dark-themes '((doom-bluloco-dark) (doom-bluloco-light)))
+    (auto-dark-themes '((doom-laserwave) (doom-bluloco-light)))
     (auto-dark-polling-interval-seconds 5)
     (auto-dark-allow-osascript nil)
     (auto-dark-allow-powershell nil)
@@ -499,6 +480,7 @@ We would need emacs-dashboard package for an easier configuration.
     (setq dashboard-show-shortcuts nil)
     :init
     (dashboard-setup-startup-hook))
+
 #+end_src
 
 *** Modeline
@@ -511,21 +493,21 @@ A minimal modeline for Emacs.
 
 #+begin_src emacs-lisp
   ;; Hide the default mode line globally
-  ;; (setq-default mode-line-format nil)
+  (setq-default mode-line-format nil)
 
   ;; Set the nano-modeline position to bottom before loading
   ;; nano-modeline.
-  ;; (setq nano-modeline-position 'nano-modeline-footer)
+  (setq nano-modeline-position 'nano-modeline-footer)
 
   ;; Install nano-modeline
-  ;; (use-package nano-modeline
-  ;;   :ensure t
-  ;;   :hook
-  ;;   (prog-mode-hook . nano-modeline-prog-mode)
-  ;;   (text-mode-hook . nano-modeline-text-mode)
-  ;;   (org-mode-hook  . nano-modeline-org-mode)
-  ;;   (term-mode-hook . nano-modeline-term-mode)
-  ;;   :init (nano-modeline-prog-mode t))
+  (use-package nano-modeline
+    :ensure t
+    :hook
+    (prog-mode-hook . nano-modeline-prog-mode)
+    (text-mode-hook . nano-modeline-text-mode)
+    (org-mode-hook  . nano-modeline-org-mode)
+    (term-mode-hook . nano-modeline-term-mode)
+    :init (nano-modeline-prog-mode t))
 #+end_src
 
 ***** Doom Modeline
@@ -535,15 +517,15 @@ back to the default Emacs one. Here are a few tweaks to make it look
 good.
 
 #+begin_src emacs-lisp
-  (use-package doom-modeline
-    :straight t
-    :init
-    (doom-modeline-mode 1)
-    :config
-    (column-number-mode 1)
-    (setq doom-modeline-column-zero-based t
-          doom-modeline-position-column-format '("C%c")
-          doom-modeline-position-column-line-format '("%l:%c")))
+  ;; (use-package doom-modeline
+  ;;   :straight t
+  ;;   :init
+  ;;   (doom-modeline-mode 1)
+  ;;   :config
+  ;;   (column-number-mode 1)
+  ;;   (setq doom-modeline-column-zero-based t
+  ;;         doom-modeline-position-column-format '("C%c")
+  ;;         doom-modeline-position-column-line-format '("%l:%c")))
 #+end_src
 
 *** Fancy Mini-Buffer
@@ -551,7 +533,7 @@ good.
 :CUSTOM_ID: fancy-mini-buffer
 :END:
 
-I like a floating minibuffer, but ivy-posframe] looks
+I like a floating minibuffer, but ivy-posframe looks
 better. Mini-frame mode is enabled by default.
 
 #+begin_src emacs-lisp
@@ -638,11 +620,10 @@ highlight-indent-guides
     ;; TODO: Doesn't work
     (use-package evil-collection
       :after evil
-      :ensure t
       :config
       (evil-collection-init))
   #+end_src
-            
+
 *** Org Mode
 :PROPERTIES:
 :CUSTOM_ID: org-mode
@@ -654,16 +635,16 @@ processor. Our goal is to make it look like one.
 
 - Enable indentation(org-indent-mode). To control individual files,
   use ~#+STARTUP: indent~ or ~#+STARTUP: noindent~ .
-    
+
   #+begin_src emacs-lisp
     (setq org-startup-indented t)
   #+end_src
 
 - Set a conservative indentation, By default the value is set to 2
-    
+
   #+begin_src emacs-lisp
     (setq org-indent-indentation-per-level 2)
-  #+end_src   
+  #+end_src
 
 - Emacs shouldn't add whitespace to indent text.
 
@@ -684,11 +665,11 @@ processor. Our goal is to make it look like one.
   #+end_src
 
 - For shorthand completions, lile <s-TAB for source code blocks.
-    
+
   #+begin_src emacs-lisp
     (require 'org-tempo)
   #+end_src
-    
+
 
 **** Org TOC
 
@@ -711,9 +692,16 @@ ref: [[https://github.com/snosov1/toc-org][toc-org]]
 Active Babel languages
 
 #+begin_src emacs-lisp
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((C . t) (python . t) (haskell . t) ))
+  (use-package ob-swift
+    :straight t
+    :defer nil)
+
+  (let ((langs '((C . t) (python . t) (haskell . t))))
+    (when (require 'ob-swift nil t)
+      (push '(swift . t) langs))
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     langs))
 #+end_src
 
 **** Org Hugo(ox-hugo)
@@ -725,16 +713,13 @@ install it manually. Edit: 08/09/2024 - Installed it using straight.el
 
 #+begin_src emacs-lisp
   (use-package tomelr
-    :straight (:host github :repo "kaushalmodi/tomelr" :files ("*.el"))
-    :ensure t)
+    :straight (:host github :repo "kaushalmodi/tomelr" :files ("*.el")))
 #+end_src
 
 
 #+begin_src emacs-lisp
   (use-package ox-hugo
-    :ensure t   ;Auto-install the package from Melpa
-    :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
-    :after ox)    
+    :after ox)
 
 #+end_src
 
@@ -771,7 +756,6 @@ might need to install it manually.
 #+begin_src emacs-lisp
 
   (use-package htmlize
-    :ensure t
     :init
     (setq org-html-htmlize-output-type 'css)
     (setq org-html-htmlize-font-prefix "org-"))
@@ -795,12 +779,12 @@ seemed like the simplest.
 
   ;; The only dependency
   (use-package s
-    :ensure t)
+    :straight t)
 
   (defun eos/org-generate-custom-ids ()
     "Generate CUSTOM_ID for any headings that are missing one, but only in Org mode."
     (when (derived-mode-p 'org-mode)
-      (let ((existing-ids (org-map-entries 
+      (let ((existing-ids (org-map-entries
                            (lambda () (org-entry-get nil "CUSTOM_ID")))))
 
         (org-map-entries
@@ -822,7 +806,7 @@ seemed like the simplest.
 
   ;; Function to the after-save-hook only in Org mode
   (add-hook 'org-mode-hook
-            (lambda () 
+            (lambda ()
               (add-hook 'after-save-hook 'eos/org-generate-custom-ids nil 'local)))
 
   (defun eos/title-to-filename (title)
@@ -839,10 +823,10 @@ seemed like the simplest.
 #+end_src
 
 
-Run the function on save, while in org-mode.
+Run the function on save, while in org-mode only.
 
 #+begin_src emacs-lisp
-  (add-hook 'after-save-hook 'eos/org-generate-custom-ids)
+  ;; Intentionally omitted: keep this hook local in org buffers only.
 #+end_src
 
 *** Projectile
@@ -896,8 +880,7 @@ the issue.
 
 #+begin_src emacs-lisp
   (use-package magit
-    :ensure t
-    :pin melpa-stable)
+    :straight t)
 #+end_src
 
 *** Completions
@@ -986,7 +969,6 @@ Ivy-rich for better Ivy interface
   ;; All the icons + Ivy
   (use-package all-the-icons-ivy-rich
     :straight t
-    :ensure t
     :init (all-the-icons-ivy-rich-mode 1))
 #+end_src
 
@@ -1024,7 +1006,6 @@ sometimes doesn't work as intended.
 
 #+begin_src emacs-lisp
   (use-package treemacs
-    :ensure t
     :defer t
     :init
     (with-eval-after-load 'winum
@@ -1043,14 +1024,10 @@ sometimes doesn't work as intended.
   ;; (add-hook 'projectile-after-switch-project-hook 'treemacs-add-and-display-current-project-exclusively)
 
   (use-package treemacs-evil
-    :after (treemacs evil)
-    :ensure t
-    :pin melpa)
+    :after (treemacs evil))
 
   (use-package treemacs-projectile
-    :after (treemacs projectile)
-    :ensure t
-    :pin melpa) 
+    :after (treemacs projectile))
 
 #+end_src
 
@@ -1063,8 +1040,6 @@ Postman for Emacs, A mode to run HTTP queries.
 
 #+begin_src emacs-lisp
   (use-package restclient
-    :ensure t
-    :pin melpa
     :mode (("\\.http\\'" . restclient-mode)))
 #+end_src
 
@@ -1078,26 +1053,24 @@ configs. Default binding to toggle is =C-c M-c=
 
 #+begin_src emacs-lisp
   (use-package command-log-mode
-    :ensure t
     :bind
     ("C-c M-c" . clm/toggle-command-log-buffer)
     :config
-    (global-command-log-mode t)
-    :pin melpa)
+    (global-command-log-mode t))
 #+end_src
 
-*** Vterm
+*** Ghostel
 :PROPERTIES:
-:CUSTOM_ID: vterm
+:CUSTOM_ID: ghostel
 :END:
 
-Probably the only usable terminal emulator for Emacs
+Terminal emulator powered by libghostty-vt. Very new and vibe-coded though.
 
 #+begin_src emacs-lisp
-  (use-package vterm
-    :ensure t
-    :straight t)
+  (use-package ghostel
+    :straight (:host github :repo "dakra/ghostel" :files ("*.el")))
 #+end_src
+
 
 ** System configuration
 :PROPERTIES:
@@ -1113,12 +1086,12 @@ Ensure Emacs env variables match system variables.
 
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
-    :ensure t)
+    :straight t)
 
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize))
 #+end_src
-  
+
 ** Code Completion
 :PROPERTIES:
 :CUSTOM_ID: code-completion
@@ -1218,27 +1191,10 @@ programming languages on Emacs.
 
 #+begin_src emacs-lisp
   (use-package go-mode
-    :ensure t
     :init
     (push '("\\.go\\'" . go-mode) auto-mode-alist))
 #+end_src
 
-
-Eglot hooks for Go
-
-#+begin_src emacs-lisp
-  ;; (defun lsp-go-install-save-hooks ()
-  ;;   ;; Format before save
-  ;;   (add-hook 'before-save-hook #'eglot-format-buffer t t)
-  ;;   ;; Sort imports before save
-  ;;   (add-hook 'before-save-hook #'eglot-code-action-organize-imports t t))
-
-
-  ;; (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
-
-  ;; Start eglot mode
-  ;; (add-hook 'go-mode-hook 'eglot-ensure)
-#+end_src
 
 *** Rust
 :PROPERTIES:
@@ -1247,7 +1203,6 @@ Eglot hooks for Go
 
 #+begin_src emacs-lisp
   (use-package rust-mode
-    :ensure t
     :init
     (push '("\\.rs\\'" . rust-mode) auto-mode-alist))
 #+end_src
@@ -1261,7 +1216,6 @@ Am I a 21st century Hippie now?
 
 #+begin_src emacs-lisp
   (use-package haskell-mode
-    :ensure t
     :hook (haskell-mode . turn-on-haskell-indent)
     :mode "\\.hs\\'")
 #+end_src
@@ -1333,62 +1287,6 @@ Custom functions to ask for root directory.
 
 #+end_src
 
-*** LaTex
-:PROPERTIES:
-:CUSTOM_ID: latex
-:END:
-
-Not sure if LaTex belongs here.
-
-#+begin_src emacs-lisp
-  ;; Install Auctex using straight.el
-  (use-package auctex
-    :straight t
-    :config
-    (setq TeX-auto-save t)
-    (setq TeX-parse-self t)
-    (setq-default TeX-master nil)
-    (setq TeX-PDF-mode t)
-    (setq TeX-source-correlate-mode t)
-    (setq TeX-source-correlate-start-server t)
-    (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-          TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view))
-          TeX-source-correlate-start-server t)
-
-    (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
-    (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode)
-    (add-hook 'LaTeX-mode-hook 'TeX-fold-mode)
-    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-    (add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
-    (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-    (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode))
-#+end_src
-
-
-Install pdf tools using straight.el with minimal configuration
-
-#+begin_src emacs-lisp
-  (use-package pdf-tools
-    :config
-    ;; Initialize the PDF Tools package
-    (pdf-tools-install)
-
-    ;; Set PDF view mode to continuous mode
-    (setq-default pdf-view-display-size 'fit-width))
-
-  ;; Enable midnight mode for PDFs
-  (add-hook 'pdf-view-mode-hook 'pdf-view-midnight-minor-mode)
-
-  ;; Set keybinding to install PDF Tools
-  (global-set-key (kbd "C-c p") 'pdf-tools-install)
-#+end_src
-
-- Latex Preview Pane
-
-  #+begin_src emacs-lisp
-    (use-package latex-preview-pane :straight t)
-  #+end_src
-
 *** Yaml
 :PROPERTIES:
 :CUSTOM_ID: yaml
@@ -1399,7 +1297,6 @@ or =yaml= files.
 
 #+begin_src emacs-lisp
   (use-package yaml-mode
-    :ensure t
     :init
     (push '("\\.yaml$" . yaml-mode) auto-mode-alist))
 #+end_src
@@ -1429,6 +1326,21 @@ Because every damn thing needs lua for configuration.
     :mode "\\.lua\\'")
 #+end_src
 
+*** Swift
+:PROPERTIES:
+:CUSTOM_ID: swift
+:END:
+
+My new Addiction!!!
+
+#+begin_src emacs-lisp
+
+  (use-package swift-mode
+      :ensure t
+      :mode "\\.swift\\'"
+      :interpreter "swift")
+#+end_src
+
 ** Code Execution
 :PROPERTIES:
 :CUSTOM_ID: code-execution
@@ -1443,33 +1355,16 @@ Emacs helpers to run things from makefiles
 
 #+begin_src emacs-lisp
   (use-package makefile-executor
-    :config
-    (add-hook 'makefile-mode-hook 'makefile-executor-mode))
+    :hook (makefile-mode . makefile-executor-mode)
+    :init
+    (with-eval-after-load 'makefile-executor
+      (defun makefile-executor--project-root (&optional otherwise)
+        "Return project root or OTHERWISE when the current buffer is not in a project."
+        (if-let ((proj (project-current nil)))
+            (project-root proj)
+          otherwise))))
 #+end_src
 
-** Non-Human Intelligence
-:PROPERTIES:
-:CUSTOM_ID: ai-stuff
-:END:
-
-*** Copilot
-:PROPERTIES:
-:CUSTOM_ID: copilot
-:END:
-
-#+begin_src emacs-lisp
-  (use-package copilot
-    :ensure t
-    :hook (prog-mode . copilot-mode)
-    :bind (:map copilot-completion-map
-                ("<tab>" . 'copilot-accept-completion-by-word)
-                ("TAB" . 'copilot-accept-completion-by-word)
-                ("C-TAB" . 'copilot-accept-completion)
-                ("C-<tab>" . 'copilot-accept-completion)))
-
-  ;; Suppress warnings from copilot
-  (setq warning-suppress-types '((copilot)))
-#+end_src
 
 ** Real life stuff
 :PROPERTIES:
@@ -1493,7 +1388,6 @@ music myself.
 #+begin_src emacs-lisp
 
   (use-package ready-player
-    :ensure t
     :config
     (ready-player-mode +1)
     :bind (("C-c m h" . 'ready-player-toggle-shuffle)
@@ -1515,9 +1409,9 @@ music myself.
 #+end_src
 
 
-** Miscellaneous
+** Custom Stuff
 :PROPERTIES:
-:CUSTOM_ID: miscellaneous
+:CUSTOM_ID: custom-stuff
 :END:
 
 *** Custom Functions
@@ -1573,8 +1467,8 @@ music myself.
   #+end_src
 
 - =eos/toggle-transparency= to toggle transparency.
-        
-  #+begin_src emacs-lisp 
+
+  #+begin_src emacs-lisp
     (defun eos/toggle-transparency ()
       "Toggle between transparent and opaque Emacs frames."
       (interactive)
@@ -1588,7 +1482,7 @@ music myself.
                                `(,transparency-level-active . ,transparency-level-inactive))
           (setq transparency-enabled t)
           (message "Transparency enabled"))))
-  #+end_src       
+  #+end_src
 
 
 *** Custom keybindings
@@ -1611,5 +1505,4 @@ frequently, as my requirements evolve.
   (global-set-key (kbd "C-c e r") 'eos/reload-emacs-config)        ;; Reload init.el
   (global-set-key (kbd "C-c e s") 'eos/toggle-transparency)        ;; Toggle transparency
   (global-set-key (kbd "C-c e t") 'counsel-load-theme)             ;; Switch themes
-
 #+end_src
