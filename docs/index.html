@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-06 Mon 04:07 -->
+<!-- 2026-04-06 Mon 20:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>The Emacs Operating System</title>
@@ -207,7 +207,7 @@
 <li><a href="#faster-startup">2.1. Faster Startup</a></li>
 <li><a href="#custom-variables">2.2. Custom Variables</a>
 <ul>
-<li><a href="#org4b4092d">2.2.1. Directories</a></li>
+<li><a href="#org9e136fb">2.2.1. Directories</a></li>
 </ul>
 </li>
 <li><a href="#basics">2.3. Basics</a></li>
@@ -217,7 +217,7 @@
 <ul>
 <li><a href="#intialize-packages">3.1. Intialize packages</a>
 <ul>
-<li><a href="#orgced1ecc">3.1.1. Install straight.el</a></li>
+<li><a href="#org890042c">3.1.1. Install straight.el</a></li>
 </ul>
 </li>
 </ul>
@@ -227,7 +227,7 @@
 <li><a href="#all-the-icons">4.1. All the Icons</a></li>
 <li><a href="#themes">4.2. Themes</a>
 <ul>
-<li><a href="#org3d77fb8">4.2.1. Auto-Dark mode</a></li>
+<li><a href="#orgc82e97d">4.2.1. Auto-Dark mode</a></li>
 </ul>
 </li>
 <li><a href="#better-focus">4.3. Better Focus</a></li>
@@ -243,25 +243,25 @@
 <li><a href="#evil-mode">5.1. Evil Mode</a></li>
 <li><a href="#org-mode">5.2. Org Mode</a>
 <ul>
-<li><a href="#org6a8d55f">5.2.1. Org TOC</a></li>
-<li><a href="#org198e641">5.2.2. Org Babel</a></li>
-<li><a href="#org2b45e5b">5.2.3. Org Hugo(ox-hugo)</a></li>
-<li><a href="#org776e330">5.2.4. Org Download</a></li>
-<li><a href="#org2024e3a">5.2.5. Org Export Settings(htmlize)</a></li>
-<li><a href="#orga8b6a47">5.2.6. Human Readable IDs</a></li>
+<li><a href="#orgd5b1d65">5.2.1. Org TOC</a></li>
+<li><a href="#org8a07eef">5.2.2. Org Babel</a></li>
+<li><a href="#org02a9fda">5.2.3. Org Hugo(ox-hugo)</a></li>
+<li><a href="#org9fb04a8">5.2.4. Org Download</a></li>
+<li><a href="#org976ab73">5.2.5. Org Export Settings(htmlize)</a></li>
+<li><a href="#org7d8ac09">5.2.6. Human Readable IDs</a></li>
 </ul>
 </li>
 <li><a href="#projectile">5.3. Projectile</a></li>
 <li><a href="#version-control">5.4. Version Control</a>
 <ul>
-<li><a href="#org94589d0">5.4.1. Magit</a></li>
+<li><a href="#org7a881e0">5.4.1. Magit</a></li>
 </ul>
 </li>
 <li><a href="#completions">5.5. Completions</a>
 <ul>
-<li><a href="#org001e3a9">5.5.1. Ivy rich</a></li>
-<li><a href="#orgf9dbdfb">5.5.2. Hydra</a></li>
-<li><a href="#orgc317674">5.5.3. Which-key</a></li>
+<li><a href="#org7b25479">5.5.1. Ivy rich</a></li>
+<li><a href="#orgf42b072">5.5.2. Hydra</a></li>
+<li><a href="#org1ca43ee">5.5.3. Which-key</a></li>
 </ul>
 </li>
 <li><a href="#treemacs">5.6. Treemacs</a></li>
@@ -325,7 +325,7 @@ difference, I'll stick with Emacs.
 </p>
 
 
-<div id="org563d68f" class="figure">
+<div id="orgdf7732f" class="figure">
 <p><img src="https://imgs.xkcd.com/comics/real_programmers.png" alt="real_programmers.png" />
 </p>
 </div>
@@ -357,8 +357,8 @@ time spent in GC, speeding things up:
 <h3 id="custom-variables"><span class="section-number-3">2.2.</span> Custom Variables</h3>
 <div class="outline-text-3" id="text-custom-variables">
 </div>
-<div id="outline-container-org4b4092d" class="outline-4">
-<h4 id="org4b4092d"><span class="section-number-4">2.2.1.</span> Directories</h4>
+<div id="outline-container-org9e136fb" class="outline-4">
+<h4 id="org9e136fb"><span class="section-number-4">2.2.1.</span> Directories</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Consolidate all the directories here.
@@ -449,7 +449,7 @@ Set fonts. TODO: Check if the font exists
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">(set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
-</span>(set-face-attribute 'default nil <span class="org-builtin">:font</span> <span class="org-string">"Iosevka"</span> <span class="org-builtin">:height</span> 180)
+</span>(set-face-attribute 'default nil <span class="org-builtin">:font</span> <span class="org-string">"Iosevka"</span> <span class="org-builtin">:height</span> 200)
 </pre>
 </div></li>
 
@@ -573,18 +573,9 @@ Setting up package managers and installing essential packages.
 <div id="outline-container-intialize-packages" class="outline-3">
 <h3 id="intialize-packages"><span class="section-number-3">3.1.</span> Intialize packages</h3>
 <div class="outline-text-3" id="text-intialize-packages">
-<ul class="org-ul">
-<li>Initialize Melpa</li>
-</ul>
-
-<div class="org-src-container">
-<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Use straight.el as the package manager and keep package.el out of startup.
-</span><span class="org-comment-delimiter">;; </span><span class="org-comment">This avoids loading two copies of the same package.</span>
-</pre>
 </div>
-</div>
-<div id="outline-container-orgced1ecc" class="outline-4">
-<h4 id="orgced1ecc"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
+<div id="outline-container-org890042c" class="outline-4">
+<h4 id="org890042c"><span class="section-number-4">3.1.1.</span> Install straight.el</h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 <code>use-package</code> does not support the additional properties  like :type,
@@ -594,8 +585,7 @@ repositories.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">
-(<span class="org-keyword">defvar</span> <span class="org-variable-name">bootstrap-version</span>)
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defvar</span> <span class="org-variable-name">bootstrap-version</span>)
 (<span class="org-keyword">let</span> ((bootstrap-file
        (expand-file-name
         <span class="org-string">"straight/repos/straight.el/bootstrap.el"</span>
@@ -695,8 +685,8 @@ I love how Org files look with poet theme, so it's a must.
 </pre>
 </div>
 </div>
-<div id="outline-container-org3d77fb8" class="outline-4">
-<h4 id="org3d77fb8"><span class="section-number-4">4.2.1.</span> Auto-Dark mode</h4>
+<div id="outline-container-orgc82e97d" class="outline-4">
+<h4 id="orgc82e97d"><span class="section-number-4">4.2.1.</span> Auto-Dark mode</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 For the past 6 months, I have been manually switching between light
@@ -809,7 +799,7 @@ We would need emacs-dashboard package for an easier configuration.
 <div class="outline-text-3" id="text-modeline">
 </div>
 <ol class="org-ol">
-<li><a id="orge0b8057"></a>Nano Modeline<br />
+<li><a id="org7f97668"></a>Nano Modeline<br />
 <div class="outline-text-5" id="text-4-6-0-1">
 <p>
 A minimal modeline for Emacs.
@@ -836,7 +826,7 @@ A minimal modeline for Emacs.
 </div>
 </div>
 </li>
-<li><a id="orgcfbb65e"></a>Doom Modeline<br />
+<li><a id="orgbf42726"></a>Doom Modeline<br />
 <div class="outline-text-5" id="text-4-6-0-2">
 <p>
 I keep getting bored with "nicer" looking modelines and keep coming
@@ -1039,8 +1029,8 @@ For shorthand completions, lile &lt;s-TAB for source code blocks.
 </div></li>
 </ul>
 </div>
-<div id="outline-container-org6a8d55f" class="outline-4">
-<h4 id="org6a8d55f"><span class="section-number-4">5.2.1.</span> Org TOC</h4>
+<div id="outline-container-orgd5b1d65" class="outline-4">
+<h4 id="orgd5b1d65"><span class="section-number-4">5.2.1.</span> Org TOC</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 Create table of contents for Org files.
@@ -1066,8 +1056,8 @@ ref: <a href="https://github.com/snosov1/toc-org">toc-org</a>
 </div>
 </div>
 </div>
-<div id="outline-container-org198e641" class="outline-4">
-<h4 id="org198e641"><span class="section-number-4">5.2.2.</span> Org Babel</h4>
+<div id="outline-container-org8a07eef" class="outline-4">
+<h4 id="org8a07eef"><span class="section-number-4">5.2.2.</span> Org Babel</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Active Babel languages
@@ -1088,8 +1078,8 @@ Active Babel languages
 </div>
 </div>
 </div>
-<div id="outline-container-org2b45e5b" class="outline-4">
-<h4 id="org2b45e5b"><span class="section-number-4">5.2.3.</span> Org Hugo(ox-hugo)</h4>
+<div id="outline-container-org02a9fda" class="outline-4">
+<h4 id="org02a9fda"><span class="section-number-4">5.2.3.</span> Org Hugo(ox-hugo)</h4>
 <div class="outline-text-4" id="text-5-2-3">
 <p>
 ox-hugo helps me manage my website using org files.
@@ -1115,8 +1105,8 @@ install it manually. Edit: 08/09/2024 - Installed it using straight.el
 </div>
 </div>
 </div>
-<div id="outline-container-org776e330" class="outline-4">
-<h4 id="org776e330"><span class="section-number-4">5.2.4.</span> Org Download</h4>
+<div id="outline-container-org9fb04a8" class="outline-4">
+<h4 id="org9fb04a8"><span class="section-number-4">5.2.4.</span> Org Download</h4>
 <div class="outline-text-4" id="text-5-2-4">
 <p>
 This nice package helps add images to an Org file in a better way.
@@ -1146,8 +1136,8 @@ we need to install <code>pngpaste</code> using Homebrew.
 </div>
 </div>
 </div>
-<div id="outline-container-org2024e3a" class="outline-4">
-<h4 id="org2024e3a"><span class="section-number-4">5.2.5.</span> Org Export Settings(htmlize)</h4>
+<div id="outline-container-org976ab73" class="outline-4">
+<h4 id="org976ab73"><span class="section-number-4">5.2.5.</span> Org Export Settings(htmlize)</h4>
 <div class="outline-text-4" id="text-5-2-5">
 <p>
 Org mode usually ships with this package, However in certain cases you
@@ -1165,8 +1155,8 @@ might need to install it manually.
 </div>
 </div>
 </div>
-<div id="outline-container-orga8b6a47" class="outline-4">
-<h4 id="orga8b6a47"><span class="section-number-4">5.2.6.</span> Human Readable IDs</h4>
+<div id="outline-container-org7d8ac09" class="outline-4">
+<h4 id="org7d8ac09"><span class="section-number-4">5.2.6.</span> Human Readable IDs</h4>
 <div class="outline-text-4" id="text-5-2-6">
 <p>
 While exporting html, <code>org-html-export-to-html</code>  function generates
@@ -1280,8 +1270,8 @@ on them.
 <h3 id="version-control"><span class="section-number-3">5.4.</span> Version Control</h3>
 <div class="outline-text-3" id="text-version-control">
 </div>
-<div id="outline-container-org94589d0" class="outline-4">
-<h4 id="org94589d0"><span class="section-number-4">5.4.1.</span> Magit</h4>
+<div id="outline-container-org7a881e0" class="outline-4">
+<h4 id="org7a881e0"><span class="section-number-4">5.4.1.</span> Magit</h4>
 <div class="outline-text-4" id="text-5-4-1">
 <p>
 The magical Git client for emacs.
@@ -1387,8 +1377,8 @@ Prescient settings for sorting and filtering.
 </pre>
 </div>
 </div>
-<div id="outline-container-org001e3a9" class="outline-4">
-<h4 id="org001e3a9"><span class="section-number-4">5.5.1.</span> Ivy rich</h4>
+<div id="outline-container-org7b25479" class="outline-4">
+<h4 id="org7b25479"><span class="section-number-4">5.5.1.</span> Ivy rich</h4>
 <div class="outline-text-4" id="text-5-5-1">
 <p>
 Ivy-rich for better Ivy interface
@@ -1409,8 +1399,8 @@ Ivy-rich for better Ivy interface
 </div>
 </div>
 </div>
-<div id="outline-container-orgf9dbdfb" class="outline-4">
-<h4 id="orgf9dbdfb"><span class="section-number-4">5.5.2.</span> Hydra</h4>
+<div id="outline-container-orgf42b072" class="outline-4">
+<h4 id="orgf42b072"><span class="section-number-4">5.5.2.</span> Hydra</h4>
 <div class="outline-text-4" id="text-5-5-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> hydra
@@ -1425,8 +1415,8 @@ Ivy-rich for better Ivy interface
 </div>
 </div>
 </div>
-<div id="outline-container-orgc317674" class="outline-4">
-<h4 id="orgc317674"><span class="section-number-4">5.5.3.</span> Which-key</h4>
+<div id="outline-container-org1ca43ee" class="outline-4">
+<h4 id="org1ca43ee"><span class="section-number-4">5.5.3.</span> Which-key</h4>
 <div class="outline-text-4" id="text-5-5-3">
 <p>
 It's a minor mode that shows kebindings for an incomplete command.
@@ -1980,6 +1970,35 @@ the config.
 </pre>
 </div></li>
 </ul>
+
+
+<ul class="org-ul">
+<li><code>eos/ghostel-toggle</code> to toggle a ghostty window</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">eos/ghostel-toggle</span> ()
+  <span class="org-doc">"Toggle a ghostel terminal in a right side window."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((buf (get-buffer <span class="org-string">"*ghostel*"</span>)))
+    (<span class="org-keyword">if-let</span> ((win (<span class="org-keyword">and</span> buf (get-buffer-window buf))))
+        (delete-window win)
+      (<span class="org-keyword">unless</span> buf
+        (<span class="org-keyword">setq</span> buf (generate-new-buffer <span class="org-string">"*ghostel*"</span>))
+        (<span class="org-keyword">with-current-buffer</span> buf
+          (ghostel-mode)
+          (<span class="org-keyword">let*</span> ((height (window-body-height))
+                 (width (window-max-chars-per-line)))
+            (<span class="org-keyword">setq</span> ghostel--term (ghostel--new height width ghostel-max-scrollback))
+            (ghostel--apply-palette ghostel--term))
+          (ghostel--start-process)))
+      (select-window
+       (display-buffer buf
+                       '((display-buffer-in-side-window)
+                         (side . right) (slot . 0) (window-width . 0.35)
+                         (window-parameters . ((no-delete-other-windows . t)))))))))
+</pre>
+</div>
 </div>
 </div>
 <div id="outline-container-custom-keybindings" class="outline-3">
@@ -2001,7 +2020,12 @@ frequently, as my requirements evolve.
 </span>(global-set-key (kbd <span class="org-string">"C-c e h"</span>) 'eos/highlight-comments)         <span class="org-comment-delimiter">;; </span><span class="org-comment">Highlight comments
 </span>(global-set-key (kbd <span class="org-string">"C-c e r"</span>) 'eos/reload-emacs-config)        <span class="org-comment-delimiter">;; </span><span class="org-comment">Reload init.el
 </span>(global-set-key (kbd <span class="org-string">"C-c e s"</span>) 'eos/toggle-transparency)        <span class="org-comment-delimiter">;; </span><span class="org-comment">Toggle transparency
-</span>(global-set-key (kbd <span class="org-string">"C-c e t"</span>) 'counsel-load-theme)             <span class="org-comment-delimiter">;; </span><span class="org-comment">Switch themes</span>
+</span>(global-set-key (kbd <span class="org-string">"C-c e t"</span>) 'counsel-load-theme)             <span class="org-comment-delimiter">;; </span><span class="org-comment">Switch themes
+</span>(global-set-key (kbd <span class="org-string">"C-c e g"</span>) 'eos/ghostel-toggle)             <span class="org-comment-delimiter">;; </span><span class="org-comment">Start a ghostty
+</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Split and focus the new window
+</span>(global-set-key (kbd <span class="org-string">"C-x 2"</span>) (<span class="org-keyword">lambda</span> () (<span class="org-keyword">interactive</span>) (split-window-below) (other-window 1)))
+(global-set-key (kbd <span class="org-string">"C-x 3"</span>) (<span class="org-keyword">lambda</span> () (<span class="org-keyword">interactive</span>) (split-window-right) (other-window 1)))
 </pre>
 </div>
 </div>

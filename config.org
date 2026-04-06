@@ -188,7 +188,7 @@ Basic setup for Emacs appearance and behavior.
 
   #+begin_src emacs-lisp
     ;; (set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
-    (set-face-attribute 'default nil :font "Iosevka" :height 180)
+    (set-face-attribute 'default nil :font "Iosevka" :height 200)
   #+end_src
 
 - Enable ligatures on Mac
@@ -284,14 +284,6 @@ Setting up package managers and installing essential packages.
 :CUSTOM_ID: intialize-packages
 :END:
 
-- Initialize Melpa
-
-#+BEGIN_SRC emacs-lisp
-  ;; Use straight.el as the package manager and keep package.el out of startup.
-  ;; This avoids loading two copies of the same package.
-#+END_SRC
-
-
 **** Install straight.el
 
 =use-package= does not support the additional properties  like :type,
@@ -300,7 +292,6 @@ manager to handle packages from non-standard sources like Git
 repositories.
 
 #+begin_src emacs-lisp
-
   (defvar bootstrap-version)
   (let ((bootstrap-file
          (expand-file-name
@@ -1485,6 +1476,32 @@ music myself.
   #+end_src
 
 
+- =eos/ghostel-toggle= to toggle a ghostty window
+
+#+begin_src emacs-lisp
+    (defun eos/ghostel-toggle ()
+      "Toggle a ghostel terminal in a right side window."
+      (interactive)
+      (let ((buf (get-buffer "*ghostel*")))
+        (if-let ((win (and buf (get-buffer-window buf))))
+            (delete-window win)
+          (unless buf
+            (setq buf (generate-new-buffer "*ghostel*"))
+            (with-current-buffer buf
+              (ghostel-mode)
+              (let* ((height (window-body-height))
+                     (width (window-max-chars-per-line)))
+                (setq ghostel--term (ghostel--new height width ghostel-max-scrollback))
+                (ghostel--apply-palette ghostel--term))
+              (ghostel--start-process)))
+          (select-window
+           (display-buffer buf
+                           '((display-buffer-in-side-window)
+                             (side . right) (slot . 0) (window-width . 0.35)
+                             (window-parameters . ((no-delete-other-windows . t)))))))))
+#+end_src
+
+
 *** Custom keybindings
 :PROPERTIES:
 :CUSTOM_ID: custom-keybindings
@@ -1505,4 +1522,9 @@ frequently, as my requirements evolve.
   (global-set-key (kbd "C-c e r") 'eos/reload-emacs-config)        ;; Reload init.el
   (global-set-key (kbd "C-c e s") 'eos/toggle-transparency)        ;; Toggle transparency
   (global-set-key (kbd "C-c e t") 'counsel-load-theme)             ;; Switch themes
+  (global-set-key (kbd "C-c e g") 'eos/ghostel-toggle)             ;; Start a ghostty
+
+  ;; Split and focus the new window
+  (global-set-key (kbd "C-x 2") (lambda () (interactive) (split-window-below) (other-window 1)))
+  (global-set-key (kbd "C-x 3") (lambda () (interactive) (split-window-right) (other-window 1)))
 #+end_src
