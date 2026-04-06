@@ -159,18 +159,10 @@
  '(org-agenda-files nil)
  '(org-safe-remote-resources
    '("\\`https://imgs\\.xkcd\\.com/comics/real_programmers\\.png\\'"))
- '(package-selected-packages
-   '(command-log-mode command-mode-log corfu treemacs-magit
-                      treemacs-icons-dired eglot restclient
-                      treemacs-projectile treemacs-evil treemacs
-                      htmlize exec-path-from-shell go-mode deft
-                      org-roam magit lsp-ivy lsp-ui lsp-mode which-key
-                      org-modern-indent yaml-mode tomelr doom-modeline
-                      ox-hugo counsel-projectile projectile hydra
-                      all-the-icons-ivy-rich ivy-rich ivy-prescient
-                      counsel toc-org org-modern evil-collection evil
-                      all-the-icons dashboard poet-theme doom-themes
-                      use-package)))
+ '(package-selected-packages nil)
+ '(package-vc-selected-packages
+   '((typst-ts-mode :url "https://git.sr.ht/~meow_king/typst-ts-mode")
+     (tomelr :url "https://github.com/kaushalmodi/tomelr"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

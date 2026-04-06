@@ -17,7 +17,6 @@
     - [[#basics][Basics]]
   - [[#package-management][Package Management]]
     - [[#intialize-packages][Intialize packages]]
-      - [[#install-straightel][Install straight.el]]
   - [[#appearence][Appearence]]
     - [[#all-the-icons][All the Icons]]
     - [[#themes][Themes]]
@@ -26,8 +25,6 @@
     - [[#transparency][Transparency]]
     - [[#dashboard][Dashboard]]
     - [[#modeline][Modeline]]
-        - [[#nano-modeline][Nano Modeline]]
-        - [[#doom-modeline][Doom Modeline]]
     - [[#fancy-mini-buffer][Fancy Mini-Buffer]]
     - [[#indentation][Indentation]]
   - [[#functionality][Functionality]]
@@ -284,42 +281,12 @@ Setting up package managers and installing essential packages.
 :CUSTOM_ID: intialize-packages
 :END:
 
-**** Install straight.el
-
-=use-package= does not support the additional properties  like :type,
-:host, :repo, etc.). Instead, We want tose the straight.el package
-manager to handle packages from non-standard sources like Git
-repositories.
-
 #+begin_src emacs-lisp
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-         (expand-file-name
-          "straight/repos/straight.el/bootstrap.el"
-          (or (bound-and-true-p straight-base-dir)
-              user-emacs-directory)))
-        (bootstrap-version 7))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
-#+end_src
-
-
-#+begin_src emacs-lisp
-  (setq straight-use-package-by-default t)
-  (straight-use-package 'use-package)
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  (package-initialize)
   (require 'use-package)
-#+end_src
-
-Avoid Org version mismatch with Straight.el
-
-#+begin_src emacs-lisp
-  (straight-use-package '(org :type built-in))
+  (setq use-package-always-ensure t)
 #+end_src
 
 ** Appearence
@@ -335,11 +302,9 @@ Avoid Org version mismatch with Straight.el
 Why we need all the icons? Because they are pretty.
 
 #+begin_src emacs-lisp
-  (use-package all-the-icons
-    :straight t)
+  (use-package all-the-icons)
 
-  (use-package nerd-icons
-    :straight t)
+  (use-package nerd-icons)
 #+end_src
 
 *** Themes
@@ -352,7 +317,6 @@ like to get them all.
 
 #+BEGIN_SRC emacs-lisp
   (use-package doom-themes
-    :straight t
     :config
     ;; Global settings (defaults)
     (setq doom-themes-enable-bold t    ; If nil, bold is universally disabled
@@ -375,8 +339,7 @@ like to get them all.
 I love how Org files look with poet theme, so it's a must.
 
 #+begin_src emacs-lisp
-  (use-package poet-theme
-    :straight t)
+  (use-package poet-theme)
 #+end_src
 
 **** Auto-Dark mode
@@ -388,7 +351,6 @@ and dark themes, until I found this package.
   (setq auto-dark-allow-osascript t)
 
   (use-package auto-dark
-    :straight t
     :custom
     (auto-dark-themes '((doom-laserwave) (doom-bluloco-light)))
     (auto-dark-polling-interval-seconds 5)
@@ -418,7 +380,6 @@ giving the later a slightly different background.
 
 #+begin_src emacs-lisp
   (use-package solaire-mode
-    :straight t
     :config
     (solaire-global-mode +1))
 #+end_src
@@ -428,7 +389,6 @@ faces in the other buffers.
 
 #+begin_src emacs-lisp
   (use-package dimmer
-    :straight t
     :config
     (dimmer-configure-which-key)
     (dimmer-mode t))
@@ -478,7 +438,6 @@ We would need emacs-dashboard package for an easier configuration.
 :PROPERTIES:
 :CUSTOM_ID: modeline
 :END:
-***** Nano Modeline
 
 A minimal modeline for Emacs.
 
@@ -497,26 +456,7 @@ A minimal modeline for Emacs.
     (prog-mode-hook . nano-modeline-prog-mode)
     (text-mode-hook . nano-modeline-text-mode)
     (org-mode-hook  . nano-modeline-org-mode)
-    (term-mode-hook . nano-modeline-term-mode)
     :init (nano-modeline-prog-mode t))
-#+end_src
-
-***** Doom Modeline
-
-I keep getting bored with "nicer" looking modelines and keep coming
-back to the default Emacs one. Here are a few tweaks to make it look
-good.
-
-#+begin_src emacs-lisp
-  ;; (use-package doom-modeline
-  ;;   :straight t
-  ;;   :init
-  ;;   (doom-modeline-mode 1)
-  ;;   :config
-  ;;   (column-number-mode 1)
-  ;;   (setq doom-modeline-column-zero-based t
-  ;;         doom-modeline-position-column-format '("C%c")
-  ;;         doom-modeline-position-column-line-format '("%l:%c")))
 #+end_src
 
 *** Fancy Mini-Buffer
@@ -529,7 +469,6 @@ better. Mini-frame mode is enabled by default.
 
 #+begin_src emacs-lisp
   (use-package mini-frame
-    :straight t
     :config
     (mini-frame-mode 1))
 
@@ -560,8 +499,6 @@ highlight-indent-guides
 
 #+begin_src emacs-lisp
   ;; (use-package highlight-indent-guides
-  ;;   :ensure t
-  ;;   :straight t
   ;;   :config (setq highlight-indent-guides-method 'character)
   ;;   :hook (prog-mode . highlight-indent-guides-mode))
 #+end_src
@@ -684,7 +621,6 @@ Active Babel languages
 
 #+begin_src emacs-lisp
   (use-package ob-swift
-    :straight t
     :defer nil)
 
   (let ((langs '((C . t) (python . t) (haskell . t))))
@@ -699,12 +635,12 @@ Active Babel languages
 
 ox-hugo helps me manage my website using org files.
 
-I couldn't install =tomelr= package, using =use-package=, so had to
-install it manually. Edit: 08/09/2024 - Installed it using straight.el
+I couldn't install =tomelr= package using =use-package=, so had to
+install it manually. Now using =:vc= with =package.el=.
 
 #+begin_src emacs-lisp
   (use-package tomelr
-    :straight (:host github :repo "kaushalmodi/tomelr" :files ("*.el")))
+    :vc (:url "https://github.com/kaushalmodi/tomelr" :rev :newest))
 #+end_src
 
 
@@ -723,7 +659,6 @@ we need to install ~pngpaste~ using Homebrew.
 
 #+begin_src emacs-lisp
   (use-package org-download
-    :straight t
     :bind
     ("C-c d" . org-download-clipboard)
     :config
@@ -769,8 +704,7 @@ seemed like the simplest.
 #+begin_src emacs-lisp
 
   ;; The only dependency
-  (use-package s
-    :straight t)
+  (use-package s)
 
   (defun eos/org-generate-custom-ids ()
     "Generate CUSTOM_ID for any headings that are missing one, but only in Org mode."
@@ -870,8 +804,7 @@ the issue.
 #+end_src
 
 #+begin_src emacs-lisp
-  (use-package magit
-    :straight t)
+  (use-package magit)
 #+end_src
 
 *** Completions
@@ -883,7 +816,6 @@ Set up Ivy, Counsel, and Swiper for better completions.
 
 #+begin_src emacs-lisp
   (use-package counsel
-    :straight t
     :diminish
     :bind (("C-s" . swiper)                         ;; Search using Swiper
            ("M-x" . counsel-M-x)                    ;; Enhanced M-x
@@ -932,7 +864,6 @@ Prescient settings for sorting and filtering.
 #+begin_src emacs-lisp
   ;; Package: ivy-prescient
   (use-package ivy-prescient
-    :straight t
     :after counsel
     :custom
     (ivy-prescient-enable-filtering nil)           ;; Disable filtering
@@ -953,13 +884,11 @@ Ivy-rich for better Ivy interface
 #+begin_src emacs-lisp
   ;; package: ivy-rich
   (use-package ivy-rich
-    :straight t
     :init
     (ivy-rich-mode 1))
 
   ;; All the icons + Ivy
   (use-package all-the-icons-ivy-rich
-    :straight t
     :init (all-the-icons-ivy-rich-mode 1))
 #+end_src
 
@@ -1059,7 +988,7 @@ Terminal emulator powered by libghostty-vt. Very new and vibe-coded though.
 
 #+begin_src emacs-lisp
   (use-package ghostel
-    :straight (:host github :repo "dakra/ghostel" :files ("*.el")))
+    :vc (:url "https://github.com/dakra/ghostel" :rev :newest))
 #+end_src
 
 
@@ -1076,8 +1005,7 @@ Terminal emulator powered by libghostty-vt. Very new and vibe-coded though.
 Ensure Emacs env variables match system variables.
 
 #+begin_src emacs-lisp
-  (use-package exec-path-from-shell
-    :straight t)
+  (use-package exec-path-from-shell)
 
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize))
@@ -1223,7 +1151,7 @@ Seems like a decent alternative to LaTex.
   (ensure-treesit-grammar-installed 'typst (expand-file-name "tree-sitter/libtree-sitter-typst.dylib" user-emacs-directory))
 
   (use-package typst-ts-mode
-    :straight (:type git :host sourcehut :repo "meow_king/typst-ts-mode" :files (:defaults "*.el"))
+    :vc (:url "https://git.sr.ht/~meow_king/typst-ts-mode" :rev :newest)
     :custom
     ;; (optional) If you want to ensure your typst tree sitter grammar version is greater than the minimum requirement
     ;; Note this only checks and compares file modification time
@@ -1476,10 +1404,10 @@ music myself.
   #+end_src
 
 
-- =eos/ghostel-toggle= to toggle a ghostty window
+- =eos/toggle-term= to toggle a ghostty window
 
 #+begin_src emacs-lisp
-    (defun eos/ghostel-toggle ()
+    (defun eos/toggle-term ()
       "Toggle a ghostel terminal in a right side window."
       (interactive)
       (let ((buf (get-buffer "*ghostel*")))
@@ -1522,7 +1450,7 @@ frequently, as my requirements evolve.
   (global-set-key (kbd "C-c e r") 'eos/reload-emacs-config)        ;; Reload init.el
   (global-set-key (kbd "C-c e s") 'eos/toggle-transparency)        ;; Toggle transparency
   (global-set-key (kbd "C-c e t") 'counsel-load-theme)             ;; Switch themes
-  (global-set-key (kbd "C-c e g") 'eos/ghostel-toggle)             ;; Start a ghostty
+  (global-set-key (kbd "C-c e g") 'eos/toggle-term)                ;; Start a ghostty
 
   ;; Split and focus the new window
   (global-set-key (kbd "C-x 2") (lambda () (interactive) (split-window-below) (other-window 1)))
