@@ -637,12 +637,13 @@ Active Babel languages
 
 ox-hugo helps me manage my website using org files.
 
-I couldn't install =tomelr= package using =use-package=, so had to
-install it manually. Now using =:vc= with =package.el=.
+=tomelr= isn't on MELPA and =:vc= checkout is unreliable ("Empty
+checkout"), so we load the copy vendored in =packages/=.
 
 #+begin_src emacs-lisp
   (use-package tomelr
-    :vc (:url "https://github.com/kaushalmodi/tomelr" :rev :newest))
+    :ensure nil
+    :load-path "packages")
 #+end_src
 
 
