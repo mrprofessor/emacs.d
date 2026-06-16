@@ -181,11 +181,13 @@ Basic setup for Emacs appearance and behavior.
     (setq visible-bell t)
   #+end_src
 
-- Set fonts. TODO: Check if the font exists
+- Set fonts. Only apply if the font is installed, so a missing font
+  degrades to the default instead of erroring out of init.
 
   #+begin_src emacs-lisp
     ;; (set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
-    (set-face-attribute 'default nil :font "Iosevka" :height 200)
+    (when (find-font (font-spec :name "Iosevka"))
+      (set-face-attribute 'default nil :font "Iosevka" :height 200))
   #+end_src
 
 - Enable ligatures on Mac
