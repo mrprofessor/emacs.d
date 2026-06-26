@@ -1,4 +1,5 @@
 #+TITLE: The Emacs Operating System
+
 #+EXPORT_FILE_NAME: docs/index.html
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
 #+OPTIONS: toc:3 author:nil date:nil html-postamble:nil results:none
@@ -46,7 +47,7 @@
     - [[#treemacs][Treemacs]]
     - [[#restclient][RestClient]]
     - [[#command-log-mode][Command-log-mode]]
-    - [[#ghostel][Ghostel]]
+    - [[#terminal][Terminal]]
   - [[#system-configuration][System configuration]]
     - [[#emacs-environment-variables][Emacs environment variables]]
   - [[#code-completion][Code Completion]]
@@ -185,9 +186,16 @@ Basic setup for Emacs appearance and behavior.
   degrades to the default instead of erroring out of init.
 
   #+begin_src emacs-lisp
-    ;; (set-face-attribute 'default nil :font "Cascadia Code NF" :height 160)
-    (when (find-font (font-spec :name "Iosevka"))
-      (set-face-attribute 'default nil :font "Iosevka" :height 200))
+    (defvar eos/font-family "Iosevka" ;; Iosevka
+      "Default font family.")
+
+    (defvar eos/font-height 200
+      "Default font height.")
+
+    (set-face-attribute 'default nil :height eos/font-height)
+
+    (when (find-font (font-spec :family eos/font-family))
+      (set-face-attribute 'default nil :family eos/font-family))
   #+end_src
 
 - Enable ligatures on Mac
@@ -305,7 +313,6 @@ Why we need all the icons? Because they are pretty.
 
 #+begin_src emacs-lisp
   (use-package all-the-icons)
-
   (use-package nerd-icons)
 #+end_src
 
@@ -326,11 +333,7 @@ like to get them all.
 
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
-    ;; Enable custom neotree theme (all-the-icons must be installed!)
-    (doom-themes-neotree-config)
-    ;; or for treemacs users
-    ;; (setq doom-themes-treemacs-theme "doom-gruvbox")
-    (doom-themes-treemacs-config)
+    (setq doom-themes-treemacs-theme "doom-gruvbox")
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config))
 
@@ -338,16 +341,11 @@ like to get them all.
 
 #+END_SRC
 
-I love how Org files look with poet theme, so it's a must.
-
-#+begin_src emacs-lisp
-  (use-package poet-theme)
-#+end_src
 
 **** Auto-Dark mode
 
-For the past 6 months, I have been manually switching between light
-and dark themes, until I found this package.
+I have been manually switching between light and dark themes, until I
+found this package.
 
 #+begin_src emacs-lisp
   (setq auto-dark-allow-osascript t)
@@ -982,17 +980,30 @@ configs. Default binding to toggle is =C-c M-c=
     (global-command-log-mode t))
 #+end_src
 
-*** Ghostel
+*** Terminal
 :PROPERTIES:
-:CUSTOM_ID: ghostel
+:CUSTOM_ID: terminal
 :END:
 
-Terminal emulator powered by libghostty-vt. Very new and vibe-coded though.
+Built-in =ansi-term=. Nothing to install, no native module to break,
+and it runs full TUIs (lazygit, htop, vim) over a real PTY. Its
+=*ansi-term*= buffer is routed into a right-side window via
+=display-buffer-alist=; toggle it with =C-c e g= (see
+[[#custom-keybindings][Custom keybindings]]).
 
 #+begin_src emacs-lisp
-  (use-package ghostel
-    :vc (:url "https://github.com/dakra/ghostel" :rev :newest))
+  (add-to-list 'display-buffer-alist
+               '("\\*ansi-term\\*"
+                 (display-buffer-in-side-window)
+                 (side . right)
+                 (slot . 0)
+                 (window-width . 0.35)
+                 (window-parameters . ((no-delete-other-windows . t)))))
 #+end_src
+
+Tried and dropped: =eat= and =ghostel=
+([[https://github.com/dakra/ghostel][libghostty-vt]], still pre-1.0). Built-in
+=ansi-term= is boring and works.
 
 
 ** System configuration
@@ -1007,11 +1018,30 @@ Terminal emulator powered by libghostty-vt. Very new and vibe-coded though.
 
 Ensure Emacs env variables match system variables.
 
+Run this for daemon sessions too, not just GUI frames. A daemon
+launched from a Homebrew context inherits brew's internal shim dir on
+=PATH=, where =git= is a stub that refuses to run ("This shim is
+internal and must be run via brew"). That makes =magit-git-version=
+return =t= and crashes startup. Importing the login shell's clean PATH
+fixes it; the =seq-remove= is belt-and-suspenders so nothing ever
+resolves to the shim regardless of how Emacs was launched.
+
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell)
 
-  (when (memq window-system '(mac ns x))
+  (when (or (memq window-system '(mac ns x)) (daemonp))
     (exec-path-from-shell-initialize))
+
+  ;; Never let Homebrew's internal shims dir win on exec-path.
+  (setq exec-path
+        (seq-remove (lambda (dir) (string-match-p "/Homebrew/shims/" dir))
+                    exec-path))
+
+  ;; Magit resolves and caches the git path when it loads (which happens
+  ;; earlier than this block), so if it grabbed the shim, repoint it at
+  ;; the real git now that exec-path is clean.
+  (with-eval-after-load 'magit
+    (setq magit-git-executable (or (executable-find "git") magit-git-executable)))
 #+end_src
 
 ** Code Completion
@@ -1407,29 +1437,29 @@ music myself.
   #+end_src
 
 
-- =eos/toggle-term= to toggle a ghostty window
+- =eos/toggle-term= to toggle an ansi-term in a right side window
 
 #+begin_src emacs-lisp
     (defun eos/toggle-term ()
-      "Toggle a ghostel terminal in a right side window."
+      "Toggle an ansi-term in the right side window."
       (interactive)
-      (let ((buf (get-buffer "*ghostel*")))
-        (if-let ((win (and buf (get-buffer-window buf))))
-            (delete-window win)
-          (unless buf
-            (setq buf (generate-new-buffer "*ghostel*"))
-            (with-current-buffer buf
-              (ghostel-mode)
-              (let* ((height (window-body-height))
-                     (width (window-max-chars-per-line)))
-                (setq ghostel--term (ghostel--new height width ghostel-max-scrollback))
-                (ghostel--apply-palette ghostel--term))
-              (ghostel--start-process)))
-          (select-window
-           (display-buffer buf
-                           '((display-buffer-in-side-window)
-                             (side . right) (slot . 0) (window-width . 0.35)
-                             (window-parameters . ((no-delete-other-windows . t)))))))))
+      (let* ((buf (get-buffer "*ansi-term*"))
+             (win (and buf (get-buffer-window buf))))
+        (cond
+         ;; Visible: hide it.
+         (win (delete-window win))
+         ;; Exists but hidden: show it again.
+         (buf (select-window (display-buffer buf)))
+         ;; Absent: create it. Passing the shell explicitly means
+         ;; `ansi-term' runs non-interactively and does NOT prompt
+         ;; "Run program:". It uses `switch-to-buffer', so build it
+         ;; inside `save-window-excursion' and let `display-buffer'
+         ;; (routed by the Terminal section's `display-buffer-alist')
+         ;; place it in the right side window.
+         (t
+          (save-window-excursion
+            (ansi-term (or explicit-shell-file-name (getenv "SHELL") "/bin/zsh")))
+          (select-window (display-buffer (get-buffer "*ansi-term*")))))))
 #+end_src
 
 
@@ -1453,7 +1483,7 @@ frequently, as my requirements evolve.
   (global-set-key (kbd "C-c e r") 'eos/reload-emacs-config)        ;; Reload init.el
   (global-set-key (kbd "C-c e s") 'eos/toggle-transparency)        ;; Toggle transparency
   (global-set-key (kbd "C-c e t") 'counsel-load-theme)             ;; Switch themes
-  (global-set-key (kbd "C-c e g") 'eos/toggle-term)                ;; Start a ghostty
+  (global-set-key (kbd "C-c e g") 'eos/toggle-term)                ;; Toggle terminal
 
   ;; Split and focus the new window
   (global-set-key (kbd "C-x 2") (lambda () (interactive) (split-window-below) (other-window 1)))
