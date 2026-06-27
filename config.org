@@ -985,25 +985,26 @@ configs. Default binding to toggle is =C-c M-c=
 :CUSTOM_ID: terminal
 :END:
 
-Built-in =ansi-term=. Nothing to install, no native module to break,
-and it runs full TUIs (lazygit, htop, vim) over a real PTY. Its
-=*ansi-term*= buffer is routed into a right-side window via
-=display-buffer-alist=; toggle it with =C-c e g= (see
-[[#custom-keybindings][Custom keybindings]]).
+[[https://github.com/dakra/ghostel][ghostel]], a terminal powered by
+libghostty-vt (the VT engine from Ghostty). On MELPA now; the native
+module is a prebuilt binary that auto-downloads on first use, so there
+is no toolchain or build step. Its =*ghostel*= buffer is routed into a
+right-side window via =display-buffer-alist=; toggle it with =C-c e g=
+(see [[#custom-keybindings][Custom keybindings]]).
 
 #+begin_src emacs-lisp
-  (add-to-list 'display-buffer-alist
-               '("\\*ansi-term\\*"
-                 (display-buffer-in-side-window)
-                 (side . right)
-                 (slot . 0)
-                 (window-width . 0.35)
-                 (window-parameters . ((no-delete-other-windows . t)))))
+  (use-package ghostel
+    :ensure t
+    :commands (ghostel)
+    :init
+    (add-to-list 'display-buffer-alist
+                 '("\\*ghostel\\*"
+                   (display-buffer-in-side-window)
+                   (side . right)
+                   (slot . 0)
+                   (window-width . 0.35)
+                   (window-parameters . ((no-delete-other-windows . t))))))
 #+end_src
-
-Tried and dropped: =eat= and =ghostel=
-([[https://github.com/dakra/ghostel][libghostty-vt]], still pre-1.0). Built-in
-=ansi-term= is boring and works.
 
 
 ** System configuration
@@ -1437,29 +1438,27 @@ music myself.
   #+end_src
 
 
-- =eos/toggle-term= to toggle an ansi-term in a right side window
+- =eos/toggle-term= to toggle a ghostel terminal in a right side window
 
 #+begin_src emacs-lisp
     (defun eos/toggle-term ()
-      "Toggle an ansi-term in the right side window."
+      "Toggle a ghostel terminal in the right side window."
       (interactive)
-      (let* ((buf (get-buffer "*ansi-term*"))
+      (let* ((buf (get-buffer "*ghostel*"))
              (win (and buf (get-buffer-window buf))))
         (cond
          ;; Visible: hide it.
          (win (delete-window win))
          ;; Exists but hidden: show it again.
          (buf (select-window (display-buffer buf)))
-         ;; Absent: create it. Passing the shell explicitly means
-         ;; `ansi-term' runs non-interactively and does NOT prompt
-         ;; "Run program:". It uses `switch-to-buffer', so build it
-         ;; inside `save-window-excursion' and let `display-buffer'
-         ;; (routed by the Terminal section's `display-buffer-alist')
-         ;; place it in the right side window.
+         ;; Absent: create it. `ghostel' reuses *ghostel* (new buffer
+         ;; only with a prefix arg). Build it inside
+         ;; `save-window-excursion' and let `display-buffer' (routed by
+         ;; the Terminal section's `display-buffer-alist') place it in
+         ;; the right side window.
          (t
-          (save-window-excursion
-            (ansi-term (or explicit-shell-file-name (getenv "SHELL") "/bin/zsh")))
-          (select-window (display-buffer (get-buffer "*ansi-term*")))))))
+          (save-window-excursion (ghostel))
+          (select-window (display-buffer (get-buffer "*ghostel*")))))))
 #+end_src
 
 
