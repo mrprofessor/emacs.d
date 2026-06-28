@@ -773,7 +773,13 @@ on them.
 
   (use-package projectile
     :diminish projectile-mode
-    :config (projectile-mode)
+    :config
+    (projectile-mode)
+    ;; counsel-projectile-switch-project reads the `projectile-known-projects'
+    ;; variable directly, but projectile only fills it lazily on first use.
+    ;; Load it now so C-c p p lists projects right at startup, not only after
+    ;; visiting a file in a project.
+    (projectile-load-known-projects)
     :custom ((projectile-completion-system 'ivy))
     :bind (:map projectile-mode-map
                 ("C-c p" . projectile-command-map))
